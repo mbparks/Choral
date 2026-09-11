@@ -1,134 +1,143 @@
 # C(H)ORAL
 ## Sound becomes structure.
 
-**A Green Shoe Garage Field Instrument — v0.7.0 — Batch 6**
+**A Green Shoe Garage Field Instrument · v1.0.0**
 
-A multicolored, three-dimensional sculpture grown from sound. Recursive branches and a Life-inspired cellular ecosystem influence one another. Audio shapes subsequent growth and birth colors; families, colonies, and color mutations leave a history in the specimen.
+A multicolored, three-dimensional sculpture grown from sound. Recursive branches and a Life-inspired 3D cellular ecosystem influence one another. Music shapes subsequent growth and birth colors. Families, colonies, and persistent color mutations leave a history in the specimen.
 
-**Batch 6 adds a five-step creative workspace, Easy/Advanced controls, Recorded / Living / Hybrid color response, independent accent animation, and device-aware reduced motion.** This release is a local static package, not a website deployment.
+**v1.0 incorporates Batch 7’s preservation/performance safeguards and the release validation pass.** This is a downloadable static release, not a deployment to a public website.
 
-## Open or host it
+## Start here
 
-Open **`index.html`** in a browser with WebGL 2 available, or place it in a static hosting folder. The ZIP has `index.html` at its root. The delivered HTML contains all JavaScript, shaders, CSS, and interface assets. No build step, installation, account, backend, CDN, remote fonts, telemetry, or runtime network dependencies are required. The `src/` files and `build.py` are optional maintainer resources.
+Open **`index.html`**, or put it into a static hosting folder. The ZIP has that file at its root. It contains all JavaScript, shaders, CSS, icons, and interface markup: **no compilation, backend, account, CDN, external fonts, installation, telemetry, or runtime network dependencies**. The optional `src/`, `build.py`, and `tests/` are maintainer resources, not runtime requirements.
 
-**Export the current specimen before closing, reloading, or upgrading. Only settings autosave—not the growing sculpture.** Existing saved settings should not be cleared just to install this release.
+Select **Open music file** for your own music, or **Play test sound** for an audible test. Startup **Silent preview** is synthetic and clearly labeled; it is not listening. A browser with WebGL 2 is required.
 
-Capture features require an appropriate secure browser context, explicit permission, and an available audio track. Audio sharing availability differs by browser, operating system, and selected source. C(H)ORAL cannot silently listen to every sound playing on a device. Test microphone/system sharing on the intended device. A local music file and the audible test sound provide alternative inputs.
+**Before replacing an older HTML file, closing the tab, or upgrading, export the current specimen as JSON and confirm that it downloaded. Only settings autosave.** An image is not a resumable specimen, and browser warnings cannot protect against every forced close or crash.
 
-## First session
+## What changed in v1.0
 
-1. **Sound:** choose **Open music file** or **Play test sound**. Startup uses **Silent preview**, explicitly synthetic and not listening.
-2. **Habitat:** choose Coral, Dendrite, Mycelium, Crystal, Vortex, or Tetra. Changing habitat starts a new specimen. The current habitat button is a no-op; use New seed to restart deliberately.
-3. **Color:** keep Full Spectrum, or choose another palette. Select Recorded, Living, or Hybrid. Adjust Color diversity, Sound influence, and Glow.
-4. **Grow:** adjust Growth intensity, pause/resume, add a Bloom, choose visible layers, or change movement preferences. The main transport stays available outside the panel.
-5. **Save:** export the living specimen as JSON or save the rendered view as a PNG.
-
-The steps are shortcuts, not a locked wizard: jump freely between them. **Easy** starts with everyday controls. **Advanced** reveals detailed audio, ancestry, palette, lighting, and cellular rules in their relevant step. Switching complexity never resets values or silently lowers simulation quality.
-
-Desktop controls occupy a contained sidebar, leaving the sculpture dominant. Phones use a bottom sheet that can be hidden with **Hide controls**. Its header and navigation stay available while the selected step scrolls. Controls start hidden on small screens; press **Show controls**. Interface theme remains independent of the artwork palette.
-
-## Three color-response modes
-
-| Mode | What current sound does to the existing sculpture |
+| Area | Behavior |
 | --- | --- |
-| **Recorded** | No live recoloring, localized accents, or audio-driven emission pulses. The current material treatment and its growth history remain visible. New growth still records sound-composed colors. |
-| **Living** | Temporarily shifts the hue of existing branches, cells, and spores according to smoothed audio. Each material retains its own color variation, saturation, and brightness; the whole sculpture does not become one uniform RGB. |
-| **Hybrid — default** | Retains the recorded body treatment while allowing localized live highlights on young tips, young cells, and selected spores. |
+| Portable exports | The complete snapshot is detached from the running simulation, validated for re-import, and given a CRC-32 accidental-corruption check before the download is initiated. |
+| Import protection | Geometry, cells, birth records, ancestry, materials, settings, counters, and camera are validated before the open specimen is replaced. A confirmation summarizes the candidate. Cancel leaves both artwork and audio untouched. |
+| Unsaved work | The specimen status is separate from settings autosave. Growth, material changes, and manual camera edits require another export. Seed and habitat changes warn before discarding unexported work. |
+| Graphics recovery | A lost WebGL context pauses growth but retains the specimen in memory. JSON export still works. On restoration, GPU resources are rebuilt in place; the app never automatically reloads and discards the artwork. |
+| Rendering budgets | Stationary Recorded views skip redundant drawing; live effects remain uniform-driven. Low quality limits halo work and samples fewer visible cells without deleting the simulation or desaturating its colors. |
+| Diagnostics | Downloads contain environment/configuration categories and aggregate counts—not audio features, raw error messages, input filenames, seeds, geometry, birth records, or ancestry. |
+| Compatibility | Actual VIVARIUM v0.1 and C(H)ORAL v0.2–v0.7 exports remain supported. No missing audio/color history is invented. |
 
-These are **view modes**, not destructive edits. They do not rewrite geometry, birth colors, audio-feature records, ancestry, appearance archives, pending offspring, or random-generator state. Switching from Living to Recorded restores the underlying material treatment. The audio connection and camera are not reset.
+## The creative workflow
 
-Living is intentionally an artistic hue-rotation layer. It does not recognize musical instruments or infer scientifically inherent sound/color correspondences. Bass-dominant, midrange-dominant, and treble-dominant signals favor different rotations, with the smoothed mixture and energy controlling the result. Silence returns the live layer to the underlying material. Recorded material can still mature or be deliberately restyled; Recorded does not freeze simulation age or override the palette controls.
+**Sound → Habitat → Color → Grow → Save** are freely accessible sections, not a locked wizard. **Easy** exposes the everyday controls. **Advanced** reveals detailed audio, inheritance, palette, lighting, and cellular settings without resetting them.
 
-### Accent animation is separate
+Desktop uses a contained sidebar. Mobile uses a hideable bottom sheet. **Show controls / Hide controls** changes the space available to the sculpture. The main growth transport stays outside the panel.
 
-**Accent animation**, in Color, controls localized highlights. In Living, turning it off leaves the whole-body color response active. In Hybrid, turning it off leaves the recorded material without live accents. Recorded and reduced motion disable the checkbox, explain why, and preserve its chosen value for later use.
+### Sound
 
-**Sound influence** scales new birth-color composition and the live response. Zero removes live hue shifts and localized sound effects; it does not erase earlier birth records. Glow controls halos, not body illumination.
+**Open music file** plays and analyzes a local audio file. The player has its own playback controls. The built-in test sound and **Advanced → Sound → Play color study** use real Web Audio analysis. Color study can hold 90 Hz bass, 1,000 Hz midrange, or 6,500 Hz treble, or cycle through those tones at five-second intervals.
 
-**Pause growth** stops the simulation, not audio playback or all visual motion. A paused specimen can still respond in Living or Hybrid and can still auto-orbit. Use **Still view** to stop all automatic visual movement.
+**Microphone** and **Share tab / device audio** require explicit permission and suitable browser support. Capture needs HTTPS or localhost. A browser cannot automatically capture every sound on the device. The sharing dialog must provide an audio track; enable its audio option when available. Browser/OS/source restrictions still apply. The sharing API can require a video track, but C(H)ORAL does not display, record, or transmit it. Disconnect stops all acquired tracks.
 
-### Compare the modes
+Captured microphone or shared audio is not played back through your speakers by the app. Local file/test output can be muted independently from analysis. Source switching and disconnect release the previous stream and file URL. A failed or cancelled capture request leaves the existing source in place.
 
-In Color, select Full Spectrum. In Grow, disable Auto orbit and pause growth so the camera and geometry stay fixed. In Advanced → Sound → **Audio study & input tuning**, choose a sustained tone or the five-second cycle, then press **Play color study**.
+Bass influences extension, thickness, and available branching; mids influence organic branching; highs influence cellular mutation; loudness influences pace; transients can introduce new buds. These are artistic mappings, not instrument recognition, biological laws, or music transcription.
 
-Compare Recorded, Living, and Hybrid in Color. Living should recolor existing material as the tone changes. Recorded should not. Hybrid limits live effects to localized accents; very mature branch bodies deliberately respond less. To inspect only stored material, select Recorded or Still view.
+### Habitat
 
-## Motion and comfort
-
-**Grow → Motion** offers:
-
-| Preference | Behavior |
+| Habitat | Growth family |
 | --- | --- |
-| **Follow device — default** | Reads the device’s current reduced-motion preference and reacts to changes during the session. An older saved `motion: true` does not override a current device request for reduced motion. |
-| **Reduced** | Suspends auto-orbit, live recoloring, localized accents, emission pulses, and growth interpolation. Rich stored colors, palette selection, lighting controls, and manual camera operation remain available. |
-| **Full motion** | An explicit override of the device preference. Auto orbit and accent animation still have independent controls. |
+| Coral | Radial recursive reef |
+| Dendrite | Upward branching canopy |
+| Mycelium | Distributed spatial filaments |
+| Crystal | Six-axis geometric recursion |
+| Vortex | Helical branching |
+| Tetra | Tetrahedral recursion |
 
-Entering reduced motion pauses growth. Leaving it **does not automatically resume growth**. The user can explicitly Resume or Bloom in Reduced mode; generations then update without interpolation. This is not a promise that resumed cellular changes are motion-free. The audio analyser and playback may continue.
+Changing habitat starts a new specimen, with a warning for unexported work. Selecting the already active habitat does not reset it. **New seed**, **Same seed**, and a manually entered seed are deliberate reset operations.
 
-**Still view**, in the desktop header and in Grow on every layout, pauses growth and selects Reduced. It does not mute playback, change the palette, or erase colors. To reenable live effects, choose Follow device or Full motion in Grow; resume growth separately as needed.
+### Color
 
-The reduced interface suppresses spectrum/meter motion, onset indicators, animated color chips, and CSS transitions. Numeric analysis is updated less frequently. An older master-animation-off setting migrates to Reduced. A fresh installation follows the device dynamically rather than storing a permanent forced-off setting.
+**Full Spectrum is the default.** Reds, oranges, yellows, greens, blues, purples, and pinks coexist; this is not one object cycling through one hue. Reef, Aurora, Volcanic, Stained Glass, and Wild Type have different distributions, contrasts, aging, accents, and mutation policies. Original Biolume, Aurora, Ember, and Monochrome remain under Legacy. Monochrome remains intentionally neutral.
 
-## Six palettes and preserved material
+New growth records sound-feature summaries and its resulting birth color. A separate color random stream supports inheritance and mutation without changing the geometry random stream. Descendants can retain family colors; cells pass identities to branch buds and vice versa. The lineage legend shows the largest current cellular lineages. It is not an unlimited archive of extinct ancestors.
 
-Full Spectrum, Reef, Aurora, Volcanic, Stained Glass, and Wild Type have different distributions, accents, aging, variation, and mutation rules. Use **Browse palette previews** to see their swatches. The selector also retains the original Biolume, Aurora, Ember, and Monochrome formulas under Legacy. The original Aurora is not replaced by the new Aurora treatment.
+| Response mode | Current sound’s effect on the existing sculpture |
+| --- | --- |
+| Recorded | Shows stored material without live recoloring or animated accents. Subsequent growth can still record sound-composed colors. |
+| Living | Temporarily shifts existing colors while retaining each material’s variation. Stored colors and ancestry are not overwritten. |
+| Hybrid — default | Retains recorded body colors with localized live accents at tips, young cells, and spores. |
 
-**Color → Where color changes apply** separates:
+**Accent animation** governs localized highlights. In Living, disabling it does not disable the whole-body color response. Recorded and reduced motion suspend accents while retaining the selected preference. **Sound influence** affects subsequent birth colors and the strength of live effects, not a destructive repaint of recorded history.
 
-- **Restyle existing growth:** deliberately apply current palette/diversity/hue/saturation to existing and subsequent material, without changing canonical birth history.
-- **Affect new growth only:** freeze the material treatment currently displayed; later material choices affect subsequent births. Surviving cells retain their treatment, and dying cells pass it into spores.
+**Restyle existing growth** applies the current palette and material controls to the whole view. **Affect new growth only** preserves the material currently on screen; subsequent palette/artist choices apply to new births. Surviving cells retain their material and carry it into dying spores. Mixed-palette appearances travel in the JSON.
 
-**Living is a temporary overlay even in new-growth-only scope.** Scope preserves material, not a past lighting environment or frozen live animation. Return to Recorded to inspect each preserved material without that overlay. Mixed-palette treatment travels in the specimen export.
+**Color diversity, Sound influence, and Glow** are prominent. Advanced adds inheritance, mutation, lineage variation, smoothing, hue bias, saturation, and independent skeleton/cell/spore hue offsets. Material controls follow the selected color scope. Glow remains a global lighting effect.
 
-Advanced reveals saturation, global hue bias, independent skeleton/cell/spore hue offsets, color inheritance, mutation, lineage variation, color smoothing, ancestry counts, and the colony legend. All existing functions remain present; none is silently reset by Easy mode.
+### Lighting and 3D form
 
-## Lighting retained from Batch 5
+**Sculpture** provides neutral studio lighting and interior/underside fill. **Bioluminescent** emphasizes luminous cells and tips. **Unlit Color** displays unshaded material, preserving perspective and occlusion; it disables directional-light controls while leaving halos optional.
 
-**Color → Lighting treatments** opens the lighting section and focuses its treatment selector. Sculpture uses neutral studio light with visible underside fill. Bioluminescent emphasizes luminous cells and tips. Unlit Color shows material without directional shading, emission, or depth dimming; halos remain optional.
+Surface illumination, self-emission, and halo intensity are separate. Direction, underside fill, and depth separation change the view without rewriting its material history. Selecting a treatment applies its starting settings. Individual edits show **Custom**. Resetting a treatment resets only its lights.
 
-Advanced reveals separate Surface illumination, Self-emission, Interior / underside fill, light direction, and Depth separation. Glow remains in the main Color controls and changes halos/spores only. Selecting a treatment applies its starting lighting controls. Reset this treatment does not reset palette, appearance scope, camera, audio, or geometry. Inapplicable surface controls are disabled in Unlit Color.
+Halos are depth-tested against opaque geometry and sorted back to front. Their transparency is bounded rather than additively building to white. Spores fade through alpha while retaining their originating colors. Interface themes—dark, light, and high contrast—do not recolor the sculpture.
 
-Halos are depth-tested against opaque geometry, sorted back-to-front, and composited with bounded premultiplied transparency. Aging spores retain RGB while fading opacity. Lighting is an artistic renderer, not volumetric or physically based light transport.
+### Grow, move, and pause
 
-In this release **interface theme no longer changes halo strength**. Canvas RGBA output is the same for light, dark, and high-contrast interface themes at otherwise identical settings. A different background can still affect perceived contrast.
+Drag to orbit; wheel or pinch to zoom; right-drag or Shift-drag to pan. **Frame** restores a useful camera position. Keyboard focus on the canvas supports arrow orbit, +/− zoom, and Shift+arrow pan. Space pauses growth, B adds a Bloom, H toggles controls, and F frames the specimen.
 
-## Explore in three dimensions
+**Pause growth** stops the simulation, not necessarily audio, auto-orbit, or live colors. **Still view** selects Reduced motion and pauses growth without muting audio or removing color. Motion preference offers **Follow device**, **Reduced**, and **Full motion**. Entering Reduced pauses growth and suppresses orbit, live effects, and interpolation. Leaving Reduced never silently resumes growth. Explicit Bloom and Resume remain available; manually resumed cellular changes are not motion-free.
 
-Drag to orbit; scroll or pinch to zoom. Right-drag or Shift-drag to pan. Frame resets framing; zoom extends well outside the specimen. The panel changes the projection’s framing offset without rewriting camera state.
+Memory at **100 / Preserve** retains branches until reset or the structural cap. Lower memory settings deliberately retire older branches. Depth and branch settings affect subsequent growth, not an instant rebuild of existing geometry.
 
-Focus the scene for keyboard operation: arrow keys orbit, Shift + arrows pan, plus/minus zoom. **F** frames, **Space** pauses/resumes growth, **B** adds a Bloom, and **H** toggles controls. **Escape** closes the field guide or controls. Hiding a panel containing focus returns focus to its toggle. Form controls retain native keyboard behavior; the color-response group uses native radios.
+### Save and import
 
-Auto orbit is in Grow. Manual camera navigation remains available in Reduced mode.
+**Export specimen** saves JSON, including geometry, living cells, cell ages, growth substrate, queued growth tips, both random-generator states, birth colors and audio-feature summaries, color lineage identities, pending offspring traits, mixed materials, settings, continuation counters, and camera. It contains no raw audio or video. Import pauses growth and disconnects audio after confirmation; reconnect a source and resume deliberately.
 
-## Save, import, and compatibility
+Exports use stable `specimenSchema: 1`, chromatic schema 2, ecology schema 1, appearance schema 1, and continuation schema 1. The maximum portable file size is **64 MiB**, enforced on both import and export. The file does not preserve a music file, its playback position, a live analyser’s smoothing buffers, or an exact recording of prior sound. Exact simulation continuation requires the same subsequent input features and settings; replaying live music at a different time is not guaranteed to reproduce the same future.
 
-**Export specimen** prepares a JSON containing living state, branch geometry, canonical birth colors, source-tagged audio-feature summaries, color lineages, pending offspring traits, separate color RNG state, mixed-material appearance, settings, and camera. It does not contain the audio itself or reconstruct a song.
+The CRC-32 record checks accidental changes in the UTF-8 JSON payload. It is **not encryption, a digital signature, or evidence of authenticity**. Reformatting whitespace is safe. Editing or reordering payload properties changes the checksum. Older/unsigned developer documents are still structurally validated and clearly identified as lacking a checksum; do not remove a failed checksum from an important archive just to force it to load.
 
-**Save PNG** prepares only the current 3D canvas with a transparent background, not the interface. The Save step reports the generation at which an export was prepared. This is not confirmation that the native browser download was retained on disk. Subsequent growth is not automatically included in an earlier export.
+The status says **Export prepared**, not “saved to disk”: confirm the browser download. Further growth or material/manual-camera changes mark it unexported again. Automatic orbit alone does not continuously invalidate the export. A PNG captures the currently displayed sculpture, not the complete page, sound, or living state. PNG export does not clear the specimen’s unsaved status.
 
-Imports are validated before replacing the open specimen, disconnect audio, and pause growth. Versions supported: original VIVARIUM v0.1 and C(H)ORAL v0.2 through v0.7. Older data retains the history it actually recorded; absent audio or ancestry is never fabricated. Current-format malformed response/motion/lighting fields are rejected transactionally rather than quietly replaced.
+Files are parsed and validated into a candidate before replacement. Malformed files do not disconnect audio or move the camera. Confirmation lists the source version, generation, branch/cell counts, and available history. Cancellation does not alter the open work. Concurrent or superseded file reads cannot replace a specimen reset while the file was being read.
 
-Imports adopt the specimen’s artistic choices, including color-response mode and lighting. They **retain this device’s current interface theme, Easy/Advanced choice, and motion preference**, instead of imposing another person’s accessibility choices. Engine-level round trips preserve all settings; the UI applies this explicit local-preference policy on import.
+Legacy v0.1/v0.2 materials use their original/reconstructed color formulas; no past audio features are fabricated. v0.3 birth colors are retained, with no invented earlier ancestry. Later ancestry, lighting, and mixed-material archives remain intact where recorded. The receiving device’s theme, complexity, and motion preferences take precedence over imported local preferences. Current-format malformed settings/camera are rejected rather than silently clamped.
 
-Settings remain in `gsg.choral.settings.v1`. Accessible legacy settings from `gsg.vivarium.settings.v1` are copied without deleting or changing the old key. Corrupt settings are backed up to a recovery key when storage permits. Cross-origin storage cannot be migrated automatically; use specimen export/import. File-origin and private-browser storage behavior needs testing on the actual device.
+Only settings autosave into `gsg.choral.settings.v1`. Accessible legacy `gsg.vivarium.settings.v1` settings migrate without deleting or overwriting that key. Damaged settings are backed up to a recovery key when storage permits. Origin storage may be unavailable, and one origin cannot read another origin’s settings. JSON is the portable route between sites/devices. **Fresh start** clears the current sculpture and C(H)ORAL settings after confirmation; it is not a backup operation.
 
-## Boundaries and privacy
+## Performance and limits
 
-The ecosystem is a bounded, experimental 3D Life-inspired automaton with 26 neighbors, fixed empty boundaries, explicit mutation, substrate-limited births, branch seeding, and occasional low-population reseeding—not classic two-dimensional Conway’s Life or a biological model.
+The cellular grid is **32 × 32 × 32**, with synchronous updates, 26 neighbors, and fixed empty boundaries. New births are constrained to the deposited growth substrate. This is a custom Life-inspired 3D ecosystem with explicit randomness—not classic 2D Conway Life or a biological model.
 
-The 32³ cellular volume is finite. Geometry budgets bound rendered detail and branch growth; the high-detail branch cap is 16,000. A cap preserves prior structure rather than silently deleting it. Structural memory below 100 deliberately retires older branches. Same seeds reproduce initial conditions; live sound and timing can change subsequent growth. This release does not offer unlimited growth, audio transcription, a full historical genealogy, or exact-song replay.
+| Quality | Future branch cap | Approximate visible-cell target | Maximum rendered halos | Dynamic draw target |
+| --- | ---: | ---: | ---: | ---: |
+| Low | 5,500 | 3,200 | 500 | Up to 24 frames/s |
+| Balanced | 10,000 | 6,000 | 1,800 | Up to 40 frames/s |
+| High | 16,000 | 11,000 | 4,500 | Up to 60 frames/s |
 
-No audio, specimen, diagnostic, or usage information is uploaded. Microphone input is not played through the speakers by default. Audio sharing can require a video track, but C(H)ORAL does not render, store, record, or transmit it; capture tracks stop when disconnected. Diagnostics contain settings, counters, summarized signal values, and errors, not raw audio or specimen geometry. Review a diagnostic export before sharing it.
+These are **work budgets, not measured performance guarantees**. All cells remain simulated; only visible cells/halos are sampled. Lowering quality preserves existing branches even above the lower cap but prevents new ones until capacity is available. Cell sampling is spatially distributed and approximate; it does not keep only a central plane or a single colony. Geometry updates and manual edits can trigger immediate drawing outside the normal live cadence. Static Recorded views with orbit off skip redundant draws. Hidden-page rendering is skipped. Color variation is not reduced to improve speed.
 
-## Validation and maintainer files
+The instrument remains finite. It is not unlimited-growth software, a persistent cloud service, an installable service-worker PWA, an audio recorder, or a video exporter. The downloaded HTML is offline-capable without runtime network requests; loading it from a site still needs that page to be available unless you keep a local copy.
 
-See **VALIDATION.md** for executed checks, artifacts, environment details, and explicit limitations. Browser tests use Chromium with software WebGL. Test-only Node/Python/Playwright dependencies are not needed by the application.
+## Validation and release status
+
+See **[VALIDATION.md](VALIDATION.md)** for executed counts, matrices, actual downloads, compatibility fixtures, environment, and limitations. Tests use the shipped application and renderer, not generated mockups. A static ZIP is delivered; no public site was deployed.
+
+Normal hosted-origin navigation/storage testing is blocked by the managed validation browser’s policy and is reported as blocked, not passed. Hardware microphone/system capture, actual target-host storage, OS Save/permission dialogs, real-GPU performance, long mobile sessions, and assistive-technology review remain target-device checks. Browser-level downloads are tested separately where available.
+
+## Maintainers
+
+Editing the delivered `index.html` directly is possible. To regenerate it from optional source files:
 
 ```sh
 python3 build.py
+```
+
+To run the validation suites in a suitable development environment:
+
+```sh
 python3 tests/run_validation.py
 ```
 
-The builder assembles the checked-in source into the already-provided standalone `index.html`. Source modules retain the original simulation and color systems; `response.js` supplies view-only response/motion policy, and `workspace.css` supplies the new workspace layout.
-
-Hardware microphone/system capture, native permission/save/fullscreen dialogs, durable intended-host storage, real-GPU performance, and long sessions still require device-level checks. **No website was deployed.**
+Development tests require Node.js, Python, Playwright, Pillow, numpy, Chromium, and Xvfb. None is required to use the application. `SHA256SUMS` covers the packaged files except the manifest itself. Tests and examples use synthetic signals and contain no captured user audio.

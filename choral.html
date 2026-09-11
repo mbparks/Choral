@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="#101b19" name="theme-color"/><meta content="C(H)ORAL is a local, full-spectrum, sound-reactive 3D field instrument. Grow recursive fractal structures and a living cellular ecosystem from music, microphone input, or shared browser audio." name="description"/><title>C(H)ORAL — Sound becomes structure</title>
+<link href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2716%27%20fill%3D%27%23101b19%27%2F%3E%3Cg%20fill%3D%27none%27%20stroke-width%3D%274%27%20stroke-linecap%3D%27round%27%3E%3Cpath%20d%3D%27M32%2053V30M32%2039L14%2021%27%20stroke%3D%27%23ff567f%27%2F%3E%3Cpath%20d%3D%27M32%2032L49%2015M42%2022V8%27%20stroke%3D%27%2345dbce%27%2F%3E%3Cpath%20d%3D%27M21%2028V12%27%20stroke%3D%27%23ffc24f%27%2F%3E%3Cpath%20d%3D%27M32%2030V17%27%20stroke%3D%27%23a67bff%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E" rel="icon"/>
+<style>
+:root{color-scheme:dark;--bg:#091411;--ink:#edf4ec;--muted:#9aafa5;--accent:#c2ef9a;--accent2:#7ddfd0;--panel:rgba(17,31,26,.86);--solid:#162720;--line:rgba(192,225,200,.19);--soft:rgba(182,213,190,.07);--shadow:0 18px 70px rgba(0,0,0,.14);--warn:#f1c17e;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:13px;min-height:100vh;padding-bottom:110px;background-image:radial-gradient(ellipse at 64% 43%,rgba(52,95,66,.22),transparent 55%);transition:background .2s}body.light{color-scheme:light;--bg:#e4eee6;--ink:#153525;--muted:#456855;--accent:#2f621c;--accent2:#16766c;--panel:rgba(245,250,241,.92);--solid:#f4f8ef;--line:rgba(37,71,49,.25);--soft:rgba(49,83,55,.08);--warn:#875000}body.contrast{--bg:#000;--ink:#fff;--muted:#e1e1e1;--accent:#ceff73;--accent2:#93ffff;--panel:#050505;--solid:#070707;--line:#a1a1a1;--soft:#242424;--warn:#ffe173}
+button,input,select{font:inherit}button,select{color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:9px}button{cursor:pointer;min-height:37px;padding:8px 12px;transition:background .15s,border-color .15s,transform .15s}button:hover{background:var(--line);border-color:var(--muted)}button:active{transform:translateY(1px)}button:disabled{opacity:.5;cursor:not-allowed}button.primary{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:650}button.active,button[aria-pressed=true]{border-color:var(--accent);background:var(--soft);box-shadow:inset 0 0 0 1px var(--accent)}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--accent2);outline-offset:4px}select{padding:8px 26px 8px 9px;max-width:100%}option{background:var(--solid);color:var(--ink)}a{color:var(--accent)}[hidden]{display:none!important}.mono,.eyebrow,output{font-family:var(--mono)}.eyebrow{font-size:10px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted)}.muted{color:var(--muted)}.small{font-size:11px;line-height:1.55}p{margin:8px 0;line-height:1.55}h1,h2,h3{margin:0}h2{font-size:13px;font-weight:600;letter-spacing:.2px}hr{border:0;border-top:1px solid var(--line);margin:15px 0}
+#scene{position:fixed;inset:0;width:100%;height:100%;z-index:0;touch-action:none;outline:none;cursor:grab}#scene:active{cursor:grabbing}.grain{position:fixed;inset:0;pointer-events:none;z-index:1;background-image:radial-gradient(rgba(200,232,199,.21) .55px,transparent .75px);background-size:43px 43px;opacity:.14}
+header{position:relative;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;margin:0 24px;padding:20px 0 16px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:13px}.mark{width:40px;height:40px;fill:none;stroke:var(--accent);stroke-width:1.65}.brand h1{font-size:24px;letter-spacing:4px;font-weight:480;line-height:1.1}.brand .eyebrow{margin-top:7px;font-size:9px;letter-spacing:1.2px}.header-actions{display:flex;gap:8px;align-items:center}.save-state{margin-right:11px;font:10px var(--mono);color:var(--muted)}.led{display:inline-block;width:5px;height:5px;background:var(--accent);border-radius:50%;margin-right:6px}.save-state.unsaved .led{background:var(--warn)}.header-actions select{font-size:11px}.version{letter-spacing:0;font-size:9px;color:var(--muted);font-family:var(--mono);margin-left:7px}
+#panel{position:relative;z-index:3;margin:20px 0 0 24px;width:300px;display:grid;gap:12px}.card{border:1px solid var(--line);border-radius:13px;background:var(--panel);padding:16px;backdrop-filter:blur(14px);box-shadow:var(--shadow)}.section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:11px}.section-index{font:9px var(--mono);color:var(--muted)}.source-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.source-grid button{font-size:11px}.source-grid button.primary{grid-column:1/-1;font-size:12px}.source-caption{margin-top:12px;font:10px/1.6 var(--mono);color:var(--accent);min-height:32px;overflow-wrap:anywhere}.source-caption.warn{color:var(--warn)}.source-bottom{display:flex;gap:6px;align-items:center;justify-content:space-between}.source-bottom button{padding:3px 8px;min-height:28px;font-size:10px}.source-bottom label{font-size:10px;color:var(--muted)}#player{width:100%;height:34px;margin-top:10px}.habitats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.habitat{text-align:left;padding:10px 8px;min-height:65px}.habitat .glyph{font-size:23px;display:block;line-height:1;margin-bottom:9px;color:var(--accent2);font-weight:300}.habitat .name{font:9px var(--mono);letter-spacing:.2px}.habitat.active .glyph{color:var(--accent)}#habitat-description{min-height:18px;margin:11px 0 0;font-size:11px;color:var(--muted)}.slider{display:block;margin:12px 0}.slider>span{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;font-size:11px}.slider output{color:var(--accent);font-size:10px}input[type=range]{appearance:none;-webkit-appearance:none;width:100%;height:3px;background:var(--line);border-radius:4px;cursor:pointer;margin:6px 0 4px;accent-color:var(--accent)}input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--solid)}input[data-lit-only]:disabled{opacity:.35;cursor:not-allowed}.slider:has(input:disabled)>span{opacity:.55}input[type=checkbox]{accent-color:var(--accent);vertical-align:middle}.toggles{display:flex;gap:10px;flex-wrap:wrap;font-size:10px;color:var(--muted);margin:13px 0 1px}.toggles label{cursor:pointer}.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mini-grid button{font-size:11px}details>summary{cursor:pointer;list-style:none;font-size:12px;font-weight:600}details>summary::-webkit-details-marker{display:none}details>summary:after{content:'+';float:right;color:var(--accent);font-family:var(--mono);font-size:16px}details[open]>summary:after{content:'−'}details[open]>summary{margin-bottom:14px}.setting-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:10px 0}.setting-row label{font-size:11px}.setting-row select{font-size:11px;max-width:166px}.rule-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}.rule-row label{font-size:10px;color:var(--muted)}input[type=number]{width:100%;background:var(--solid);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px;margin-top:4px}.seed-row{display:flex;gap:8px;margin-top:10px}.seed-row input{margin:0;min-width:0}.seed-row button{white-space:nowrap;font-size:10px}.notebook-copy{font-size:11px;color:var(--muted)}
+#telemetry{position:fixed;right:26px;top:109px;z-index:2;width:186px;pointer-events:none}.live-badge{font:10px var(--mono);letter-spacing:1px;color:var(--accent);display:flex;align-items:center;gap:7px}.badge-dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}#spectrum{display:flex;gap:2px;align-items:end;height:43px;margin:16px 0 16px;opacity:.75}#spectrum i{display:block;flex:1;min-width:1px;background:var(--accent2);height:2px}.meter{margin:11px 0}.meter-heading{display:flex;justify-content:space-between;gap:8px;font:9px var(--mono);color:var(--muted);margin-bottom:5px}.meter-line{height:3px;background:var(--line)}.meter-line i{display:block;height:100%;background:var(--accent);width:0}.mapping-note{font:9px/1.7 var(--mono);margin:18px 0 0;color:var(--muted)}#beat-indicator{margin-top:14px;font:9px var(--mono);color:var(--muted)}#beat-indicator.lit{color:var(--accent);text-shadow:0 0 16px var(--accent)}.stage-label{position:fixed;bottom:118px;left:365px;z-index:2;pointer-events:none}.stage-label .eyebrow{font-size:10px}.stage-label h2{font-size:29px;font-weight:350;letter-spacing:.2px;margin-top:7px}.stage-label p{font-size:11px;color:var(--muted);margin-top:7px}.stage-label span{color:var(--accent)}
+#transport{position:fixed;z-index:4;bottom:44px;left:365px;right:26px;display:flex;gap:8px;align-items:center;justify-content:space-between}.transport-main,.transport-view{display:flex;gap:7px}.transport-view button{font-size:11px}.transport-main button{font-size:11px;background:var(--panel);backdrop-filter:blur(8px)}.transport-main button.primary{background:var(--accent)}.transport-view button{background:var(--panel);backdrop-filter:blur(8px)}.statusbar{position:fixed;z-index:5;bottom:0;left:0;right:0;min-height:27px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 25px;background:var(--bg);border-top:1px solid var(--line);font:9px var(--mono);color:var(--muted)}.statusbar .stats{display:flex;gap:18px}.stats b{font-weight:400;color:var(--ink)}#toast{position:fixed;z-index:20;top:88px;left:50%;transform:translateX(-50%);width:min(520px,calc(100% - 36px));padding:13px 17px;background:var(--solid);border:1px solid var(--accent);border-radius:10px;box-shadow:0 8px 50px rgba(0,0,0,.25);font-size:12px;line-height:1.6}#toast.error{border-color:var(--warn)}#fatal{position:fixed;z-index:30;inset:20% 20%;border:1px solid var(--warn);border-radius:16px;background:var(--solid);padding:35px;height:max-content}#fatal h2{font-size:22px;margin-bottom:12px}#boot{position:fixed;z-index:25;inset:0;display:grid;place-content:center;text-align:center;background:var(--bg)}#boot h2{font-size:27px;letter-spacing:5px;font-weight:400}.panel-hidden #panel{display:none}.panel-hidden .stage-label{left:26px}.panel-hidden #transport{left:26px}.panel-hidden #telemetry{opacity:.65}.panel-hidden{padding-bottom:0}#dropzone{position:fixed;z-index:25;inset:12px;border:2px dashed var(--accent);border-radius:14px;background:var(--panel);display:grid;place-content:center;pointer-events:none;font-size:26px}dialog{color:var(--ink);background:var(--solid);border:1px solid var(--line);border-radius:15px;width:min(660px,calc(100% - 30px));padding:28px;max-height:85vh}dialog::backdrop{background:rgba(0,0,0,.6);backdrop-filter:blur(6px)}dialog h2{font-size:22px;margin-bottom:16px;font-weight:450}dialog h3{font-size:13px;margin-top:21px}dialog p{font-size:12px;color:var(--muted)}dialog .close{float:right}.help-key{font:10px var(--mono);border:1px solid var(--line);padding:2px 5px;border-radius:4px;margin-right:3px}noscript{position:fixed;z-index:50;background:var(--solid);padding:30px;inset:10%;height:max-content}.reduced-motion *{scroll-behavior:auto!important;transition:none!important}
+@media(max-width:1150px){#telemetry{width:150px}.transport-view button{padding:8px}.save-state{display:none}}@media(max-width:950px){header{margin:0 16px;gap:7px}.brand h1{font-size:20px;letter-spacing:2px}.brand .eyebrow{font-size:8px;letter-spacing:.4px}.mark{width:30px}#panel{margin-left:16px;width:280px}#telemetry{right:18px;width:130px}.stage-label{left:320px}.stage-label h2{font-size:23px}#transport{left:320px;gap:8px;flex-wrap:wrap;justify-content:flex-start}.header-actions{gap:5px}.version{display:none}.header-actions button{font-size:11px;padding:8px}.statusbar .stats{gap:10px}.local-label{display:none}}
+@media(max-width:650px){body{padding-bottom:130px}header{padding:15px 0 12px}.brand{gap:7px}.brand h1{font-size:18px;letter-spacing:1.5px}.brand .eyebrow{max-width:180px;line-height:1.5}.mark{display:none}.header-actions select{width:55px;max-width:55px;color:var(--ink);padding:6px 3px;font-size:10px}.header-actions option{color:var(--ink)}.header-actions button{min-height:34px;padding:7px 8px}#panel{width:calc(100% - 32px);margin-top:15px;max-width:370px}.card{background:var(--solid);backdrop-filter:none}#telemetry{top:102px;right:17px;width:118px}.stage-label{left:18px;bottom:148px}.stage-label h2{font-size:22px}.stage-label p{max-width:230px}.stage-label .eyebrow{font-size:8px}body:not(.panel-hidden) #telemetry,body:not(.panel-hidden) .stage-label{display:none}#transport,.panel-hidden #transport{left:16px;right:16px;bottom:53px;display:block}.transport-main,.transport-view{gap:6px;margin-top:6px}.transport-view button,.transport-main button{flex:1;padding:7px 5px;font-size:10px;min-height:33px}.statusbar{font-size:8px;padding:7px 13px;flex-wrap:wrap;gap:4px}.stats{width:100%;justify-content:space-between}.statusbar .stats{gap:7px}#footer-state{display:none}.source-caption{min-height:16px}#fatal{inset:15% 16px;padding:22px}.header-actions .help-button{display:none}}
+
+/* Color is a primary instrument control, not an advanced-only preference. */
+.color-card{border-color:var(--line);position:relative}
+.palette-swatches{display:flex;gap:4px;height:19px;margin:3px 0 13px}
+.palette-swatches i{flex:1;min-width:0;display:block;border-radius:3px;border:1px solid rgba(255,255,255,.18)}
+.palette-row{margin:9px 0}.palette-row select{max-width:164px;min-height:37px}
+.color-description{color:var(--ink);font-size:11px;line-height:1.55;margin:8px 0}
+.palette-note{color:var(--muted);font-size:10px;line-height:1.6;margin-bottom:0}
+.spectrum-button{width:100%;font-size:11px;margin:3px 0 4px;font-weight:600;background:var(--soft)}
+.spectrum-button:before{content:'';display:inline-block;width:35px;height:7px;margin-right:8px;border-radius:6px;background:linear-gradient(90deg,#ff405b,#ffb329,#c5ee36,#36e2ae,#31b8ff,#925aff,#f23bd5)}
+.settings-notice{font-size:10px;line-height:1.65;border-top:1px solid var(--line);padding-top:9px;color:var(--muted)}
+.brand h1 .choral-h{color:var(--accent2)}
+body.contrast .palette-swatches i{border-color:#ddd}
+
+.color-mapping{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:13px 0 7px}
+.color-route{border:1px solid var(--line);border-radius:7px;padding:8px 5px;min-width:0;background:var(--soft)}
+.color-route i{display:block;height:5px;border-radius:3px;margin-bottom:6px;background:var(--muted)}
+.color-route b{display:block;font:9px var(--mono);letter-spacing:.4px}.color-route span{display:block;font-size:9px;color:var(--muted);margin-top:4px}
+.color-toggle{display:flex;gap:7px;align-items:center;font-size:11px;line-height:1.5;margin:11px 0}
+.study-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:6px;margin-top:11px}.study-row select{width:100%;min-width:0;font-size:11px;padding:6px}.study-row button{font-size:11px;padding:6px}
+#color-status{font:9px/1.6 var(--mono);color:var(--accent2);margin:9px 0 0}
+#color-history{font-size:10px;line-height:1.6;color:var(--muted);margin:4px 0}
+
+.lineage-controls{margin:16px 0;padding:14px 0 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.lineage-controls summary{cursor:pointer;color:var(--ink);font-size:13px;font-weight:650;list-style-position:inside;min-height:28px}
+.lineage-controls .section-index{float:right;font-size:9px;padding-top:3px}
+.lineage-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:14px 0 8px}
+.lineage-stats div{padding:9px 4px;text-align:center;background:var(--soft);border-radius:8px;border:1px solid var(--line)}
+.lineage-stats b{display:block;font-family:var(--mono);font-size:18px;color:var(--ink);font-weight:600}
+.lineage-stats span{display:block;font-family:var(--mono);font-size:7px;letter-spacing:.035em;margin-top:5px;color:var(--muted)}
+.lineage-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0 10px}
+.lineage-chip{display:flex;align-items:center;gap:5px;min-width:0;border:1px solid var(--line);border-radius:6px;padding:6px 4px;font:9px var(--mono);color:var(--ink);background:var(--soft)}
+.lineage-chip i{flex:0 0 10px;width:10px;height:10px;border-radius:50%;box-shadow:0 0 7px var(--chip-color);background:var(--chip-color)}
+.lineage-chip span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.legend-caption{margin-bottom:4px!important}
+
+/* Batch 4: real palette previews and explicit scope; never a color-only state. */
+.palette-explorer,.artist-controls{border-top:1px solid var(--line);padding-top:12px;margin:12px 0}
+.palette-explorer>summary,.artist-controls>summary{font-size:11px}
+.palette-library{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:12px}
+.palette-choice{min-width:0;text-align:left;font-size:11px;padding:9px 8px;display:grid;gap:9px}
+.choice-swatches{display:flex;height:12px;gap:1px;border-radius:4px;overflow:hidden}.choice-swatches i{flex:1;min-width:0}
+.scope-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:12px}
+.scope-controls button{font-size:10px;line-height:1.5;padding:7px;min-width:0}
+.scope-controls [aria-pressed="true"]:before{content:'✓ ';font-weight:700}
+.scope-status{font:9px/1.6 var(--mono);letter-spacing:.35px;color:var(--accent2);margin-top:9px;overflow-wrap:anywhere}
+#palette-policy{padding:8px 0;border-top:1px solid var(--line);margin-top:12px}
+#reset-color-tuning{width:100%;font-size:11px}
+.palette-row label{max-width:84px}.palette-row select{min-width:0;max-width:164px}
+
+
+/* Batch 6 workspace: five reachable steps; the sculpture never becomes a scrolling page. */
+:root{--panel-width:346px}
+html,body{height:100%;overflow:hidden}body{padding:0!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+header{position:fixed;top:0;left:24px;right:24px;margin:0;height:88px;padding:14px 0;backdrop-filter:blur(8px)}
+header .mark{flex:none}.version{display:inline!important}.header-actions{flex-wrap:nowrap}.header-actions button{min-height:40px}#still-view{font-size:11px}
+#panel{position:fixed;left:24px;top:106px;bottom:104px;width:var(--panel-width);max-width:none;margin:0;display:flex;flex-direction:column;gap:0;background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);backdrop-filter:blur(18px);overflow:hidden}
+#workflow-head,#workflow-footer{flex:none;background:var(--solid);padding:12px}.workspace-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:11px}.workspace-heading .eyebrow{font-size:9px;letter-spacing:.6px}.workspace-mode{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:10px}.workspace-mode select{padding:7px;min-height:36px;font-size:11px}
+#workflow-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}#workflow-nav button{min-width:0;padding:7px 2px;min-height:49px;font-size:11px;border-radius:8px}#workflow-nav button span{display:block;font:9px var(--mono);color:var(--muted);margin-bottom:5px}#workflow-nav button[aria-current=step]{background:var(--soft);border-color:var(--accent);box-shadow:inset 0 -2px var(--accent);color:var(--accent)}
+#workflow-body{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--muted) transparent;scroll-padding:16px}
+#workflow-body .card{border:0;background:transparent;border-radius:0;box-shadow:none;backdrop-filter:none;padding:18px}
+#workflow-footer{display:flex;justify-content:space-between;gap:8px;border-top:1px solid var(--line);padding:9px 12px}#workflow-footer button{font-size:11px;min-height:38px}#workflow-next{color:var(--accent)}
+#settings-notice{font-size:10px;line-height:1.4;margin:8px 0 0;padding:7px 9px}.section-head h2{font-size:17px;letter-spacing:-.3px}.section-index{font-size:8px}.step-intro{color:var(--muted);font-size:12px;line-height:1.55;margin:0 0 14px}.source-grid button{min-height:44px}.source-grid button#test-audio{grid-column:1/-1}.source-caption{min-height:0;margin:12px 0}.source-bottom{flex-wrap:wrap;gap:8px}.source-bottom button{min-height:38px}.source-bottom label{display:flex;align-items:center;gap:5px;min-height:36px}
+#workflow-body details{padding:12px 0;margin:9px 0 0;border-top:1px solid var(--line)}#workflow-body details>summary{line-height:1.5;font-size:12px;min-height:28px;padding:4px 2px}#workflow-body details[open]>summary{margin-bottom:10px}.palette-note,.color-description{font-size:11px;line-height:1.55}.habitats{gap:9px}.habitat{min-height:86px;padding:13px 10px}.habitat .glyph{font-size:29px}.habitat .name{font-size:10px}.save-before-change{width:100%;margin-top:20px;font-size:11px;min-height:40px}
+.response-group{border:0;padding:0;margin:6px 0 16px;min-width:0}.response-group legend{padding:0 0 10px;font-size:12px}.response-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.response-options label{cursor:pointer;position:relative;display:block}.response-options input{position:absolute;opacity:0;width:1px;height:1px}.response-options span{display:block;border:1px solid var(--line);border-radius:9px;padding:11px 5px;text-align:center;min-height:59px}.response-options b{font-size:12px;font-weight:550}.response-options small{display:block;font-size:9px;color:var(--muted);margin-top:5px}.response-options input:checked+span{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--soft)}.response-options input:focus-visible+span{outline:2px solid var(--accent2);outline-offset:3px}.response-status{font:9px/1.55 var(--mono);color:var(--accent);min-height:14px;margin:5px 0}.response-status:empty{display:none}
+.palette-library{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.palette-choice{font-size:10px;min-height:58px;padding:8px 6px}.choice-swatches{height:8px}.palette-swatches{height:10px;margin-bottom:8px}#palette-explorer{border-top:0!important;padding-top:0!important;margin-top:0!important}#palette-description{margin-bottom:12px}.slider{margin:15px 0}.slider>span{font-size:12px}input[type=range]{height:20px;background:linear-gradient(var(--line),var(--line)) center/100% 3px no-repeat;margin:0;min-height:28px}input[type=range]::-webkit-slider-thumb{width:16px;height:16px}input[type=range]::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:50%;background:var(--accent)}
+#lighting-card{padding-bottom:4px}#accent-toggle{min-height:36px;display:flex;align-items:center;gap:7px;font-size:12px}#accent-toggle:has(input:disabled){opacity:.6}#color-memory-note{margin-bottom:8px}.comfort-controls{margin:18px 0;border-top:1px solid var(--line);padding-top:16px}.comfort-controls h3{font-size:13px}.comfort-controls .color-toggle{display:flex;gap:7px;align-items:center;min-height:36px}.comfort-controls button{width:100%;font-size:11px;min-height:40px}.toggles{font-size:11px;gap:5px}.toggles label{min-height:36px;display:flex;align-items:center;gap:4px}.mini-grid button{min-height:44px}.setting-row select{max-width:180px}.notebook-copy{font-size:11px}#specimen-save-status{margin:14px 0}#diagnostics,#fresh-start{margin-top:10px;min-height:40px}
+#transport{left:calc(var(--panel-width) + 50px);bottom:43px;gap:8px;right:24px}#transport button{min-height:42px}.stage-label{left:calc(var(--panel-width) + 50px);bottom:113px;max-width:calc(100vw - var(--panel-width) - 85px)}.stage-label h2{font-size:26px}.stage-label p{max-width:500px}#telemetry{right:25px;top:111px;width:154px}#response-badge{margin-top:12px;line-height:1.5;font-size:9px}.mapping-note{display:none}.statusbar{min-height:30px}#scene:focus-visible{outline:2px solid var(--accent2);outline-offset:-5px}.panel-hidden #transport,.panel-hidden .stage-label{left:24px}.panel-hidden .stage-label{max-width:calc(100vw - 48px)}
+.reduced-motion #spectrum,.reduced-motion .meter-line,.reduced-motion #beat-indicator{display:none}.reduced-motion #bass-color,.reduced-motion #mid-color,.reduced-motion #high-color{opacity:1!important}.reduced-motion *,body.reduce-interface *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+@media(max-width:1150px){:root{--panel-width:324px}#transport{flex-wrap:wrap;justify-content:flex-start}.stage-label{bottom:150px}#panel{bottom:130px}.header-actions{gap:6px}#telemetry{width:130px}.save-state{display:none}}
+@media(min-width:651px) and (max-width:900px){:root{--panel-width:300px}header{left:16px;right:16px}#panel{left:16px}.brand h1{font-size:19px}.brand .eyebrow{font-size:7px}.header-actions button{font-size:10px;padding:7px}#still-view{display:none}#telemetry{width:116px;font-size:9px}.stage-label{left:340px;max-width:calc(100vw - 355px)}.stage-label h2{font-size:20px}#transport{left:340px}.transport-main button{font-size:10px;padding:7px 5px}.transport-view button{font-size:10px}.version{font-size:8px}}
+@media(max-width:650px){header{height:82px;left:12px;right:12px;padding:10px 0}.brand h1{font-size:19px;letter-spacing:.5px}.brand .eyebrow{font-size:7px;max-width:167px}.version{font-size:8px;margin-left:3px}.header-actions select{width:55px;max-width:55px;min-height:40px;font-size:10px}.header-actions button{min-height:40px;font-size:10px;padding:7px 8px}#still-view{display:none}.mark{display:none}#panel{top:auto;bottom:137px;left:12px;right:12px;width:auto;max-width:none;height:56vh;height:56dvh;max-height:calc(100dvh - 235px);border-radius:16px;margin:0;background:var(--solid);backdrop-filter:none}#workflow-head{padding:8px 10px}.workspace-heading{margin-bottom:6px}.workspace-heading .eyebrow{font-size:8px}.workspace-mode{font-size:9px}.workspace-mode select{min-height:32px;padding:4px 6px}#workflow-nav{gap:3px}#workflow-nav button{font-size:10px;min-height:42px;padding:5px 1px}#workflow-nav button span{font-size:8px;margin-bottom:3px}#workflow-body .card{padding:14px}#workflow-footer{padding:6px 10px}#workflow-footer button{min-height:36px;font-size:10px}.section-head h2{font-size:16px}.palette-note{font-size:11px}#transport,.panel-hidden #transport{left:12px;right:12px;bottom:48px;display:block}.transport-main,.transport-view{gap:5px;margin-top:5px}#transport button{min-height:37px;font-size:10px;padding:7px 3px}.statusbar{min-height:34px;padding:6px 12px}.statusbar .stats{font-size:8px}.stage-label,.panel-hidden .stage-label{left:16px;bottom:151px;max-width:calc(100vw - 32px)}.stage-label h2{font-size:23px}.stage-label p{max-width:270px}#telemetry{top:103px;right:14px;width:106px}.live-badge{font-size:8px}#spectrum{height:25px;margin:11px 0}#beat-indicator{display:none}.meter{margin:9px 0}.meter-heading{font-size:8px}#response-badge{font-size:8px}.panel-hidden #telemetry{opacity:.8}body:not(.panel-hidden) #telemetry,body:not(.panel-hidden) .stage-label{display:none}#settings-notice{padding:5px 7px;margin-top:6px;font-size:9px}#toast{top:90px;font-size:11px;padding:10px 13px;pointer-events:none}.response-options small{font-size:8px}.source-grid button{font-size:11px}#workflow-body details>summary{font-size:12px}}
+@media(max-height:600px) and (min-width:651px){header{height:70px}#panel{top:80px;bottom:46px}.stage-label{display:none}#telemetry{top:84px}#transport{bottom:40px}}
+@media(max-height:600px) and (max-width:650px){header{height:67px}#panel{top:77px;height:auto;max-height:none;bottom:129px}#workflow-head .workspace-heading .eyebrow{display:none}#telemetry{top:75px}.stage-label{display:none}}
+
+</style>
+</head>
+<body>
+<canvas aria-describedby="scene-help" aria-label="Interactive three-dimensional fractal and cellular ecosystem" id="scene" tabindex="0"></canvas><p class="sr-only" id="scene-help">Drag to orbit, scroll or pinch to zoom. Arrow keys orbit; Shift and arrows pan; plus and minus zoom. F frames the specimen. Space pauses growth. H opens controls. Escape closes controls.</p><div aria-hidden="true" class="grain"></div>
+<header>
+<div class="brand"><svg aria-hidden="true" class="mark" viewBox="0 0 44 44"><path d="M22 40V23M22 30L8 16M22 24L36 10M13 21V9M30 16V4M22 18L16 12"></path><circle cx="8" cy="16" r="2"></circle><circle cx="36" cy="10" r="2"></circle><circle cx="22" cy="40" r="2"></circle></svg><div><h1>C<span class="choral-h">(H)</span>ORAL<span class="version">v0.7.0</span></h1><div class="eyebrow">A Green Shoe Garage Field Instrument</div></div></div>
+<div class="header-actions"><span class="save-state" id="save-state"><i class="led"></i>Settings saved locally</span><button id="still-view" title="Pause growth, auto orbit, and animated colors">Still view</button><select aria-label="Interface theme" data-setting="theme" id="theme"><option value="dark">Dark</option><option value="light">Light</option><option value="contrast">High contrast</option></select><button class="help-button" id="help">Field guide</button><button aria-controls="panel" aria-expanded="true" id="toggle-panel">Hide controls</button></div>
+</header>
+<aside aria-label="Instrument controls" id="panel"><div id="workflow-head"><div class="workspace-heading"><span class="eyebrow">Shape your ecosystem</span><label class="workspace-mode">Controls <select aria-label="Control complexity" data-setting="interfaceMode" id="interface-mode"><option value="easy">Easy</option><option value="advanced">Advanced</option></select></label></div><nav aria-label="Creative workflow" id="workflow-nav"><button aria-controls="step-sound" aria-current="step" data-step="sound" id="nav-sound"><span>01</span>Sound</button><button aria-controls="step-habitat" data-step="habitat" id="nav-habitat"><span>02</span>Habitat</button><button aria-controls="step-color" data-step="color" id="nav-color"><span>03</span>Color</button><button aria-controls="step-grow" data-step="grow" id="nav-grow"><span>04</span>Grow</button><button aria-controls="step-save" data-step="save" id="nav-save"><span>05</span>Save</button></nav><p class="settings-notice" hidden="" id="settings-notice" role="status"></p></div><div id="workflow-body"><section aria-labelledby="nav-sound" class="workflow-pane" hidden="" id="step-sound"><section class="card"><div class="section-head"><h2>Start with sound.</h2><span class="section-index">01 / SOUND</span></div><p class="step-intro">Play a local track, share an audio source, or try the built-in sound. Your audio stays on this device.</p><div class="source-grid"><button class="primary" id="open-audio">Open music file</button><button id="share-audio">↗   Share tab / device audio</button><button id="microphone">Microphone</button><button aria-pressed="true" id="preview">Silent preview</button><button id="test-audio">Play test sound</button></div><p aria-live="polite" class="source-caption" id="source-caption" role="status">Preview signal · not listening</p><div class="source-bottom"><button id="disconnect">Disconnect</button><label><input id="mute-output" type="checkbox"/> Mute local playback</label></div><audio controls="" hidden="" id="player" loop="" preload="metadata"></audio><input accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac,.aac" hidden="" id="audio-file" type="file"/><p class="palette-note">Sharing needs browser permission and an available audio track. Silent preview is synthetic—not listening.</p><details class="advanced-only" id="audio-lab"><summary>Audio study &amp; input tuning</summary><div class="study-row"><select aria-label="Color study tone" id="study-tone"><option value="sweep">Cycle · 5 s each</option><option value="bass">Bass · 90 Hz</option><option value="mid">Mids · 1,000 Hz</option><option value="high">Highs · 6,500 Hz</option></select><button aria-pressed="false" id="color-study">Play color study</button></div><p class="palette-note">An audible study through the real analyser. Each passage lasts 5 seconds in cycle mode. This replaces the current audio source.</p><label class="slider"><span>Input sensitivity <output data-output="sensitivity"></output></span><input aria-label="Input sensitivity" data-setting="sensitivity" max="8" min=".1" step=".1" type="range"/></label><label class="slider"><span>Silence threshold <output data-output="gate"></output></span><input aria-label="Silence threshold" data-setting="gate" max=".15" min="0" step=".001" type="range"/></label></details></section></section><section aria-labelledby="nav-habitat" class="workflow-pane" hidden="" id="step-habitat"><section class="card"><div class="section-head"><h2>Choose a world.</h2><span class="section-index">02 / HABITAT</span></div><div class="habitats" id="habitats"></div><p id="habitat-description">Radial, recursive reef</p><p class="small muted" style="font-size:9px">Changing habitat starts a new specimen.</p><button class="save-before-change" data-go="save">Save current specimen first →</button></section></section><section aria-labelledby="nav-color" class="workflow-pane" hidden="" id="step-color"><section aria-labelledby="color-heading" class="card color-card" id="color-controls">
+<div class="section-head"><h2 id="color-heading">Let every color grow.</h2><span class="section-index">03 / COLOR</span></div><fieldset class="response-group" id="response-controls"><legend>Color response</legend><div class="response-options"><label><input aria-describedby="response-description" data-setting="colorResponse" name="color-response" type="radio" value="recorded"/><span><b>Recorded</b><small>Keep history</small></span></label><label><input aria-describedby="response-description" data-setting="colorResponse" name="color-response" type="radio" value="living"/><span><b>Living</b><small>Recolor now</small></span></label><label><input aria-describedby="response-description" checked="" data-setting="colorResponse" name="color-response" type="radio" value="hybrid"/><span><b>Hybrid</b><small>History + accents</small></span></label></div><p class="palette-note" id="response-description"></p><p aria-live="polite" class="response-status" id="response-status" role="status"></p></fieldset>
+<div aria-hidden="true" class="palette-swatches" id="palette-swatches"></div>
+<div class="setting-row palette-row legacy-palette-row"><label for="palette" id="palette-next-label">Growth palette</label><select aria-describedby="palette-description palette-behavior" data-setting="palette" id="palette"><optgroup label="Palette library"><option value="spectrum">Full Spectrum</option><option value="reef">Reef</option><option value="aurora-wide">Aurora</option><option value="volcanic">Volcanic</option><option value="glass">Stained Glass</option><option value="wild">Wild Type</option></optgroup><optgroup label="Legacy · original colors preserved"><option value="biolume">Biolume · legacy</option><option value="aurora">Aurora · legacy</option><option value="ember">Ember · legacy</option><option value="mono">Monochrome · legacy</option></optgroup></select></div>
+<details class="palette-explorer" id="palette-explorer"><summary>Browse palette previews</summary><div aria-label="Six palette previews" class="palette-library" id="palette-library"></div></details>
+<p class="palette-note" id="palette-description">Many colors. One living specimen.</p>
+<button class="spectrum-button" hidden="" id="full-spectrum">Use Full Spectrum</button>
+
+<label class="slider"><span>Color diversity <output data-output="colorDiversity"></output></span><input aria-describedby="palette-behavior" aria-label="Color diversity" data-setting="colorDiversity" max="1" min="0" step=".01" type="range"/></label>
+<label class="slider"><span>Sound influence <output data-output="soundColor"></output></span><input aria-describedby="color-memory-note" aria-label="Sound influence" data-setting="soundColor" max="1" min="0" step=".01" type="range"/></label>
+<label class="slider"><span>Glow · halo intensity <output data-output="glow"></output></span><input aria-label="Halo intensity" data-setting="glow" max="1.5" min="0" step=".01" type="range"/></label>
+<button id="lighting-jump" style="width:100%;font-size:11px">Lighting treatments ↓</button><details id="material-scope"><summary>Where color changes apply</summary><div aria-label="Apply color changes to" class="scope-controls" role="group"><button aria-pressed="true" data-scope="existing">Restyle existing growth</button><button aria-pressed="false" data-scope="future">Affect new growth only</button></div><p aria-live="polite" class="scope-status" id="palette-scope-status" role="status">RESTYLE VIEW + NEW GROWTH</p><p class="palette-note" id="palette-behavior">Palette changes restyle the view, not recorded birth colors. Returning to a palette restores its treatment.</p></details>
+<details class="artist-controls advanced-only" id="artist-controls"><summary>Fine-tune the colors <span class="section-index"> / ADVANCED</span></summary>
+<p class="palette-note">These material controls follow the selected scope. Glow changes halos only. Surface lighting, self-emission, and live accents affect the whole view.</p>
+<label class="slider"><span>Hue bias <output data-output="hueBias"></output></span><input aria-label="Hue bias" data-setting="hueBias" max="180" min="-180" step="1" type="range"/></label>
+<label class="slider"><span>Saturation <output data-output="colorSaturation"></output></span><input aria-label="Color saturation" data-setting="colorSaturation" max="1.5" min="0" step=".01" type="range"/></label>
+<p class="palette-note">Independent hue offsets for each visual layer:</p>
+<label class="slider"><span>Skeleton hue <output data-output="branchHue"></output></span><input aria-label="Skeleton hue offset" data-setting="branchHue" max="180" min="-180" step="1" type="range"/></label>
+<label class="slider"><span>Living cell hue <output data-output="cellHue"></output></span><input aria-label="Living cell hue offset" data-setting="cellHue" max="180" min="-180" step="1" type="range"/></label>
+<label class="slider"><span>Spore / halo hue <output data-output="sporeHue"></output></span><input aria-label="Spore and halo hue offset" data-setting="sporeHue" max="180" min="-180" step="1" type="range"/></label>
+<button id="reset-color-tuning">Reset color tuning</button>
+</details>
+<p class="palette-note advanced-only" id="palette-policy"></p>
+<details class="lineage-controls advanced-only" id="lineage-controls">
+<summary>Colors have ancestry.</summary>
+<p class="palette-note">Related branches. Distinct colonies. Mutations that last.</p>
+<label class="slider"><span>Color inheritance <output data-output="colorInheritance"></output></span><input aria-describedby="lineage-behavior" aria-label="Color inheritance" data-setting="colorInheritance" max="1" min="0" step=".01" type="range"/></label>
+<label class="slider"><span>Color mutation · base chance <output data-output="colorMutation"></output></span><input aria-describedby="lineage-behavior" aria-label="Color mutation probability" data-setting="colorMutation" max="1" min="0" step=".01" type="range"/></label>
+<p class="palette-note" id="lineage-behavior">Inheritance keeps families related; mutation starts contrasting variants. Palettes scale the base chance and within-family variation; the effective chance is shown above. Only new colors change—not geometry.</p>
+<div class="lineage-stats"><div><b id="family-count">0</b><span>FAMILIES</span></div><div><b id="colony-count">0</b><span>CELL COLONIES</span></div><div><b id="variant-count">0</b><span>RETAINED VARIANTS</span></div></div>
+<p class="palette-note legend-caption">Most populous cellular lineages · ID / cells</p>
+<div aria-label="Most populous cellular lineages" class="lineage-legend" id="lineage-legend"></div>
+<p class="palette-note" id="lineage-history">Color ancestry is saved with the specimen.</p>
+<label class="slider"><span>Lineage variation <output data-output="lineageVariation"></output></span><input aria-label="Lineage variation" data-setting="lineageVariation" max="1" min="0" step=".01" type="range"/></label><p class="palette-note">Small color differences within a family. Mutation creates a new identity; variation does not. The color random stream is independent of growth.</p></details>
+<label class="color-toggle" id="accent-toggle"><input aria-describedby="accent-help" data-setting="colorAccents" type="checkbox"/> Accent animation</label><p class="palette-note" id="accent-help">Localized highlights only. Living can still recolor the body when accents are off.</p>
+<p class="palette-note" id="color-memory-note">Sound influence shapes new birth colors and live response. Color modes never overwrite birth colors or ancestry.</p>
+<details class="advanced-only" id="sound-mapping"><summary>Sound mapping &amp; color history</summary><div aria-label="Current sound-to-color families" class="color-mapping">
+<div class="color-route"><i aria-hidden="true" id="bass-color"></i><b>BASS</b><span>Structure</span></div>
+<div class="color-route"><i aria-hidden="true" id="mid-color"></i><b>MIDS</b><span>Colonies</span></div>
+<div class="color-route"><i aria-hidden="true" id="high-color"></i><b>HIGHS</b><span>Accents</span></div>
+</div><label class="slider"><span>Color smoothing <output data-output="colorSmoothing"></output></span><input aria-label="Color smoothing" data-setting="colorSmoothing" max="1.2" min=".08" step=".01" type="range"/></label><p id="color-status">PREVIEW COLORS · SYNTHETIC INPUT</p><p id="color-history">Birth colors are stored with the specimen.</p></details><details aria-labelledby="lighting-heading" class="lighting-details" id="lighting-card">
+<summary id="lighting-heading">Light the sculpture</summary>
+<div class="setting-row"><label for="render-mode">Treatment</label><select data-setting="renderMode" id="render-mode"><option value="sculpture">Sculpture</option><option value="bioluminescent">Bioluminescent</option><option value="unlit">Unlit Color</option></select></div>
+<p class="palette-note" id="lighting-description"></p><p class="eyebrow" id="lighting-status" role="status"></p>
+<label class="slider advanced-only"><span>Surface illumination <output data-output="illumination"></output></span><input aria-label="Surface illumination" data-lit-only="" data-setting="illumination" max="2" min="0" step=".05" type="range"/></label>
+<label class="slider advanced-only"><span>Self-emission <output data-output="emission"></output></span><input aria-label="Self-emission" data-lit-only="" data-setting="emission" max="2" min="0" step=".01" type="range"/></label>
+<label class="slider advanced-only"><span>Interior / underside fill <output data-output="interiorFill"></output></span><input aria-label="Interior and underside fill" data-lit-only="" data-setting="interiorFill" max="1" min="0" step=".05" type="range"/></label>
+<p class="palette-note advanced-only">Halo intensity lives in Color above. All lighting affects the whole view, even in new-growth-only mode. No growth or birth colors are rewritten.</p>
+<details class="advanced-only" id="light-direction"><summary>Direction and depth</summary>
+<label class="slider advanced-only"><span>Light around specimen <output data-output="lightAzimuth"></output></span><input aria-label="Light azimuth" data-lit-only="" data-setting="lightAzimuth" max="180" min="-180" step="5" type="range"/></label>
+<label class="slider advanced-only"><span>Light above / below <output data-output="lightElevation"></output></span><input aria-label="Light elevation" data-lit-only="" data-setting="lightElevation" max="80" min="-80" step="5" type="range"/></label>
+<label class="slider advanced-only"><span>Depth separation <output data-output="depthCue"></output></span><input aria-label="Depth separation" data-lit-only="" data-setting="depthCue" max=".5" min="0" step=".01" type="range"/></label>
+<p class="palette-note">Light direction follows your orbit. Negative elevation lights from below. Depth separation gently dims farther material without adding a colored fog. This is fill lighting, not an X-ray view.</p>
+</details><button id="reset-lighting" style="width:100%;margin-top:10px">Reset this treatment</button>
+</details></section></section><section aria-labelledby="nav-grow" class="workflow-pane" hidden="" id="step-grow"><section class="card" id="grow-controls"><div class="section-head"><h2>Give it room to grow.</h2><span class="section-index">04 / GROW</span></div><p class="palette-note">Pause stops new growth. Sound can still animate colors in Living or Hybrid.</p><div class="mini-grid"><button id="grow-pause">Pause growth</button><button id="grow-bloom">✦ Bloom</button></div><label class="slider"><span>Growth intensity <output data-output="growth"></output></span><input aria-label="Growth intensity" data-setting="growth" max="4" min=".1" step=".1" type="range"/></label><label class="slider advanced-only"><span>Branching <output data-output="branching"></output></span><input aria-label="Branching" data-setting="branching" max="1" min="0" step=".01" type="range"/></label><label class="slider advanced-only"><span>Growth mutation <output data-output="mutation"></output></span><input aria-label="Growth mutation" data-setting="mutation" max="1" min="0" step=".01" type="range"/></label><div class="toggles"><label><input data-setting="skeleton" type="checkbox"/> Skeleton</label><label><input data-setting="cells" type="checkbox"/> Living cells</label><label><input data-setting="spores" type="checkbox"/> Spore halos</label></div><div class="comfort-controls"><h3>Movement &amp; comfort</h3><div class="setting-row"><label for="motion-preference">Motion</label><select aria-describedby="motion-status" data-setting="motionPreference" id="motion-preference"><option value="system">Follow device</option><option value="reduce">Reduced</option><option value="full">Full motion</option></select></div><label class="color-toggle"><input data-setting="orbit" type="checkbox"/> Auto orbit</label><p aria-live="polite" class="palette-note" id="motion-status" role="status"></p><button id="still-view-grow">Still view · pause all movement</button><p class="palette-note">Still view pauses growth, orbit, and live color effects. Rich material colors remain. Resume growth explicitly whenever ready.</p></div><div class="setting-row"><label for="silence">During silence</label><select data-setting="silence" id="silence"><option value="preserve">Preserve specimen</option><option value="decay">Continue cellular decay</option><option value="idle">Slow autonomous life</option></select></div><div class="setting-row"><label for="quality">Geometry budget</label><select data-setting="quality" id="quality"><option value="low">Economy</option><option value="balanced">Balanced</option><option value="high">High detail</option></select></div><details class="advanced-only" id="advanced"><summary>Detailed growth rules</summary><label class="slider"><span>Recursion depth <output data-output="depth"></output></span><input aria-label="Recursion depth" data-setting="depth" max="10" min="3" step="1" type="range"/></label><label class="slider"><span>Cellular influence <output data-output="life"></output></span><input aria-label="Cellular influence" data-setting="life" max="1" min="0" step=".01" type="range"/></label><label class="slider"><span>Structural memory <output data-output="memory"></output></span><input aria-label="Structural memory" data-setting="memory" max="100" min="0" step="1" type="range"/></label><hr/><div class="eyebrow">3D cellular rules / 26 neighbors</div><div class="rule-row"><label>Birth count<input aria-label="Cell birth neighbor count" data-setting="birth" max="26" min="1" type="number"/></label><label>Survival min<input aria-label="Cell survival minimum" data-setting="surviveMin" max="26" min="0" type="number"/></label><label>Survival max<input aria-label="Cell survival maximum" data-setting="surviveMax" max="26" min="0" type="number"/></label></div><p class="small muted">Life-inspired, not classic 2D Conway. Random mutation and audio modulation are explicit additions.</p><hr/><label class="eyebrow" for="seed-input">Seed / initial conditions</label><div class="seed-row"><input aria-label="Specimen seed" id="seed-input" max="4294967295" min="0" type="number"/><button id="apply-seed">Plant seed</button></div></details><button class="advanced-only" id="same-seed">Replant same seed</button></section></section><section aria-labelledby="nav-save" class="workflow-pane" hidden="" id="step-save"><section class="card" id="notebook"><div class="section-head"><h2>Keep what you grow.</h2><span class="section-index">05 / SAVE</span></div><p class="step-intro">Export the specimen to keep its living state, color history, and camera. A PNG keeps the view only.</p><p class="notebook-copy">Export the living state, branches, recorded birth colors, color lineages, pending offspring colors, mixed-palette appearances, birth-time artist controls, audio feature summaries, settings, and camera. Audio stays on your device and is never included.</p><div class="mini-grid"><button class="primary" id="export-json">Export specimen</button><button id="import-json">Import specimen</button><button id="save-png-panel">Save PNG</button><button data-go="grow">Back to growing →</button></div><input accept="application/json,.json" hidden="" id="json-file" type="file"/><p class="small muted">Only settings autosave. Export a specimen to preserve its actual growth. Fresh start clears this instrument’s saved settings.</p><button class="advanced-only" id="diagnostics" style="width:100%;font-size:11px">Export diagnostics</button><button class="advanced-only" id="fresh-start">Fresh start</button><p class="settings-notice" id="specimen-save-status" role="status">Only settings autosave. Export the specimen before closing or upgrading.</p></section></section></div><div id="workflow-footer"><button id="workflow-prev">Back</button><button id="workflow-next">Next: Habitat →</button></div></aside>
+<section aria-label="Live audio analysis" id="telemetry"><div class="live-badge"><i class="badge-dot"></i><span id="input-badge">PREVIEW SIGNAL</span></div><div aria-hidden="true" id="spectrum"></div><div class="meter"><div class="meter-heading"><span>BASS / EXPANSION</span><span id="bass-value">0%</span></div><div class="meter-line"><i id="bass-meter"></i></div></div><div class="meter"><div class="meter-heading"><span>MIDS / BRANCHING</span><span id="mid-value">0%</span></div><div class="meter-line"><i id="mid-meter"></i></div></div><div class="meter"><div class="meter-heading"><span>HIGHS / MUTATION</span><span id="high-value">0%</span></div><div class="meter-line"><i id="high-meter"></i></div></div><div id="beat-indicator">○   ONSET DETECTOR</div><p class="mapping-note">SOUND BECOMES STRUCTURE.<br/>Each generation remembers<br/>what came before.</p><p class="eyebrow" id="response-badge">HYBRID COLOR</p></section>
+<div class="stage-label"><div class="eyebrow" id="specimen-label">SPECIMEN 73129 / 3D LIVING SYSTEM</div><h2 id="stage-title">A reef, grown from sound.</h2><p id="stage-subtitle">Silent preview. <span>Connect audio to make it yours.</span></p></div>
+<div id="transport"><div class="transport-main"><button aria-label="Pause or resume growth" aria-pressed="false" class="primary" id="pause">Ⅱ   Pause growth</button><button aria-label="Add a manual bloom" id="bloom" title="Inject a manual burst of growth">✦   Bloom</button><button aria-label="Start a new specimen with a new seed" id="new-seed">↻   New seed</button></div><div class="transport-view"><button aria-label="Frame specimen" id="fit" title="Frame specimen">Frame</button><button id="snapshot">Save PNG</button><button id="fullscreen">Fullscreen</button></div></div>
+<footer class="statusbar"><div class="stats"><span>GEN <b id="gen-stat">0</b></span><span>CELLS <b id="cells-stat">0</b></span><span>BRANCHES <b id="branches-stat">0</b></span><span id="fps-stat">— FPS</span></div><span id="footer-state">PREVIEW · SYNTHETIC INPUT</span><span class="local-label">LOCAL ONLY / NO TELEMETRY</span></footer>
+<div aria-live="polite" hidden="" id="toast" role="status"></div><div hidden="" id="dropzone">Drop music or a specimen JSON</div><div hidden="" id="fatal" role="alert"><h2>The habitat could not start.</h2><p id="fatal-detail"></p></div><div id="boot"><h2>C(H)ORAL</h2><p class="muted">Planting the first seed…</p></div>
+<dialog id="guide"><button class="close" id="close-guide">Close</button><div class="eyebrow">FIELD GUIDE / v0.7.0</div><h2>Sound becomes structure.</h2><section><h3>A simpler creative path.</h3><p>Use Sound → Habitat → Color → Grow → Save. Each step stays available; this is not a locked wizard. Easy controls cover everyday creation. Advanced reveals detailed audio, palette, lighting, ancestry, and cellular rules without resetting their values. On phones the controls form a compact bottom sheet; Hide controls exposes the whole scene.</p><h3>Three ways to hear color.</h3><p><b>Recorded</b> keeps material history visible and suppresses live recoloring and emission pulses. New growth still records sound. <b>Living</b> temporarily shifts the hue of every visible material according to current sound while retaining its individual variation and saturation. <b>Hybrid</b>, the default, keeps the body history and allows localized young-tip, young-cell, and spore accents. Modes never rewrite recorded birth colors, mixed-palette appearance, ancestry, camera, or geometry.</p><p><b>Accent animation</b> is separate: it controls localized highlights, not Living’s whole-body response. Recorded has no animated accents. <b>Sound influence</b> scales both new birth-color composition and live effects. With zero influence or a quiet/disconnected source, live recoloring recedes. Current scope applies to material restyling; Living is a temporary overlay even on preserved material.</p><h3>Keep the color, reduce the movement.</h3><p><b>Follow device</b> respects the current reduced-motion preference, including changes during a session. <b>Reduced</b> disables orbit, live recoloring, accent animation, and interpolation. Entering reduced motion pauses growth; explicit Resume or Bloom can still advance it in discrete steps. It never resumes itself after a device setting changes back. <b>Full motion</b> is an explicit override. <b>Still view</b> pauses growth and selects Reduced without making the specimen monochrome. Palette and lighting changes remain available.</p><p>Interface themes change interface/background only; they do not change the sculpture palette, lighting, or halo strength. Import preserves this device’s current interface and motion preferences rather than imposing those from someone else’s specimen. The imported color-response and lighting choices remain portable.</p></section><p>C(H)ORAL combines recursive branching with a 32 × 32 × 32 cellular world. Branches seed living cells. Cell populations influence new branches. Sound changes the growth that follows, while older structure remains.</p><h3>Connect something worth growing.</h3><p><b>Share tab / device audio</b> opens your browser’s sharing dialog. Choose the music-playing tab and enable its audio checkbox. Availability of whole-device or application audio depends on your browser and operating system; it is not guaranteed. The browser also requests a video track, but C(H)ORAL does not render, record, store, or transmit that track. All capture tracks stop when disconnected.</p><p><b>Open music file</b> plays and analyzes a local file. <b>Microphone</b> listens without playing its input back through your speakers. <b>Silent preview</b> uses clearly labeled synthetic control signals, not audio. <b>Play test sound</b> generates a repeating test phrase and analyzes its real audio.</p><h3>Listen to the shape.</h3><p>Bass changes extension length and available growth. Midrange changes organic branching. High frequencies increase local mutation. Onsets can trigger new buds. RMS loudness controls the simulation’s pace. These are artistic mappings, not biological claims or music transcription.</p><h3>Let every color grow.</h3><p><b>Full Spectrum</b> is the default for new configurations. Branches receive stable, varied hues, nearby cells form colorful spatial regions, and new growth has contrasting accents. Mature growth keeps its saturation. Colors coexist even when motion is off; this is not one hue cycling over the whole sculpture.</p><p>The library contains Full Spectrum, Reef, Aurora, Volcanic, Stained Glass, and Wild Type. Each has its own color distribution, branch contrast, accent, aging, variation, and mutation rules. Original Biolume, Aurora, Ember, and Monochrome remain under Legacy; the old Aurora is not silently replaced. New growth now records smoothed bass, midrange, high-frequency energy, loudness, and onsets together with its resulting base color. Bass favors structural color families; midrange shapes colonies; highs and onsets introduce contrasting accents. These artistic mappings depend on the palette. The neutral Monochrome palette deliberately remains neutral. Recorded and Hybrid preserve older body colors; Living offers an explicitly temporary whole-body recoloring layer. Branches now inherit their parent’s color identity. Cellular births inherit the locally dominant lineage from the previous generation; ties use a seeded spatial choice. Color mutation makes a persistent new hue identity, which can spread through descendants. Branches seed cell colors, and buds can inherit from cells. Sound still influences new colors, within the inheritance strength you choose.</p><h3>Paint now, or grow into the next palette.</h3><p><b>Restyle existing growth</b> applies the selected palette and artist controls immediately to the visible specimen and future growth. The original birth records and ancestry are not overwritten. <b>Affect new growth only</b> preserves the current material treatment when selected. Later palette, diversity, saturation, and hue changes apply only to new births, leaving older branches and living cells in their retained treatment. Dying cells carry their retained look into spores. Return to Restyle existing growth to apply the current look to everything again. Neither mode resets geometry, moves the camera, or interrupts audio.</p><p><b>Color diversity</b> opens or narrows the range of material tones. <b>Hue bias</b> rotates all material hues. <b>Saturation</b> adjusts their strength. The three layer hue controls act independently on skeleton, cells, and spores/halos. Reset color tuning restores those artist controls without changing the palette, ancestry, or scope. These controls are recorded in birth-time artist metadata and saved appearance. <b>Glow</b> and live highlights remain global lighting effects, not frozen material. For a static comparison, pause growth, disable orbit and live color accents, and keep lighting unchanged.</p><p>Palette previews show their unmodified default colors. Wild Type doubles the base mutation chance (capped at 100%) and increases within-family variation; Aurora reduces both. The interface shows the effective chance. Color mutation remains zero when its base control is zero. The lineage legend uses each identity’s most populous retained look when several palettes coexist; a chip is not the average color of the colony.</p><p><b>Color inheritance</b> balances family resemblance against newly composed sound colors. <b>Color mutation · base chance</b> is the base probability of founding a contrasting variant when a birth has a known lineage. It does not change cell birth/death rules or branch geometry. <b>Lineage variation</b>, under Advanced, controls smaller differences within a family. Mature growth stays saturated, and spores carry their originating colors. The six legend chips show the largest cellular lineages; IDs remain stable even when their population ranking changes.</p><p>A separate seeded random stream drives color inheritance and mutation. Its state and pending offspring traits are included in specimen exports. Retired lineages are pruned when nothing refers to them; parent IDs may refer to retired ancestors, so this is not an unlimited genealogical archive.</p><p><b>Sound influence</b> affects future birth colors and the strength of live accents; it does not rewrite saved birth records. <b>Accent animation</b> adds smoothly changing, localized highlights to tips, young cells, and selected spores. Turning it off leaves the underlying birth colors visible. Reduced motion also disables these effects and Living recoloring. <b>Color smoothing</b> controls how quickly newly recorded colors follow a new passage.</p><p><b>Play color study</b> sends audible 90 Hz bass, 1,000 Hz midrange, and 6,500 Hz treble through the same analyser as your music. Cycle mode changes passage every five seconds. New seed clears the specimen; it does not restart playback. Silent preview and manual Bloom births are explicitly labeled as synthetic or manual in exported records, never as captured audio.</p><h3>Light without losing the colors.</h3><p><b>Sculpture</b> is neutral studio lighting with underside fill. <b>Bioluminescent</b> emphasizes luminous cells and tips. <b>Unlit Color</b> shows unshaded material and disables surface light, self-emission, direction, and depth controls; halos remain optional. Selecting a treatment applies its starting light settings; subsequent changes show Custom. Reset this treatment restores only those lighting settings.</p><p><b>Surface illumination</b> lights the material. <b>Self-emission</b> makes it luminous independently of those lights. <b>Glow · halo intensity</b> controls only the surrounding spore/cell halos, with bounded transparency instead of additive white glare. Turn off Spore halos to hide that layer. Interior / underside fill lifts visible recesses without revealing occluded geometry. Direction and depth adjust the studio light and subtle rear-material dimming. All these settings are global to the current view; they do not rewrite color history or restart audio.</p><p>The new renderer changes the lighting of older specimens, not their saved geometry, colors, or mixed-palette materials. Old Glow values are retained as halo intensity; new surface/emission controls receive safe defaults. v0.7 exports retain lighting, color response, and motion settings. Import honors the receiving device’s interface and motion preferences.</p><h3>Explore all three dimensions.</h3><p>Drag to orbit. Scroll or pinch to zoom, including far outside the specimen. Right-drag or Shift-drag to pan. Frame specimen resets the framing. Auto orbit is in Grow, beside the motion preference.</p><p><span class="help-key">Space</span> Pause growth   <span class="help-key">B</span> Bloom   <span class="help-key">H</span> Controls   <span class="help-key">F</span> Frame   <span class="help-key">Esc</span> Close guide</p><h3>Keep what you grow.</h3><p>Save PNG captures only the 3D view. Export specimen preserves the simulation and camera in JSON. Imports pause growth for inspection and disconnect audio; reconnect a source and resume when ready. Audio itself is never exported. Settings autosave locally, but the living specimen does not. C(H)ORAL v0.6, v0.5, v0.4, v0.3, v0.2 and original VIVARIUM v0.1 specimens are accepted. v0.4 ancestry and its original palette remain intact. v0.5 exports include mixed-palette appearances and per-birth artist controls; malformed appearance references are rejected before replacing the open specimen. v0.3 birth colors and sound history remain intact, but past ancestry is not invented. v0.2/v0.1 growth retains its earlier color formulas without fabricated sound history. New births establish color lineages when growth resumes. Exported feature summaries are not audio recordings and cannot reconstruct or replay the original sound. Settings are copied to a separate C(H)ORAL key when the old key is accessible on the same origin; the original key is left intact. A different website origin cannot read that key, so export/import is the portable route.</p><h3>The edge of this habitat.</h3><p>This is a bounded, experimental 3D automaton, not the classic 2D Conway rule and not a biological model. Mutations, branch seeding, and occasional low-population reseeding keep the artwork evolving. Cellular birth and survival are synchronous, with 26 neighbors and fixed empty boundaries. New births are restricted to a growth substrate deposited around branches, so each habitat retains its own spatial character. The branch cap pauses additional structural growth rather than silently deleting history. Rendering samples cells across the entire volume when the graphics budget is exceeded; every cell remains simulated.</p><p>Structural memory at 100 preserves every branch until reset or the cap. Lower values retire older branches by simulation age. The same seed reproduces initial conditions; live audio and timing can produce different futures. Recursion depth affects future growth, not existing branches.</p><h3>Comfort and privacy.</h3><p>No strobing or camera shake is used. Reduced motion stops auto orbit and live color/emission effects; Pause growth freezes the simulation. Accent animation is a separate localized-highlights control. Capture requires explicit permission. No uploads, analytics, remote fonts, or runtime network dependencies are used.</p></dialog>
+<noscript>C(H)ORAL needs JavaScript and WebGL 2 to simulate and render its 3D ecosystem. Audio is only accessed with your permission.</noscript>
+<script>
+/* C(H)ORAL — view-only color response and motion policy. No random consumption. */
+(function(root){
+'use strict';
+const MODES=Object.freeze({
+ recorded:Object.freeze({name:'Recorded',description:'Keep material history visible. Current sound still grows new colors, but does not animate existing colors.'}),
+ living:Object.freeze({name:'Living',description:'Current sound shifts colors across the whole specimen. The effect is temporary; recorded colors and mixed palettes are untouched.'}),
+ hybrid:Object.freeze({name:'Hybrid',description:'Keep material history, with sound-reactive tips, young cells, and spores. The default balance.'})
+});
+const DEFAULTS=Object.freeze({colorResponse:'hybrid',motionPreference:'system',interfaceMode:'easy'});
+const KEYS=Object.freeze([...Object.keys(DEFAULTS),'motion','orbit','colorAccents','soundColor']);
+function sanitize(input={}){
+ const out={...DEFAULTS};
+ if(Object.hasOwn(MODES,input.colorResponse))out.colorResponse=input.colorResponse;
+ if(['system','reduce','full'].includes(input.motionPreference))out.motionPreference=input.motionPreference;
+ else if(input.motion===false)out.motionPreference='reduce'; // Prior master-off settings stay quiet.
+ if(['easy','advanced'].includes(input.interfaceMode))out.interfaceMode=input.interfaceMode;
+ return out;
+}
+function valid(input){return !!input&&Object.hasOwn(MODES,input.colorResponse)&&['system','reduce','full'].includes(input.motionPreference)&&['easy','advanced'].includes(input.interfaceMode)&&['motion','orbit','colorAccents'].every(k=>typeof input[k]==='boolean');}
+function reduced(s,system=false){return s.motion===false||s.motionPreference==='reduce'||(s.motionPreference!=='full'&&system);}
+function unit(v){return typeof v==='number'&&Number.isFinite(v)?Math.max(0,Math.min(1,v)):0;}
+function frame(s,signal={},system=false){
+ const quiet=reduced(s,system),mode=Object.hasOwn(MODES,s.colorResponse)?s.colorResponse:'hybrid';
+ const energy=unit(signal.energy),bass=unit(signal.bass),mid=unit(signal.mid),high=unit(signal.high),onset=unit(signal.accent),influence=unit(s.soundColor);
+ const live=!quiet&&mode==='living',accents=!quiet&&mode!=='recorded'&&s.colorAccents!==false;
+ const total=bass+mid+high;
+ // Preserve simultaneous variation by rotating each material's own hue, not painting a single RGB over it.
+ const tone=total>.0001?(-.26*bass+.09*mid+.43*high)/total:0;
+ const activity=energy>.008?unit(energy*1.3+Math.max(bass,mid,high)*.3):0;
+ return {mode,reduced:quiet,orbit:!quiet&&s.orbit===true,interpolate:!quiet,
+  livingHue:live?tone*influence*activity:0,
+  accentPower:accents?influence*unit(high*.55+onset*.7+energy*.13):0,
+  pulse:accents?energy*influence:0};
+}
+const api={MODES,DEFAULTS,KEYS,sanitize,valid,reduced,frame};
+if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChoralResponse=api;
+})(typeof window==='undefined'?globalThis:window);
+
+/* C(H)ORAL — renderer settings only. Never consumes growth or color randomness. */
+(function(root){
+'use strict';
+const PRESETS=Object.freeze({
+ sculpture:Object.freeze({name:'Sculpture',description:'Neutral studio light, clear facets, and generous underside fill. Surface color stays distinct.',illumination:1,emission:.12,glow:.55,interiorFill:.75,lightAzimuth:-35,lightElevation:40,depthCue:.16}),
+ bioluminescent:Object.freeze({name:'Bioluminescent',description:'Darker structure with luminous cells and growing tips. Color-rich emission, not white glare.',illumination:.65,emission:1.1,glow:1,interiorFill:.65,lightAzimuth:-50,lightElevation:25,depthCue:.22}),
+ unlit:Object.freeze({name:'Unlit Color',description:'The material colors without surface shading, emission, or depth dimming. Halos are off by default but remain optional.',illumination:1,emission:0,glow:0,interiorFill:.75,lightAzimuth:-35,lightElevation:40,depthCue:0})
+});
+const RANGES=Object.freeze({illumination:[0,2],emission:[0,2],glow:[0,1.5],interiorFill:[0,1],lightAzimuth:[-180,180],lightElevation:[-80,80],depthCue:[0,.5]});
+const KEYS=Object.freeze(['renderMode',...Object.keys(RANGES)]);
+function preset(mode){const p=PRESETS[mode]||PRESETS.sculpture;const out={renderMode:PRESETS[mode]?mode:'sculpture'};for(const k of Object.keys(RANGES))out[k]=p[k];return out;}
+const DEFAULTS=Object.freeze(preset('sculpture'));
+function sanitize(input={}){const s={...DEFAULTS};if(Object.hasOwn(PRESETS,input.renderMode))s.renderMode=input.renderMode;for(const [k,[lo,hi]] of Object.entries(RANGES))if(typeof input[k]==='number'&&Number.isFinite(input[k]))s[k]=Math.max(lo,Math.min(hi,input[k]));return s;}
+function valid(input){return !!input&&Object.hasOwn(PRESETS,input.renderMode)&&Object.entries(RANGES).every(([k,[lo,hi]])=>typeof input[k]==='number'&&Number.isFinite(input[k])&&input[k]>=lo&&input[k]<=hi);}
+function isCustom(s){const p=preset(s.renderMode);return Object.keys(RANGES).some(k=>Math.abs(s[k]-p[k])>.00001);}
+// Directions follow the camera yaw, not the specimen: rotating below it remains useful.
+function direction(s,cameraYaw=0){const az=cameraYaw+s.lightAzimuth*Math.PI/180,el=s.lightElevation*Math.PI/180;return [Math.sin(az)*Math.cos(el),Math.sin(el),Math.cos(az)*Math.cos(el)];}
+const api={PRESETS,RANGES,KEYS,DEFAULTS,preset,sanitize,valid,isCustom,direction};
+if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChoralLighting=api;
+})(typeof window==='undefined'?globalThis:window);
+
+/* C(H)ORAL 0.5.0 — audio composition and durable birth colors.
+   All color choices are deterministic hashes. This module never consumes the
+   simulation RNG. Ecology adds color lineage to birth records without changing these audio mappings. */
+(function(root){
+'use strict';
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const finite=(v,f=0)=>typeof v==='number'&&Number.isFinite(v)?v:f;
+const fract=v=>v-Math.floor(v);
+const TAU=2*Math.PI;
+const BANDS=['bass','mid','high'];
+const SOURCES=Object.freeze(['preview','test','file','mic','share','manual','idle','unknown']);
+// Stable palette IDs: the old Aurora formula is retained as a legacy option.
+const PRIMARY_PALETTES=Object.freeze(['spectrum','reef','aurora-wide','volcanic','glass','wild']);
+const PALETTES=Object.freeze({
+ spectrum:{name:'Full Spectrum',description:'Every hue belongs. Wide color families, saturated mature growth, and contrasting new tips.',variation:1,mutation:1,step:.18,span:.27,age:.94,accent:0,contrast:0},
+ reef:{name:'Reef',description:'Coral pink, turquoise, lime, violet, cobalt, and gold. Distinct colonies with warm, bright tips.',variation:.8,mutation:.85,step:.20,span:.25,age:.96,accent:.16,contrast:.04},
+ 'aurora-wide':{name:'Aurora',description:'Green, cyan, indigo, violet, and magenta. Flowing transitions and cooler luminous accents.',variation:.65,mutation:.75,step:.22,span:.20,age:.95,accent:.12,contrast:.025},
+ volcanic:{name:'Volcanic',description:'Ember, orange, sulfur yellow, and electric blue among mineral-dark regions. Sharp contrasting eruptions.',variation:1.1,mutation:1.2,step:.30,span:.18,age:.93,accent:.40,contrast:.08},
+ glass:{name:'Stained Glass',description:'Ruby, amber, emerald, sapphire, and amethyst. Crisp jewel regions with almost no blending.',variation:.45,mutation:1,step:.17,span:.32,age:.98,accent:.17,contrast:.12},
+ wild:{name:'Wild Type',description:'The full wheel, remixed. Strong family variation and twice the base mutation chance, without changing geometry.',variation:1.6,mutation:2,step:.24,span:.25,age:.96,accent:.33,contrast:.18},
+ biolume:{name:'Biolume · legacy',description:'Original green-to-cyan material, retained for older specimens.'},
+ aurora:{name:'Aurora · legacy',description:'Original blue-to-violet material. Choose the new Aurora for greens, cyans, purples, and magentas.'},
+ ember:{name:'Ember · legacy',description:'Original red-to-gold material, retained for older specimens.'},
+ mono:{name:'Monochrome · legacy',description:'Neutral material. Hue controls cannot introduce colors into this deliberately monochrome palette.'}
+});
+const STOPS={reef:[.97,.475,.235,.765,.63,.12],'aurora-wide':[.34,.43,.50,.64,.77,.88],volcanic:[.005,.045,.085,.145,.625,.71],glass:[.97,.10,.375,.625,.77,.895]};
+function profile(name){return PALETTES[name]||PALETTES.spectrum;}
+// Artistic color families, not physical associations between pitch and hue.
+const FAMILIES=Object.freeze({
+ bass:[.995,.035,.085,.665,.88,.12],
+ mid:[.29,.365,.145,.835,.435,.945],
+ high:[.495,.555,.635,.74,.81,.94]
+});
+function color(h,s,l){h=fract(h);const a=s*Math.min(l,1-l);return [0,8,4].map(n=>{const k=(n+h*12)%12;return l-a*Math.max(-1,Math.min(k-3,9-k,1))})}
+function palette(name,t,bright=.56){
+ if(PRIMARY_PALETTES.includes(name)&&name!=='spectrum')return material(name,t,.9,bright);
+ if(name==='spectrum')return color(t,.9,bright);
+ if(name==='ember')return color(.005+t*.13,.88,bright);
+ if(name==='aurora')return color(.52+t*.32,.78,bright);
+ if(name==='mono')return [bright+.16,bright+.16,bright+.16];
+ return color(.35+t*.24,.61,bright);
+}
+function material(name,t,s,l){
+ if(name==='mono')return [l+.16,l+.16,l+.16].map(v=>clamp(v,0,.92));
+ if(PRIMARY_PALETTES.includes(name)&&name!=='spectrum'){
+  t=fract(t);
+  if(name==='wild')return color(fract(t*2.61803398875+.11*Math.sin(t*TAU*3)),clamp(s*1.06),clamp(l,.10,.72));
+  const stops=STOPS[name],x=t*stops.length,i=Math.floor(x),f=x-i;
+  let hue=name==='aurora-wide'?hueMix(stops[i],stops[(i+1)%stops.length],f):fract(stops[i]+(f-.5)*(name==='glass'?.004:name==='reef'?.045:.025));
+  let sat=clamp(s*(name==='glass'?1.05:1)),light=l;
+  if(name==='volcanic'&&i===5){sat*=.40;light*=.37;} // Mineral islands, not a blacked-out sculpture.
+  if(name==='glass')light*=.94;
+  return color(hue,sat,light);
+ }
+ const hue=name==='spectrum'?t:name==='ember'?.005+t*.13:name==='aurora'?.52+t*.32:.35+t*.24;
+ const sat=s*(name==='biolume'?.76:name==='aurora'?.90:1);
+ return color(hue,sat,l);
+}
+function hash01(seed,key){let h=(seed^Math.imul(key|0,0x9e3779b1))>>>0;h=Math.imul(h^(h>>>16),0x21f0aaad);h=Math.imul(h^(h>>>15),0x735a2d97);return ((h^(h>>>15))>>>0)/4294967296;}
+function cellTone(seed,p){const a=hash01(seed,101)*TAU,b=hash01(seed,233)*TAU;return fract(hash01(seed,17)+p[0]*.025+p[1]*.017-p[2]*.021+.16*Math.sin(p[2]*.23+a)+.13*Math.sin(p[0]*.19+b));}
+function branchTone(seed,seg){const mid=seg.a.map((v,i)=>(v+seg.b[i])*.5);const id=Number.isSafeInteger(seg.id)?seg.id:Math.round(mid[0]*197+mid[1]*349+mid[2]*571+seg.level*31);return fract(cellTone(seed,mid)+.19+(hash01(seed^0x6a09e667,id)-.5)*.8);}
+function hueMix(a,b,t){const d=fract(b-a+.5)-.5;return fract(a+d*clamp(t));}
+function cleanSignal(input={}){const s={};for(const k of ['energy',...BANDS])s[k]=clamp(finite(input[k]));s.onset=!!(input.onset??input.beat);return s;}
+function targetTone(role,input,variant=0){
+ const f=cleanSignal(input),weights=role==='branch'?[1.7,1,.65]:role==='cell'?[.7,1.6,1.1]:[.4,.8,2];
+ let x=0,y=0,total=0;variant=((variant%6)+6)%6;
+ for(let i=0;i<3;i++){const w=Math.pow(f[BANDS[i]],1.35)*weights[i],h=FAMILIES[BANDS[i]][variant];x+=Math.cos(h*TAU)*w;y+=Math.sin(h*TAU)*w;total+=w;}
+ return total<.00001?null:fract(Math.atan2(y,x)/TAU);
+}
+function createFrame(id,tick,input,settings){
+ const f=cleanSignal(input),source=SOURCES.includes(input?.source)?input.source:'unknown';
+ return {id,tick,source,signal:f,influence:clamp(finite(settings.soundColor,.85)),palette:Object.hasOwn(PALETTES,settings.palette)?settings.palette:'spectrum'};
+}
+function record(role,seed,key,base,frame){
+ if(!frame)return null;
+ const local=hash01(seed^0x381f2ba1,key),variant=Math.floor(local*6),target=targetTone(role,frame.signal,variant);
+ // A minority keeps the complete wheel even during a single sustained tone.
+ // The rest is strongly composed into different band-dependent color families.
+ const independent=hash01(seed^0x72db693f,key)<.23;
+ let amount=frame.influence*clamp(frame.signal.energy*8)*(independent?.13:1);
+ let tone=target===null?base:hueMix(base,fract(target+(local*6-variant-.5)*.06),amount);
+ // Onsets add new color to a LOCAL subset of births, never repaint old growth.
+ const accent=frame.signal.onset&&hash01(seed^frame.id,key+713)<.27;
+ if(accent)tone=fract(tone+(.16+hash01(seed^0x56176b35,frame.id)*.36)*frame.influence);
+ if(PRIMARY_PALETTES.includes(frame.palette)&&frame.palette!=='spectrum'){const p=profile(frame.palette);tone=fract(tone+(role==='branch'?p.contrast:role==='cell'?-p.contrast*.4:p.accent));}
+ const saturation=.9+.12*(frame.signal.energy-.5)*frame.influence;
+ const light=.50+.055*frame.signal.energy*frame.influence+(accent?.025*frame.influence:0);
+ return {frame:frame.id,palette:frame.palette,tone,saturation,light,rgb:material(frame.palette,tone,saturation,light)};
+}
+function recordBranch(seed,seg,frame){return record('branch',seed,seg.id,branchTone(seed,seg),frame);}
+function recordCell(seed,index,p,frame){
+ const base=cellTone(seed,p),region=Math.floor(base*18);
+ // Regional key keeps nearby births coherent. Frame changes record the passage.
+ return record('cell',seed,region+193,base,frame);
+}
+function recordedColor(name,c,age,newness=6){const base=name===c.palette?c.rgb:material(name,c.tone,c.saturation,c.light);const floor=c.lineage?(profile(name).age??.94):.91;const scale=floor+(1-floor)*clamp(1-Math.max(0,age)/newness);return base.map(v=>v*scale);}
+function branchColor(name,seed,seg,tick,chroma=null){
+ const age=Math.max(0,tick-seg.born);
+ if(chroma)return recordedColor(name,chroma,age,8);
+ if(name!=='spectrum')return palette(name,clamp(seg.level/10),age<8?.66:.45);
+ return palette(name,branchTone(seed,seg),.50+.08*clamp(1-age/8));
+}
+function cellColor(name,seed,p,age,chroma=null){
+ if(chroma)return recordedColor(name,chroma,age-1,5);
+ if(name!=='spectrum')return palette(name,clamp(.15+p[1]/100+age/60),age<3?.70:.55);
+ return palette(name,cellTone(seed,p),.50+.09*clamp(1-(age-1)/5));
+}
+function sporeColor(name,seed,p,chroma=null){if(chroma)return recordedColor(name,chroma,0);return name==='spectrum'?palette(name,cellTone(seed,p),.54):palette(name,.9,.5);}
+function liveColor(name,signal,role='accent'){const t=targetTone(role,signal,0);return material(name,(t===null?.52:t)+(profile(name).accent||0),.92,.55);}
+
+
+const STYLE_DEFAULTS=Object.freeze({colorDiversity:1,hueBias:0,colorSaturation:1,branchHue:0,cellHue:0,sporeHue:0});
+function styleFrom(settings={}){return {palette:Object.hasOwn(PALETTES,settings.palette)?settings.palette:'spectrum',...Object.fromEntries(Object.entries(STYLE_DEFAULTS).map(([k,v])=>[k,finite(settings[k],v)]))};}
+function validStyle(s){return !!s&&typeof s==='object'&&!Array.isArray(s)&&Object.keys(s).length===7&&Object.hasOwn(PALETTES,s.palette)&&Object.keys(STYLE_DEFAULTS).every(k=>typeof s[k]==='number'&&Number.isFinite(s[k])&&(k==='colorDiversity'?s[k]>=0&&s[k]<=1:k==='colorSaturation'?s[k]>=0&&s[k]<=1.5:s[k]>=-180&&s[k]<=180));}
+function rgbHsl(rgb){const hi=Math.max(...rgb),lo=Math.min(...rgb),d=hi-lo,l=(hi+lo)/2;if(d<1e-12)return [0,0,l];const s=d/(1-Math.abs(2*l-1));let h=hi===rgb[0]?(rgb[1]-rgb[2])/d+(rgb[1]<rgb[2]?6:0):hi===rgb[1]?(rgb[2]-rgb[0])/d+2:(rgb[0]-rgb[1])/d+4;return [h/6,s,l];}
+function applyStyle(style,tone,saturation,light,role='branch'){
+ const t=style.colorDiversity===1?tone:hueMix(.08,tone,style.colorDiversity);
+ const rgb=material(style.palette,t,saturation,light),shift=(style.hueBias+style[role+'Hue'])/360;
+ if(shift===0&&style.colorSaturation===1)return rgb;
+ let [h,s,l]=rgbHsl(rgb);return color(h+shift,clamp(s*style.colorSaturation),l);
+}
+function styleColor(style,seed,item,role,tick=0,chroma=null,trait=null){
+ // Preserve exact original RGB for neutral artist controls and the original palette.
+ const neutral=style.colorDiversity===1&&style.hueBias===0&&style.colorSaturation===1&&style[role+'Hue']===0;
+ if(neutral){if(trait&&!chroma)return material(style.palette,trait.tone,.9,.53);return role==='branch'?branchColor(style.palette,seed,item,tick,chroma):role==='cell'?cellColor(style.palette,seed,item.p,item.age,chroma):sporeColor(style.palette,seed,item.p,chroma);}
+ let t,s=.9,l=.53,scale=1;
+ if(chroma){t=chroma.tone;s=chroma.saturation;l=chroma.light;const age=role==='branch'?tick-item.born:role==='cell'?item.age-1:0;const floor=chroma.lineage?(profile(style.palette).age??.94):.91;scale=floor+(1-floor)*clamp(1-Math.max(0,age)/(role==='branch'?8:5));}
+ else if(trait)t=trait.tone;
+ else {t=role==='branch'?branchTone(seed,item):cellTone(seed,item.p);l=role==='branch'?.50+.08*clamp(1-(tick-item.born)/8):role==='cell'?.50+.09*clamp(1-(item.age-1)/5):.54;}
+ return applyStyle(style,t,s,l,role).map(v=>v*scale);
+}
+
+class Composer {
+ constructor(){this.reset('preview');}
+ reset(source='unknown'){this.source=source;this.signal=cleanSignal();this.pending=false;this.pendingAge=0;this.impulse=0;this.accent=0;}
+ update(input,dt,settings={},source=this.source){
+  if(source!==this.source)this.reset(source);
+  dt=clamp(finite(dt),0,.25);const f=cleanSignal(input),tau=clamp(finite(settings.colorSmoothing,.35),.08,1.2);
+  for(const k of ['energy',...BANDS]){const t=f[k]>this.signal[k]?tau*.55:tau;this.signal[k]+=(f[k]-this.signal[k])*(1-Math.exp(-dt/t));}
+  if(f.onset&&f.energy>.008){this.pending=true;this.pendingAge=0;this.impulse=1;}
+  this.pendingAge+=dt;if(this.pendingAge>.9)this.pending=false;
+  this.impulse*=Math.exp(-dt/.38);
+  this.accent+=(this.impulse-this.accent)*(1-Math.exp(-dt/.12));
+  return this.snapshot();
+ }
+ snapshot(){return {...this.signal,onset:this.pending,source:this.source,accent:this.accent};}
+ consume(){const f=this.snapshot();this.pending=false;return f;}
+ clearPending(){this.pending=false;}
+}
+function validateRecord(c,frames){
+ const n=(x,a=0,b=1)=>typeof x==='number'&&Number.isFinite(x)&&x>=a&&x<=b;
+ return c&&typeof c==='object'&&!Array.isArray(c)&&Number.isSafeInteger(c.frame)&&frames.has(c.frame)&&Object.hasOwn(PALETTES,c.palette)&&
+  n(c.tone,0,1)&&n(c.saturation)&&n(c.light,.05,.9)&&Array.isArray(c.rgb)&&c.rgb.length===3&&c.rgb.every(v=>n(v))&&
+  c.palette===frames.get(c.frame).palette&&material(c.palette,c.tone,c.saturation,c.light).every((v,i)=>Math.abs(v-c.rgb[i])<1e-9);
+}
+const api={PRIMARY_PALETTES,STYLE_DEFAULTS,styleFrom,validStyle,applyStyle,styleColor,rgbHsl,profile,PALETTES,SOURCES,FAMILIES,palette,color,material,hash01,cellTone,branchTone,branchColor,cellColor,sporeColor,hueMix,cleanSignal,targetTone,createFrame,recordBranch,recordCell,recordedColor,liveColor,Composer,validateRecord};
+if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChoralColor=api;
+})(typeof window==='undefined'?globalThis:window);
+
+/* C(H)ORAL 0.5.0 — color ecology, independent of geometry and audio RNGs.
+   A lineage is a persistent color identity, not a biological claim. */
+(function(root){
+'use strict';
+const C=typeof module!=='undefined'&&module.exports?require('./color.js'):root.ChoralColor;
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const fract=v=>v-Math.floor(v);
+class ColorRandom {
+ constructor(seed){this.s=seed>>>0;}
+ next(){let t=this.s+=0x6D2B79F5;this.s>>>=0;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296;}
+}
+class Ecology {
+ constructor(seed){this.seed=(seed^0xc01a1f37)>>>0;this.rng=new ColorRandom(this.seed);this.serial=0;this.mutations=0;this.origin='new';this.started=0;this.lineages=new Map();}
+ founder(tone,tick=0,kind='seed'){
+  const id=++this.serial,node={id,family:id,parent:0,tone:fract(tone),born:tick,kind};
+  this.lineages.set(id,node);return {lineage:id,tone:node.tone,generation:0};
+ }
+ seedTrait(rootIndex){return this.founder(C.hash01(this.seed,17)+rootIndex*.618033988749895);}
+ trait(record,fallback=0){
+  const id=record?.lineage||fallback,node=this.lineages.get(id);
+  if(node)return {lineage:id,tone:record?.tone??node.tone,generation:record?.generation||0};
+  // An older record may provide a known color, but never invented ancestry.
+  return record?{lineage:0,tone:record.tone,generation:0}:null;
+ }
+ inherit(record,parent,settings,role,tick){
+  if(!record)return null;
+  // Fixed four draws per recorded birth, even when mutation/variation are off.
+  // No part of this stream is read by geometry, life rules, or the audio engine.
+  const chance=this.rng.next(),shift=this.rng.next(),sign=this.rng.next(),jitter=this.rng.next();
+  const policy=C.profile(record.palette),amount=clamp(settings.colorInheritance??.82),variation=clamp(settings.lineageVariation??.20)*(policy.variation||1);
+  let node=this.lineages.get(parent?.lineage),mutated=false,generation=node?Math.min(1e9,(parent.generation||0)+1):0;
+  let tone=record.tone;
+  if(parent){
+   // An anchor stops small differences accumulating until a colony loses identity.
+   const anchor=node&&amount<1?C.hueMix(node.tone,parent.tone,.45):parent.tone;
+   const weight=role==='cell'?Math.sqrt(amount):amount;
+   tone=weight===1?anchor:C.hueMix(tone,anchor,weight);
+   if(variation>0)tone=fract(tone+(jitter-.5)*variation*(role==='cell'?.16:.36));
+  }
+  if(!node){const trait=this.founder(tone,tick,role);node=this.lineages.get(trait.lineage);}
+  else if(chance<clamp((settings.colorMutation??.04)*(policy.mutation||1))){
+   // Large, bounded hue step makes mutation visible and persists as a new anchor.
+   tone=fract(parent.tone+(sign<.5?-1:1)*((policy.step??.18)+shift*(policy.span??.27)));
+   const id=++this.serial;
+   node={id,family:node.family,parent:node.id,tone,born:tick,kind:'mutation'};
+   this.lineages.set(id,node);this.mutations++;mutated=true;generation=0;
+  }
+  return {...record,tone,rgb:C.material(record.palette,tone,record.saturation,record.light),lineage:node.id,generation,mutated};
+ }
+ // Only previous-generation cells participate. A plurality wins; seeded spatial
+ // tie breaks avoid traversal-order bias and RGB averaging into muddy colors.
+ neighbor(world,index){
+  const n=world.N,nn=n*n,votes=new Map();let legacy=null;
+  for(let dz=-1;dz<=1;dz++)for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+   if(!(dx||dy||dz))continue;const j=index+dx+n*dy+nn*dz;
+   if(!world.cells[j])continue;
+   const id=world.cellLineage[j],record=world.cellChroma[j];
+   if(!id){if(record&&!legacy)legacy=record;continue;}
+   const entry=votes.get(id);if(entry)entry.count++;else votes.set(id,{count:1,record});
+  }
+  let best=0,count=0,rank=-1;
+  for(const [id,v]of votes){const r=C.hash01(this.seed^world.tick,index^Math.imul(id,193));if(v.count>count||(v.count===count&&r>rank)){best=id;count=v.count;rank=r;}}
+  return best?this.trait(votes.get(best).record,best):this.trait(legacy);
+ }
+ referenced(world){
+  const used=new Set();
+  for(const s of world.segments){const c=world.branchChroma.get(s.id);if(c?.lineage)used.add(c.lineage);}
+  for(let i=0;i<world.total;i++)if(world.cells[i]&&world.cellLineage[i])used.add(world.cellLineage[i]);
+  for(const g of world.ghosts){const id=g.chroma?.lineage||g.trait?.lineage;if(id)used.add(id);}
+  for(const t of world.tips){const c=world.tipTraits.get(t);if(c?.lineage)used.add(c.lineage);}
+  return used;
+ }
+ prune(world){const used=this.referenced(world);for(const id of this.lineages.keys())if(!used.has(id))this.lineages.delete(id);}
+ serialize(world){
+  const used=this.referenced(world),seedCells=[],tips=[];
+  for(let i=0;i<world.total;i++)if(world.cells[i]&&world.cellLineage[i]&&!world.cellChroma[i]?.lineage)seedCells.push([i,world.cellLineage[i]]);
+  world.tips.forEach((t,i)=>{const p=world.tipTraits.get(t);if(p)tips.push([i,{...p}]);});
+  return {schema:1,origin:this.origin,started:this.started,seed:this.seed,rng:this.rng.s,serial:this.serial,mutations:this.mutations,lineages:[...this.lineages.values()].filter(l=>used.has(l.id)),seedCells,tips};
+ }
+ stats(world){
+  const visible=new Map(),families=new Set(),cells=new Map();let recorded=0;
+  const add=(id,isCell=false)=>{if(!id)return;const l=this.lineages.get(id);if(!l)return;visible.set(id,(visible.get(id)||0)+1);families.add(l.family);if(isCell)cells.set(id,(cells.get(id)||0)+1);};
+  for(const s of world.segments)add(world.branchChroma.get(s.id)?.lineage);
+  for(let i=0;i<world.total;i++)if(world.cells[i]){add(world.cellLineage[i],true);if(world.cellLineage[i])recorded++;}
+  let variants=0;for(const id of visible.keys())if(this.lineages.get(id)?.kind==='mutation')variants++;
+  const leaders=[...cells].sort((a,b)=>b[1]-a[1]||a[0]-b[0]).slice(0,6).map(([id,count])=>({...this.lineages.get(id),cells:count}));
+  return {lineageOrigin:this.origin,families:families.size,lineages:visible.size,cellColonies:cells.size,livingVariants:variants,mutations:this.mutations,lineageCells:recorded,colorRng:this.rng.s,leaders};
+ }
+ static validate(data,worldState,colors,total,seed){
+  const bad=()=>{throw Error('Invalid color lineage data. The current specimen has not been changed.');};
+  const integer=(x,a=0,b=Number.MAX_SAFE_INTEGER)=>Number.isSafeInteger(x)&&x>=a&&x<=b;
+  const num=(x,a=0,b=1)=>typeof x==='number'&&Number.isFinite(x)&&x>=a&&x<=b;
+  const e=new Ecology(seed);
+  if(!data||data.schema!==1||!['new','legacy-v0.1.0','legacy-v0.2.0','legacy-v0.3.0'].includes(data.origin)||!integer(data.started,0,worldState.tick)||(data.origin==='new'&&data.started!==0)||data.seed!==e.seed||!integer(data.rng,0,4294967295)||!integer(data.serial)||!integer(data.mutations,0,data.serial)||!Array.isArray(data.lineages)||data.lineages.length>60000||!Array.isArray(data.seedCells)||data.seedCells.length>total||!Array.isArray(data.tips)||data.tips.length>worldState.tips.length)bad();
+  for(const l of data.lineages){
+   if(!l||!integer(l.id,1,data.serial)||e.lineages.has(l.id)||!integer(l.family,1,l.id)||!integer(l.parent,0,l.id-1)||!num(l.tone,0,1)||!num(l.born,0,worldState.tick)||!['seed','branch','cell','mutation'].includes(l.kind))bad();
+   if(l.kind==='mutation'?(l.parent===0||l.family===l.id):(l.parent!==0||l.family!==l.id))bad();
+   if(l.kind==='seed'&&l.born!==0)bad();
+   e.lineages.set(l.id,structuredClone(l));
+  }
+  for(const l of e.lineages.values()){const parent=e.lineages.get(l.parent);if(parent&&(parent.family!==l.family||parent.born>l.born))bad();}
+  e.origin=data.origin;e.started=data.started;e.serial=data.serial;e.mutations=data.mutations;e.rng.s=data.rng;
+  const validateTrait=t=>t&&integer(t.lineage,1,e.serial)&&e.lineages.has(t.lineage)&&num(t.tone,0,1)&&integer(t.generation,0,1e9);
+  const validateRecord=r=>{
+   if(!r)return;
+   if(r.lineage===undefined){if(r.generation!==undefined||r.mutated!==undefined||colors.frames.get(r.frame).tick>e.started)bad();return;}
+   if(!validateTrait(r)||typeof r.mutated!=='boolean')bad();
+   const l=e.lineages.get(r.lineage),f=colors.frames.get(r.frame);
+   if(l.born>f.tick||(r.mutated&&(l.kind!=='mutation'||l.born!==f.tick||r.generation!==0||r.tone!==l.tone)))bad();
+  };
+  for(const r of colors.branches.values())validateRecord(r);
+  for(const r of colors.cells)validateRecord(r);
+  for(const g of colors.ghosts){validateRecord(g.chroma);if(g.trait!==undefined&&(!validateTrait(g.trait)||g.chroma?.lineage||e.lineages.get(g.trait.lineage).born>g.time))bad();}
+  const tipTraits=new Map();
+  // IDs remain exact integer references rather than uint32-truncated values.
+  const ids=new Array(total).fill(0);
+  for(let i=0;i<total;i++)if(worldState.cells[i]&&colors.cells[i]?.lineage)ids[i]=colors.cells[i].lineage;
+  for(const entry of data.seedCells){if(!Array.isArray(entry)||entry.length!==2)bad();const [i,id]=entry;if(!integer(i,0,total-1)||!worldState.cells[i]||ids[i]||!e.lineages.has(id))bad();ids[i]=id;}
+  for(const entry of data.tips){if(!Array.isArray(entry)||entry.length!==2)bad();const [i,t]=entry;if(!integer(i,0,worldState.tips.length-1)||tipTraits.has(i)||!validateTrait(t))bad();tipTraits.set(i,structuredClone(t));}
+  // Unreferenced entries are not accepted: export is a bounded living archive.
+  const used=new Set(ids.filter(Boolean));for(const c of colors.branches.values())if(c.lineage)used.add(c.lineage);for(const g of colors.ghosts){const id=g.chroma?.lineage||g.trait?.lineage;if(id)used.add(id);}for(const t of tipTraits.values())used.add(t.lineage);
+  if(used.size!==e.lineages.size)bad();
+  return {ecology:e,cellLineage:ids,tipTraits};
+ }
+}
+const api={Ecology,ColorRandom};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChoralEcology=api;
+})(typeof window==='undefined'?globalThis:window);
+
+/* C(H)ORAL 0.5.0 — bounded appearance archive, separate from birth history.
+   A look is a palette plus artist controls. Freezing a view never rewrites a
+   birth record, lineage, simulation RNG, camera, or audio connection. */
+(function(root){
+'use strict';
+const C=typeof module!=='undefined'&&module.exports?require('./color.js'):root.ChoralColor;
+class Appearance {
+ constructor(total,settings){this.total=total;this.serial=0;this.styles=new Map();this.keys=new Map();this.branches=new Map();this.cells=new Uint32Array(total);this.next=new Uint32Array(total);this.ghosts=new Map();this.update(settings);}
+ intern(style){const key=JSON.stringify(style);if(this.keys.has(key))return this.keys.get(key);const id=++this.serial;this.styles.set(id,{...style});this.keys.set(key,id);return id;}
+ update(settings){const key=JSON.stringify(C.styleFrom(settings));if(key!==this.currentKey){this.currentKey=key;this.current=this.intern(C.styleFrom(settings));}return this.current;}
+ get(id){return this.styles.get(id)||this.styles.get(this.current);}
+ forBranch(id,scope){return this.get(scope==='future'?this.branches.get(id):this.current);}
+ forCell(id,scope){return this.get(scope==='future'?this.cells[id]:this.current);}
+ forGhost(g,scope){return this.get(scope==='future'?this.ghosts.get(g):this.current);}
+ freeze(world,settings){const id=this.update(settings);for(const s of world.segments)this.branches.set(s.id,id);for(let i=0;i<this.total;i++)if(world.cells[i])this.cells[i]=id;for(const g of world.ghosts)this.ghosts.set(g,id);}
+ initialize(world){this.freeze(world,world.settings);}
+ references(world){const used=new Set([this.current]),branches=[],cells=[],ghosts=[];for(const s of world.segments){const id=this.branches.get(s.id)||this.current;branches.push([s.id,id]);used.add(id);}for(let i=0;i<this.total;i++)if(world.cells[i]){const id=this.cells[i]||this.current;cells.push([i,id]);used.add(id);}world.ghosts.forEach((g,i)=>{const id=this.ghosts.get(g)||this.current;ghosts.push([i,id]);used.add(id);});return {used,branches,cells,ghosts};}
+ prune(world){const {used,branches}=this.references(world);this.branches=new Map(branches);const alive=new Set(world.ghosts);for(const g of this.ghosts.keys())if(!alive.has(g))this.ghosts.delete(g);for(const [id,s]of this.styles)if(!used.has(id)){this.styles.delete(id);this.keys.delete(JSON.stringify(s));}}
+ serialize(world){this.update(world.settings);const {used,branches,cells,ghosts}=this.references(world);return {schema:1,serial:this.serial,current:this.current,styles:[...this.styles].filter(([id])=>used.has(id)),branches,cells,ghosts};}
+ static validate(data,state,ghosts,total,settings){
+  const bad=()=>{throw Error('Invalid saved appearance. The current specimen has not been changed.');};
+  const int=(n,a=0,b=4294967295)=>Number.isSafeInteger(n)&&n>=a&&n<=b;
+  if(!data||data.schema!==1||!int(data.serial,1)||!int(data.current,1,data.serial)||!Array.isArray(data.styles)||!data.styles.length||data.styles.length>51000)bad();
+  const a=new Appearance(total,settings);a.styles.clear();a.keys.clear();a.serial=data.serial;a.current=data.current;
+  for(const pair of data.styles){if(!Array.isArray(pair)||pair.length!==2)bad();const [id,s]=pair;if(!int(id,1,a.serial)||a.styles.has(id)||!C.validStyle(s))bad();const key=JSON.stringify(C.styleFrom(s));if(a.keys.has(key))bad();a.styles.set(id,C.styleFrom(s));a.keys.set(key,id);}
+  if(!a.styles.has(a.current)||JSON.stringify(a.get(a.current))!==JSON.stringify(C.styleFrom(settings)))bad();a.currentKey=JSON.stringify(a.get(a.current));
+  const refs=(list,expected,max,has)=>{if(!Array.isArray(list)||list.length!==expected)bad();const seen=new Map();for(const pair of list){if(!Array.isArray(pair)||pair.length!==2)bad();const [i,id]=pair;if(!int(i,0,max)||seen.has(i)||!has(i)||!a.styles.has(id))bad();seen.set(i,id);}return seen;};
+  const segs=new Set(state.segments.map(s=>s.id));a.branches=refs(data.branches,state.segments.length,Number.MAX_SAFE_INTEGER,id=>segs.has(id));
+  const living=state.cells.reduce((n,x)=>n+x,0),cells=refs(data.cells,living,total-1,i=>state.cells[i]===1);for(const [i,id]of cells)a.cells[i]=id;
+  const grefs=refs(data.ghosts,ghosts.length,ghosts.length-1,i=>i<ghosts.length);for(const [i,id]of grefs)a.ghosts.set(ghosts[i],id);
+  const used=new Set([a.current,...a.branches.values(),...cells.values(),...grefs.values()]);if(used.size!==a.styles.size)bad();return a;
+ }
+}
+const api={Appearance};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChoralAppearance=api;
+})(typeof window==='undefined'?globalThis:window);
+
+/* C(H)ORAL 0.7.0 — original simulation, no dependencies. */
+(function(root){
+'use strict';
+const Color=typeof module!=='undefined'&&module.exports?require('./color.js'):root.ChoralColor;
+const {Ecology}=typeof module!=='undefined'&&module.exports?require('./ecology.js'):root.ChoralEcology;
+const {Appearance}=typeof module!=='undefined'&&module.exports?require('./appearance.js'):root.ChoralAppearance;
+const Response=typeof module!=='undefined'&&module.exports?require('./response.js'):root.ChoralResponse;
+const Lighting=typeof module!=='undefined'&&module.exports?require('./lighting.js'):root.ChoralLighting;
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const V={add:(a,b)=>a.map((v,i)=>v+b[i]),sub:(a,b)=>a.map((v,i)=>v-b[i]),mul:(a,s)=>a.map(v=>v*s),dot:(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),cross:(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],norm:a=>{let n=Math.hypot(...a)||1;return a.map(x=>x/n)},mix:(a,b,t)=>a.map((x,i)=>x+(b[i]-x)*t)};
+class Random {constructor(seed=73129){this.s=seed>>>0} next(){let t=this.s+=0x6D2B79F5;this.s>>>=0;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return ((t^t>>>14)>>>0)/4294967296} direction(){const z=this.next()*2-1,a=this.next()*Math.PI*2,r=Math.sqrt(1-z*z);return [r*Math.cos(a),z,r*Math.sin(a)]}}
+const MODES={
+ coral:{title:'CORAL',sub:'Radial, recursive reef',tag:'01 / ORGANIC',ratio:.82,roots:8,length:5.8,radius:.48,branches:3},
+ forest:{title:'DENDRITE',sub:'A branching canopy',tag:'02 / ARBOREAL',ratio:.73,roots:3,length:9,radius:.65,branches:2},
+ mycelium:{title:'MYCELIUM',sub:'A spatial filament network',tag:'03 / DISTRIBUTED',ratio:.86,roots:10,length:6,radius:.23,branches:2},
+ crystal:{title:'CRYSTAL',sub:'Six-axis recursive growth',tag:'04 / GEOMETRIC',ratio:.53,roots:6,length:12,radius:.28,branches:5},
+ vortex:{title:'VORTEX',sub:'Nested helical branches',tag:'05 / HELICAL',ratio:.81,roots:6,length:5,radius:.32,branches:2},
+ tetra:{title:'TETRA',sub:'A tetrahedral recursion',tag:'06 / FRACTAL',ratio:.50,roots:4,length:16,radius:.20,branches:4}
+};
+const VERSION='0.7.0';
+const STORAGE='gsg.choral.settings.v1', LEGACY_STORAGE='gsg.vivarium.settings.v1';
+const DEFAULTS={...Response.DEFAULTS,mode:'coral',seed:73129,growth:1.2,branching:.65,mutation:.28,depth:8,sensitivity:2.5,gate:.018,life:.68,...Lighting.DEFAULTS,memory:100,orbit:true,motion:true,silence:'preserve',palette:'spectrum',paletteScope:'existing',...Color.STYLE_DEFAULTS,soundColor:.85,colorSmoothing:.35,colorAccents:true,colorInheritance:.82,lineageVariation:.20,colorMutation:.04,quality:'balanced',skeleton:true,cells:true,spores:true,birth:5,surviveMin:4,surviveMax:8,theme:'dark'};
+const AXES=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]], TET=[[1,1,1],[-1,-1,1],[-1,1,-1],[1,-1,-1]].map(V.norm);
+class World {
+ constructor(settings={}){this.settings={...DEFAULTS,...settings};this.N=32;this.spacing=2.5;this.total=this.N**3;this.reset(this.settings.mode,this.settings.seed)}
+ reset(mode,seed){this.settings.mode=MODES[mode]?mode:'coral';this.settings.seed=seed>>>0;this.rng=new Random(seed);this.cells=new Uint8Array(this.total);this.ages=new Uint16Array(this.total);this.next=new Uint8Array(this.total);this.counts=new Uint8Array(this.total);this.substrate=new Uint8Array(this.total);this.ghosts=[];this.segments=[];this.tips=[];this.generation=0;this.tick=0;this.births=0;this.deaths=0;this.population=0;this.serial=0;this.injected=0;this.lastBeat=-20;this.capacity=false;this.extinctions=0;this.colorOrigin='new';this.colorSerial=0;this.colorFrames=new Map();this.branchChroma=new Map();this.cellChroma=new Array(this.total).fill(null);this.activeColorFrame=null;this.ecology=new Ecology(seed);this.cellLineage=new Array(this.total).fill(0);this.nextCellLineage=new Array(this.total).fill(0);this.nextCellChroma=new Array(this.total).fill(null);this.tipTraits=new Map();this.appearance=new Appearance(this.total,this.settings);
+ const m=MODES[this.settings.mode];for(let i=0;i<m.roots;i++){let p=[0,0,0],d=this.rng.direction();if(mode==='forest'){p=[(i-1)*8,-19,(i%2)*5-2.5];d=V.norm([.15*(i-1),1,.08]);}if(mode==='coral'){p=V.mul(d,2);d=V.norm(V.add(d,[0,.3,0]));}if(mode==='crystal')d=AXES[i];if(mode==='tetra')d=TET[i];if(mode==='vortex'){let a=i/m.roots*Math.PI*2;p=[Math.cos(a)*3,-12,Math.sin(a)*3];d=V.norm([-Math.sin(a),.55,Math.cos(a)]);}if(mode==='mycelium')p=V.mul(d,5);
+ const tip={p,d,len:m.length,level:0,root:i,phase:i*1.31},trait=this.ecology.seedTrait(i);this.tips.push(tip);this.tipTraits.set(tip,trait);this.seedAt(p,2,.35,trait)}this.recount();}
+ limits(){return this.settings.quality==='low'?{branches:5500,cells:3200}:this.settings.quality==='high'?{branches:16000,cells:11000}:{branches:10000,cells:6000}}
+ index(x,y,z){return x+this.N*(y+this.N*z)}
+ coords(p){return p.map(v=>Math.round(v/this.spacing+this.N/2))}
+ position(index){const n=this.N;return [(index%n-n/2)*this.spacing,(Math.floor(index/n)%n-n/2)*this.spacing,(Math.floor(index/n/n)-n/2)*this.spacing]}
+ nourish(p,r=2){let [x,y,z]=this.coords(p);for(let dz=-r;dz<=r;dz++)for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){const xx=x+dx,yy=y+dy,zz=z+dz;if(xx<1||xx>=this.N-1||yy<1||yy>=this.N-1||zz<1||zz>=this.N-1||dx*dx+dy*dy+dz*dz>(r+.3)**2)continue;this.substrate[this.index(xx,yy,zz)]=1}}
+ seedAt(p,r=1,density=.42,parent=null){this.nourish(p,r+1);let [x,y,z]=this.coords(p);for(let dz=-r;dz<=r;dz++)for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){const xx=x+dx,yy=y+dy,zz=z+dz;if(xx<1||xx>=this.N-1||yy<1||yy>=this.N-1||zz<1||zz>=this.N-1)continue;if(this.rng.next()<density){let i=this.index(xx,yy,zz);if(!this.cells[i]){this.cells[i]=1;this.ages[i]=1;const c=this.ecology.inherit(Color.recordCell(this.settings.seed,i,this.position(i),this.activeColorFrame),parent,this.settings,'cell',this.tick);this.appearance.cells[i]=this.appearance.current;this.cellChroma[i]=c;this.cellLineage[i]=c?.lineage||parent?.lineage||0;this.injected++}}}}
+ field(p){let [x,y,z]=this.coords(p);if(x<1||x>=this.N-1||y<1||y>=this.N-1||z<1||z>=this.N-1)return 0;return this.counts[this.index(x,y,z)]/26}
+ gradient(p){let v=[];for(let k=0;k<3;k++){let a=p.slice(),b=p.slice();a[k]+=this.spacing;b[k]-=this.spacing;v[k]=this.field(a)-this.field(b)}return V.norm(v)}
+ recount(){this.population=this.cells.reduce((s,v)=>s+v,0)}
+ lifeStep(audio){const n=this.N,nn=n*n,a=this.cells,c=this.counts;c.fill(0);for(let z=1;z<n-1;z++)for(let y=1;y<n-1;y++)for(let x=1;x<n-1;x++){let i=x+n*y+nn*z;if(!a[i])continue;for(let dz=-1;dz<=1;dz++)for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){if(dx||dy||dz)c[i+dx+n*dy+nn*dz]++}}
+ this.appearance.next.fill(0);this.next.fill(0);this.nextCellChroma.fill(null);this.nextCellLineage.fill(0);let births=0,deaths=0,pop=0;const s=this.settings,b=clamp(Math.round(s.birth),1,26),lo=clamp(Math.round(s.surviveMin),0,26),hi=clamp(Math.round(s.surviveMax)+(audio.bass>.8?1:0),lo,26),mutation=s.mutation*(.00015+audio.high*.008);
+ let newGhosts=[];for(let z=1;z<n-1;z++)for(let y=1;y<n-1;y++)for(let x=1;x<n-1;x++){let i=x+n*y+nn*z,count=c[i],alive=a[i],next=alive?(count>=lo&&count<=hi):(count===b&&this.substrate[i]);if(this.substrate[i]&&count>0&&mutation>0&&this.rng.next()<mutation)next=!next;if(next){this.next[i]=1;this.appearance.next[i]=alive?this.appearance.cells[i]:this.appearance.current;this.ages[i]=alive?Math.min(65535,this.ages[i]+1):1;pop++;if(alive){this.nextCellChroma[i]=this.cellChroma[i];this.nextCellLineage[i]=this.cellLineage[i];}else{births++;const parent=this.ecology.neighbor(this,i),color=this.ecology.inherit(Color.recordCell(this.settings.seed,i,this.position(i),this.activeColorFrame),parent,this.settings,'cell',this.tick);this.nextCellChroma[i]=color;this.nextCellLineage[i]=color?.lineage||parent?.lineage||0;}}else{if(alive){deaths++;if(newGhosts.length<800){const ghost={p:this.position(i),time:this.tick,chroma:this.cellChroma[i],...(!this.cellChroma[i]?.lineage&&this.cellLineage[i]?{trait:this.ecology.trait(null,this.cellLineage[i])}:{})};newGhosts.push(ghost);this.appearance.ghosts.set(ghost,this.appearance.cells[i]);}}this.ages[i]=0}}
+ const looks=this.appearance.cells;this.appearance.cells=this.appearance.next;this.appearance.next=looks;
+ const tmp=this.cells;this.cells=this.next;this.next=tmp;const oldChroma=this.cellChroma,oldLineage=this.cellLineage;this.cellChroma=this.nextCellChroma;this.nextCellChroma=oldChroma;this.cellLineage=this.nextCellLineage;this.nextCellLineage=oldLineage;this.population=pop;this.births=births;this.deaths=deaths;this.generation++;this.ghosts=this.ghosts.filter(g=>this.tick-g.time<8).concat(newGhosts).slice(-1800);}
+ childDirection(t,j,count,a){let mode=this.settings.mode;if(mode==='crystal'){let options=AXES.filter(d=>V.dot(d,t.d)>-.9);return options[j%options.length].slice()}if(mode==='tetra')return TET[j%4].slice();
+ let tangent=V.norm(V.cross(t.d,Math.abs(t.d[1])>.9?[1,0,0]:[0,1,0])),binormal=V.cross(t.d,tangent),angle=t.phase+j*2*Math.PI/count+this.rng.next()*.32;
+ let spread=(mode==='mycelium'?.65:mode==='coral'?.60:.47)+this.settings.branching*.6+a.mid*.22;
+ let side=V.add(V.mul(tangent,Math.cos(angle)),V.mul(binormal,Math.sin(angle)));let d=V.norm(V.add(V.mul(t.d,Math.cos(spread)),V.mul(side,Math.sin(spread))));
+ if(mode==='forest')d=V.norm(V.add(d,[0,.22,0]));if(mode==='vortex'){let r=V.norm([-t.p[2],3.5,t.p[0]]);d=V.norm(V.mix(d,r,.65));}if(mode==='mycelium')d=V.norm(V.add(d,V.mul(this.rng.direction(),.3+this.settings.mutation*.6)));return d;}
+ grow(audio,budget){let m=MODES[this.settings.mode],limit=this.limits().branches;this.capacity=this.segments.length>=limit;if(this.capacity)return;
+ for(let k=0;k<budget&&this.tips.length&&this.segments.length<limit;k++){let t=this.tips.shift(),parent=this.tipTraits.get(t);this.tipTraits.delete(t);if(t.level>this.settings.depth)continue;let local=this.field(t.p);let direction=t.d;
+ // Cellular density gently steers organic growth; geometric modes keep their symmetry.
+ if(!['crystal','tetra'].includes(this.settings.mode)&&local>.02)direction=V.norm(V.add(direction,V.mul(this.gradient(t.p),this.settings.life*.30)));
+ let length=t.len*(.8+audio.bass*.48),end=V.add(t.p,V.mul(direction,length));if(end.some(v=>Math.abs(v)>36))continue;
+ let seg={a:t.p.slice(),b:end,r:Math.max(.035,m.radius*Math.pow(.78,t.level)*(1+audio.bass*.35)),level:t.level,born:this.tick,id:this.serial++,energy:audio.energy};this.segments.push(seg);this.appearance.branches.set(seg.id,this.appearance.current);const chroma=this.ecology.inherit(Color.recordBranch(this.settings.seed,seg,this.activeColorFrame),parent,this.settings,'branch',this.tick);if(chroma)this.branchChroma.set(seg.id,chroma);this.nourish(V.mix(seg.a,seg.b,.5),2);if(this.settings.life>0)this.seedAt(end,1,.22+this.settings.life*.23,this.ecology.trait(chroma)||parent);
+ if(t.level<this.settings.depth){let count=m.branches;if(!['crystal','tetra'].includes(this.settings.mode)&&this.rng.next()>this.settings.branching+audio.mid*.3)count=1;
+ for(let j=0;j<count;j++){const child={p:end.slice(),d:this.childDirection({...t,d:direction,p:end},j,count,audio),len:t.len*m.ratio,level:t.level+1,root:t.root,phase:t.phase+1.618+j};this.tips.push(child);const trait=this.ecology.trait(chroma)||parent;if(trait)this.tipTraits.set(child,trait);} }
+ }
+ // Enforce a bounded queue without keeping only a single root's descendants.
+ if(this.tips.length>5000){let skip=Math.ceil(this.tips.length/5000);this.tips=this.tips.filter((t,i)=>{if(i%skip===0)return true;this.tipTraits.delete(t);return false;})}
+ }
+ bud(audio,force=false){if(this.tips.length>250||this.capacity||(!force&&audio.energy<.06))return;let live=[];for(let i=0;i<this.total;i++)if(this.cells[i]&&this.ages[i]>=2)live.push(i);if(!live.length)return;
+ let count=force?12:2+Math.floor(audio.bass*5);for(let j=0;j<count;j++){let i=live[Math.floor(this.rng.next()*live.length)],p=this.position(i),d=this.rng.direction();if(this.settings.mode==='forest')d=V.norm(V.add(d,[0,1.3,0]));if(this.settings.mode==='crystal')d=AXES[j%6].slice();if(this.settings.mode==='tetra')d=TET[j%4].slice();const tip={p,d,len:2+audio.bass*3,level:Math.max(0,this.settings.depth-4),root:j,phase:this.rng.next()*6.28};this.tips.push(tip);const trait=this.ecology.trait(this.cellChroma[i],this.cellLineage[i]);if(trait)this.tipTraits.set(tip,trait)}}
+ updateSettings(next){if(this.settings.paletteScope!=='future'&&next.paletteScope==='future')this.appearance.freeze(this,this.settings);this.settings=next;const before=this.appearance.current;this.appearance.update(next);if(before!==this.appearance.current)this.appearance.prune(this);}
+ step(audio){this.appearance.update(this.settings);this.tick++;const signal=audio.color||{...audio,source:audio.source||'unknown'};this.activeColorFrame=Color.createFrame(++this.colorSerial,this.tick,signal,this.settings);this.activeColorFrame.art=Color.styleFrom(this.settings);this.colorFrames.set(this.colorSerial,this.activeColorFrame);this.injected=0;this.lifeStep(audio);if(audio.energy>.015){const budget=Math.max(1,Math.floor((3+audio.energy*16)*this.settings.growth));this.grow(audio,budget);if(audio.beat||!this.tips.length)this.bud(audio);if(this.population<10&&this.tick%10===0&&this.settings.life>0){this.extinctions++;let tip=this.tips[0];this.seedAt(tip?tip.p:[0,0,0],2,.33,tip?this.tipTraits.get(tip):null)}}
+ if(this.settings.memory<100){let ttl=30+this.settings.memory*4;this.segments=this.segments.filter(s=>this.tick-s.born<ttl)}
+ this.recount();if(this.tick%24===0)this.pruneColors();}
+ serialize(){return {format:'choral-specimen',version:VERSION,settings:{...this.settings},chromatic:this.serializeColors(),appearance:this.appearance.serialize(this),state:{tick:this.tick,generation:this.generation,rng:this.rng.s,segments:this.segments,tips:this.tips,cells:Array.from(this.cells),ages:Array.from(this.ages),substrate:Array.from(this.substrate),serial:this.serial}}}
+ restore(data){
+ const supported=data&&((data.format==='choral-specimen'&&['0.2.0','0.3.0','0.4.0','0.5.0','0.6.0',VERSION].includes(data.version))||(data.format==='vivarium-specimen'&&data.version==='0.1.0'));
+ if(!supported||!data.state||!data.settings||typeof data.settings!=='object'||Array.isArray(data.settings))throw Error('Use a C(H)ORAL v0.2–v0.7 or legacy VIVARIUM v0.1 specimen.');
+ const s=data.state;if(!Array.isArray(s.substrate)||s.substrate.length!==this.total||!s.substrate.every(x=>x===0||x===1)||!Array.isArray(s.cells)||s.cells.length!==this.total||!Array.isArray(s.ages)||s.ages.length!==this.total||!Array.isArray(s.segments)||s.segments.length>16000||!Array.isArray(s.tips)||s.tips.length>5000)throw Error('Specimen dimensions or limits are invalid.');
+ const finite=(n,a=-1e7,b=1e7)=>typeof n==='number'&&Number.isFinite(n)&&n>=a&&n<=b,point=p=>Array.isArray(p)&&p.length===3&&p.every(n=>finite(n,-100,100));
+ for(const x of s.segments)if(!point(x.a)||!point(x.b)||!finite(x.r,.001,5)||!finite(x.level,0,20)||!finite(x.born,0)||!finite(x.energy,0,1))throw Error('Invalid branch geometry.');for(const x of s.tips)if(!point(x.p)||!point(x.d)||!finite(x.len,0,100)||!finite(x.level,0,20)||!finite(x.phase))throw Error('Invalid growth tip.');if(!s.cells.every(x=>x===0||x===1)||!s.ages.every(x=>Number.isInteger(x)&&x>=0&&x<=65535)||!finite(s.tick,0)||!finite(s.generation,0)||!finite(s.rng,0,4294967295)||!finite(s.serial,0))throw Error('Invalid cellular state.');
+ const colorState=['0.3.0','0.4.0','0.5.0','0.6.0',VERSION].includes(data.version)?this.validateColors(data.chromatic,s,data.version==='0.3.0'?1:2):null;
+ const ecologyState=['0.4.0','0.5.0','0.6.0',VERSION].includes(data.version)?Ecology.validate(data.chromatic.ecology,s,colorState,this.total,sanitize(data.settings).seed):null;
+ if(['0.6.0',VERSION].includes(data.version)&&!Lighting.valid(data.settings))throw Error('Invalid lighting settings. The open specimen was not replaced.');
+ if(data.version===VERSION&&!Response.valid(data.settings))throw Error('Invalid color-response or motion settings. The open specimen was not replaced.');
+ const appearanceState=['0.5.0','0.6.0',VERSION].includes(data.version)?Appearance.validate(data.appearance,s,colorState.ghosts,this.total,sanitize(data.settings)):null;
+ this.settings=sanitize(data.format==='vivarium-specimen'?{...data.settings,palette:['biolume','aurora','ember','mono'].includes(data.settings.palette)?data.settings.palette:'biolume'}:data.settings);this.reset(this.settings.mode,this.settings.seed);this.tick=s.tick;this.generation=s.generation;this.rng.s=s.rng>>>0;this.segments=structuredClone(s.segments);this.tips=structuredClone(s.tips);this.cells.set(s.cells);this.ages.set(s.ages);this.substrate.set(s.substrate);this.serial=s.serial;this.recount();this.colorOrigin=colorState?.origin||'legacy-v'+data.version;if(colorState){this.colorSerial=colorState.serial;this.colorFrames=colorState.frames;this.branchChroma=colorState.branches;this.cellChroma=colorState.cells;this.ghosts=colorState.ghosts;}this.activeColorFrame=null;this.ecology=ecologyState?.ecology||new Ecology(this.settings.seed);if(!ecologyState){this.ecology.origin='legacy-v'+data.version;this.ecology.started=this.tick;}this.cellLineage=ecologyState?.cellLineage||new Array(this.total).fill(0);this.nextCellLineage=new Array(this.total).fill(0);this.nextCellChroma=new Array(this.total).fill(null);this.tipTraits=new Map();if(ecologyState)for(const [i,trait] of ecologyState.tipTraits)this.tipTraits.set(this.tips[i],trait);this.appearance=appearanceState||new Appearance(this.total,this.settings);if(!appearanceState)this.appearance.initialize(this);}
+
+
+ // Color metadata is separate from geometry, so artist controls never perturb
+ // cellular rules or the simulation RNG. Export only referenced frames.
+ referencedColors(){
+  const ids=new Set(this.segments.map(s=>s.id)),branches=[...this.branchChroma].filter(([id])=>ids.has(id));
+  const cells=[];for(let i=0;i<this.total;i++)if(this.cells[i]&&this.cellChroma[i])cells.push([i,this.cellChroma[i]]);
+  const used=new Set([...branches,...cells].map(([,c])=>c.frame));for(const g of this.ghosts)if(g.chroma)used.add(g.chroma.frame);
+  return {branches,cells,used};
+ }
+ pruneColors(){const {branches,used}=this.referencedColors();this.branchChroma=new Map(branches);for(const id of this.colorFrames.keys())if(!used.has(id))this.colorFrames.delete(id);this.ecology.prune(this);this.appearance.prune(this);}
+ serializeColors(){const {branches,cells,used}=this.referencedColors();return {schema:2,ecology:this.ecology.serialize(this),origin:this.colorOrigin,serial:this.colorSerial,frames:[...this.colorFrames.values()].filter(f=>used.has(f.id)),branches,cells,ghosts:this.ghosts};}
+ colorStats(){return {recordedBranches:this.segments.reduce((n,s)=>n+(this.branchChroma.has(s.id)?1:0),0),recordedCells:this.cellChroma.reduce((n,c,i)=>n+(this.cells[i]&&c?1:0),0),origin:this.colorOrigin,...this.ecology.stats(this)};}
+ validateColors(c,state,schema=2){
+  const bad=()=>{throw Error('Invalid color history. The current specimen has not been changed.')};
+  const num=(x,a=0,b=Number.MAX_SAFE_INTEGER)=>typeof x==='number'&&Number.isFinite(x)&&x>=a&&x<=b;
+  const integer=(x,a=0,b=Number.MAX_SAFE_INTEGER)=>Number.isSafeInteger(x)&&x>=a&&x<=b;
+  if(!c||c.schema!==schema||!['new','legacy-v0.1.0','legacy-v0.2.0'].includes(c.origin)||!integer(c.serial)||!Array.isArray(c.frames)||c.frames.length>51000||!Array.isArray(c.branches)||c.branches.length>16000||!Array.isArray(c.cells)||c.cells.length>this.total||!Array.isArray(c.ghosts)||c.ghosts.length>1800)bad();
+  if(c.origin==='new'&&c.branches.length!==state.segments.length)bad();
+  const frames=new Map();for(const f of c.frames){if(!f||!integer(f.id,1,c.serial)||frames.has(f.id)||!num(f.tick,0,state.tick)||!Color.SOURCES.includes(f.source)||!Object.hasOwn(Color.PALETTES,f.palette)||!num(f.influence,0,1)||!f.signal||!['energy','bass','mid','high'].every(k=>num(f.signal[k],0,1))||typeof f.signal.onset!=='boolean'||(f.art!==undefined&&(!Color.validStyle(f.art)||f.art.palette!==f.palette)))bad();frames.set(f.id,structuredClone(f));}
+  const segs=new Map();for(const seg of state.segments){if(integer(seg.id)){if(segs.has(seg.id))bad();segs.set(seg.id,seg);}}
+  if([...segs.keys()].some(id=>id>=state.serial))bad();
+  const branches=new Map();for(const entry of c.branches){if(!Array.isArray(entry)||entry.length!==2)bad();const [id,rec]=entry;if(!segs.has(id)||branches.has(id)||!Color.validateRecord(rec,frames)||frames.get(rec.frame).tick!==segs.get(id).born)bad();branches.set(id,structuredClone(rec));}
+  const cells=new Array(this.total).fill(null);for(const entry of c.cells){if(!Array.isArray(entry)||entry.length!==2)bad();const [id,rec]=entry;if(!integer(id,0,this.total-1)||!state.cells[id]||cells[id]||!Color.validateRecord(rec,frames))bad();cells[id]=structuredClone(rec);}
+  const ghosts=[];for(const g of c.ghosts){if(!g||!Array.isArray(g.p)||g.p.length!==3||!g.p.every(v=>num(v,-100,100))||!num(g.time,0,state.tick)||state.tick-g.time>=8||(g.chroma!==null&&!Color.validateRecord(g.chroma,frames)))bad();ghosts.push(structuredClone(g));}
+  return {origin:c.origin,serial:c.serial,frames,branches,cells,ghosts};
+ }
+
+}
+function sanitize(input){if(!input||typeof input!=='object'||Array.isArray(input))input={};let s={...DEFAULTS,...Lighting.sanitize(input),...Response.sanitize(input)};for(let k of ['mode','silence','palette','paletteScope','quality','theme']){const allowed={mode:Object.keys(MODES),silence:['preserve','decay','idle'],palette:Object.keys(Color.PALETTES),paletteScope:['existing','future'],quality:['low','balanced','high'],theme:['dark','light','contrast']}[k];if(allowed.includes(input[k]))s[k]=input[k]}
+ const ranges={colorDiversity:[0,1],hueBias:[-180,180],colorSaturation:[0,1.5],branchHue:[-180,180],cellHue:[-180,180],sporeHue:[-180,180],seed:[0,4294967295],growth:[.1,4],branching:[0,1],mutation:[0,1],depth:[3,10],sensitivity:[.1,8],gate:[0,.15],life:[0,1],glow:[0,1.5],soundColor:[0,1],colorSmoothing:[.08,1.2],colorInheritance:[0,1],lineageVariation:[0,1],colorMutation:[0,1],memory:[0,100],birth:[1,26],surviveMin:[0,26],surviveMax:[0,26]};for(let k in ranges)if(typeof input[k]==='number'&&Number.isFinite(input[k]))s[k]=clamp(input[k],...ranges[k]);for(let k of ['orbit','motion','skeleton','cells','spores','colorAccents'])if(typeof input[k]==='boolean')s[k]=input[k];s.surviveMax=Math.max(s.surviveMin,s.surviveMax);return s}
+
+// Read-only migration. Saving to STORAGE is performed by the UI only after loading.
+// The legacy key is deliberately never deleted or overwritten.
+function loadSettings(storage,reduced=false){
+ // System preference is evaluated at runtime, never baked into a saved override.
+ const defaults={...DEFAULTS};
+ const notices=[];
+ if(!storage)return {settings:defaults,source:'unavailable',notice:'Local settings storage is unavailable.'};
+ for(const key of [STORAGE,LEGACY_STORAGE]){
+  let raw;
+  try{raw=storage.getItem(key)}catch{return {settings:defaults,source:'unavailable',notice:'Local settings storage is unavailable.'}}
+  if(raw===null)continue;
+  try{
+   const value=JSON.parse(raw);
+   if(!value||typeof value!=='object'||Array.isArray(value)||!Object.keys(DEFAULTS).some(k=>Object.hasOwn(value,k)))throw Error('Invalid settings object');
+   const legacy=key===LEGACY_STORAGE;
+   const settings=sanitize(legacy?{...value,palette:['biolume','aurora','ember','mono'].includes(value.palette)?value.palette:'biolume'}:value);
+   if(legacy)notices.push('Earlier settings restored without changing the original. Choose Full Spectrum to try the new colors without resetting growth.');
+   return {settings,source:legacy?'legacy':'choral',notice:notices.join(' ')};
+  }catch{
+   // Preserve damaged JSON before the normal autosave writes a usable configuration.
+   const backup=key+'.recovery';let saved=false;
+   try{storage.setItem(backup,raw);saved=true}catch{}
+   notices.push(saved?'Unreadable saved settings were copied to a local recovery key.':'Saved settings could not be read or backed up.');
+  }
+ }
+ return {settings:defaults,source:'default',notice:notices.join(' ')};
+}
+
+const api={World,Random,V,clamp,MODES,DEFAULTS,VERSION,STORAGE,LEGACY_STORAGE,sanitize,loadSettings};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ChoralCore=api;
+})(typeof window==='undefined'?globalThis:window);
+
+(function(root){
+'use strict';
+const {V,clamp}=root.ChoralCore;
+const {palette,branchColor,cellColor,sporeColor,styleColor}=root.ChoralColor;
+const mul4=(a,b)=>{const o=new Float32Array(16);for(let c=0;c<4;c++)for(let r=0;r<4;r++)for(let k=0;k<4;k++)o[c*4+r]+=a[k*4+r]*b[c*4+k];return o};
+function perspective(fov,aspect,near,far){let f=1/Math.tan(fov/2),nf=1/(near-far);return new Float32Array([f/aspect,0,0,0,0,f,0,0,0,0,(far+near)*nf,-1,0,0,2*far*near*nf,0])}
+function lookAt(eye,center){let z=V.norm(V.sub(eye,center)),x=V.norm(V.cross([0,1,0],z)),y=V.cross(z,x);return new Float32Array([x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-V.dot(x,eye),-V.dot(y,eye),-V.dot(z,eye),1])}
+const vs=`#version 300 es
+precision highp float;
+layout(location=0) in vec3 position;layout(location=1) in vec3 normal;
+layout(location=2) in mat4 model;layout(location=6) in vec3 color;layout(location=7) in float born;
+uniform mat4 viewProjection;uniform float time;uniform float kind;
+out vec3 vNormal;out vec3 vColor;out vec3 vWorld;out float vAccentMask;
+void main(){vec3 p=position;float grow=smoothstep(0.0,1.0,time-born);if(kind<.5)p.y*=grow;else p*=.65+.35*grow;vec4 w=model*vec4(p,1.0);vWorld=w.xyz;float age=max(0.0,time-born);float young=1.0-smoothstep(2.0,14.0,age);vec3 anchor=model[3].xyz;float locality=fract(sin(dot(anchor,vec3(12.9898,78.233,37.719)))*43758.5453);vAccentMask=young*(kind<.5?smoothstep(.65,1.0,position.y):step(.68,locality));mat3 nm=mat3(model[0].xyz/max(dot(model[0].xyz,model[0].xyz),1e-10),model[1].xyz/max(dot(model[1].xyz,model[1].xyz),1e-10),model[2].xyz/max(dot(model[2].xyz,model[2].xyz),1e-10));vNormal=normalize(nm*normal);vColor=color;gl_Position=viewProjection*w;}`;
+const hueGLSL=`
+// HSV hue rotation preserves each material's saturation/value and simultaneous color diversity.
+vec3 livingColor(vec3 c,float shift){
+ vec4 K=vec4(0.0,-1.0/3.0,2.0/3.0,-1.0);
+ vec4 p=mix(vec4(c.bg,K.wz),vec4(c.gb,K.xy),step(c.b,c.g));
+ vec4 q=mix(vec4(p.xyw,c.r),vec4(c.r,p.yzx),step(p.x,c.r));
+ float d=q.x-min(q.w,q.y),e=1e-10;
+ vec3 h=vec3(abs(q.z+(q.w-q.y)/(6.0*d+e)),d/(q.x+e),q.x);
+ vec3 rgb=clamp(abs(fract(vec3(h.x+shift)+vec3(0.0,2.0/3.0,1.0/3.0))*6.0-3.0)-1.0,0.0,1.0);
+ return h.z*mix(vec3(1.0),rgb,h.y);
+}`;
+const fs=`#version 300 es
+precision highp float;
+in vec3 vNormal;in vec3 vColor;in vec3 vWorld;in float vAccentMask;
+uniform vec3 eye;uniform vec3 keyDirection;uniform vec3 forward;
+uniform float focusDistance;uniform float illumination;uniform float emission;
+uniform float interiorFill;uniform float depthCue;uniform float renderMode;
+uniform float livingHue;
+${hueGLSL}
+uniform float pulse;uniform float kind;uniform vec3 accentColor;uniform float accentPower;uniform float retainColors;
+out vec4 outColor;
+// Compress peak energy by ONE scalar, never per-channel clipping or white highlights.
+vec3 preserveHue(vec3 c){float peak=max(c.r,max(c.g,c.b));if(peak>.78){float shoulder=.78+.205*(1.0-exp(-(peak-.78)/.205));c*=shoulder/max(peak,.00001);}return c;}
+void main(){
+ vec3 n=normalize(vNormal);if(!gl_FrontFacing)n=-n;
+ vec3 e=normalize(eye-vWorld);float facing=max(0.0,dot(n,e));
+ float mask=vAccentMask*accentPower;
+ vec3 tint=retainColors>.5?mix(vColor,vColor.gbr,.24):accentColor;
+ vec3 surface=mix(vColor,tint,mask*.64);if(abs(livingHue)>.000001)surface=livingColor(surface,livingHue);
+ if(renderMode>1.5){outColor=vec4(surface,1.0);return;}
+ float key=max(0.0,dot(n,keyDirection));
+ float above=max(0.0,n.y),below=max(0.0,-n.y);
+ float ambient=.14+interiorFill*(.34+.18*above+.22*below+.16*facing);
+ float rim=pow(1.0-facing,2.4);
+ float spec=pow(max(0.0,dot(n,normalize(e+keyDirection))),28.0);
+ float diffuse=ambient+.62*key;
+ if(renderMode>.5)diffuse*=.66;
+ // Surface light and self-emission are independent. Zero both means no surface light.
+ float lit=illumination*(diffuse+.13*spec);
+ float emitting=emission*(kind>.5?.85:(.23+.52*vAccentMask+.22*rim));
+ emitting*=1.0+pulse*.18*vAccentMask;
+ float behind=clamp((dot(vWorld-eye,forward)-focusDistance+40.0)/80.0,0.0,1.0);
+ vec3 c=preserveHue(surface*(lit+emitting))*(1.0-depthCue*behind);
+ outColor=vec4(c,1.0);
+}`;
+const pvs=`#version 300 es
+precision highp float;layout(location=0) in vec3 position;layout(location=1) in vec3 color;layout(location=2) in float size;layout(location=3) in float opacity;out float vOpacity;uniform mat4 viewProjection;uniform vec3 eye;uniform float livingHue;
+${hueGLSL}
+uniform float pixelScale;uniform vec3 accentColor;uniform float accentPower;uniform float retainColors;out vec3 vColor;void main(){vOpacity=opacity;vec4 p=viewProjection*vec4(position,1.0);gl_Position=p;gl_PointSize=clamp(size*pixelScale/max(2.0,p.w),1.0,100.0);float locality=step(.70,fract(sin(dot(position,vec3(12.98,78.23,37.71)))*43758.5453));vec3 tint=retainColors>.5?mix(color,color.gbr,.24):accentColor;vColor=mix(color,tint*min(1.0,max(color.r,max(color.g,color.b))),locality*accentPower*.42);if(abs(livingHue)>.000001)vColor=livingColor(vColor,livingHue);}`;
+const pfs=`#version 300 es
+precision highp float;in vec3 vColor;in float vOpacity;uniform float intensity;out vec4 outColor;
+void main(){vec2 q=gl_PointCoord*2.0-1.0;float d=dot(q,q);if(d>1.0)discard;
+ float a=min(.78,exp(-d*4.0)*(1.0-d)*intensity)*vOpacity;
+ outColor=vec4(clamp(vColor,0.0,.985)*a,a);
+}`;
+function shader(gl,type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s)||'Shader compilation failed.');return s}
+function program(gl,v,f){let p=gl.createProgram(),a=shader(gl,gl.VERTEX_SHADER,v),b=shader(gl,gl.FRAGMENT_SHADER,f);gl.attachShader(p,a);gl.attachShader(p,b);gl.linkProgram(p);gl.deleteShader(a);gl.deleteShader(b);if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(p)||'Shader link failed.');return p}
+function geometry(type){let out=[];const tri=(a,b,c,smooth=false)=>{let n=V.norm(V.cross(V.sub(b,a),V.sub(c,a)));for(let p of [a,b,c])out.push(...p,...(smooth?V.norm(p):n))};
+ if(type==='cylinder'){let N=8;for(let i=0;i<N;i++){let a=i/N*Math.PI*2,b=(i+1)/N*Math.PI*2,p=[Math.cos(a),0,Math.sin(a)],q=[Math.cos(b),0,Math.sin(b)],r=[Math.cos(a),1,Math.sin(a)],s=[Math.cos(b),1,Math.sin(b)];tri(p,r,q);tri(q,r,s);tri([0,0,0],p,q);tri([0,1,0],s,r)}}
+ else if(type==='cube'){let v=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]],faces=[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[3,7,6],[3,6,2],[0,4,7],[0,7,3],[1,2,6],[1,6,5]];faces.forEach(f=>tri(...f.map(i=>v[i])))}
+ else if(type==='tetra'){let v=[[1,1,1],[-1,-1,1],[-1,1,-1],[1,-1,-1]].map(V.norm);[[0,2,1],[0,1,3],[0,3,2],[1,2,3]].forEach(f=>tri(...f.map(i=>v[i])))}
+ else {let t=(1+Math.sqrt(5))/2,v=[[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]].map(V.norm),faces=[[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];faces.forEach(f=>tri(...f.map(i=>v[i]),true))}
+ return new Float32Array(out)}
+class View {
+ constructor(canvas){this.canvas=canvas;const gl=canvas.getContext('webgl2',{antialias:true,alpha:true,preserveDrawingBuffer:true,powerPreference:'high-performance'});if(!gl)throw Error('C(H)ORAL needs WebGL 2. Enable browser hardware acceleration or try a current browser.');this.gl=gl;this.program=program(gl,vs,fs);this.pointProgram=program(gl,pvs,pfs);this.meshes={};for(let t of ['cylinder','sphere','cube','tetra'])this.meshes[t]=this.makeMesh(geometry(t));this.pointVAO=gl.createVertexArray();this.pointBuffer=gl.createBuffer();gl.bindVertexArray(this.pointVAO);gl.bindBuffer(gl.ARRAY_BUFFER,this.pointBuffer);for(let i=0;i<4;i++){gl.enableVertexAttribArray(i);gl.vertexAttribPointer(i,i>=2?1:3,gl.FLOAT,false,32,i===0?0:i===1?12:i===2?24:28)}gl.bindVertexArray(null);this.yaw=.65;this.pitch=.28;this.distance=102;this.target=[0,0,0];this.dragging=false;this.pointerMap=new Map();this.auto=true;this.bind();this.resize();this.drawnCells=0;this.drawnSegments=0;this.dirty=true;this.frameCount=0;this.status='ready';this.systemReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;this.cameraChanged=()=>{};
+ canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();this.status='lost';document.dispatchEvent(new CustomEvent('choral-render-error',{detail:'The graphics context was lost. Export your specimen, then reload to restore graphics.'}))});canvas.addEventListener('webglcontextrestored',()=>location.reload());}
+ makeMesh(data){const g=this.gl,vao=g.createVertexArray(),vertices=g.createBuffer(),instances=g.createBuffer();g.bindVertexArray(vao);g.bindBuffer(g.ARRAY_BUFFER,vertices);g.bufferData(g.ARRAY_BUFFER,data,g.STATIC_DRAW);for(let i=0;i<2;i++){g.enableVertexAttribArray(i);g.vertexAttribPointer(i,3,g.FLOAT,false,24,i*12)}g.bindBuffer(g.ARRAY_BUFFER,instances);for(let i=0;i<4;i++){g.enableVertexAttribArray(2+i);g.vertexAttribPointer(2+i,4,g.FLOAT,false,80,i*16);g.vertexAttribDivisor(2+i,1)}g.enableVertexAttribArray(6);g.vertexAttribPointer(6,3,g.FLOAT,false,80,64);g.vertexAttribDivisor(6,1);g.enableVertexAttribArray(7);g.vertexAttribPointer(7,1,g.FLOAT,false,80,76);g.vertexAttribDivisor(7,1);g.bindVertexArray(null);return {vao,vertices,instances,count:0,verticesCount:data.length/6}}
+ bind(){const c=this.canvas;c.addEventListener('contextmenu',e=>e.preventDefault());c.addEventListener('pointerdown',e=>{this.pointerMap.set(e.pointerId,{x:e.clientX,y:e.clientY});c.setPointerCapture(e.pointerId);this.dragging=true;this.pinch=null;this.cameraChanged()});c.addEventListener('pointermove',e=>{let old=this.pointerMap.get(e.pointerId);if(!old)return;let dx=e.clientX-old.x,dy=e.clientY-old.y;this.pointerMap.set(e.pointerId,{x:e.clientX,y:e.clientY});if(this.pointerMap.size===2){let p=[...this.pointerMap.values()],dist=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);if(this.pinch)this.distance=clamp(this.distance*this.pinch/dist,5,1600);this.pinch=dist}else if(e.buttons===2||e.shiftKey){let right=[Math.cos(this.yaw),0,-Math.sin(this.yaw)];this.target=V.add(this.target,V.mul(right,-dx*this.distance*.0012));this.target[1]+=dy*this.distance*.0012}else{this.yaw-=dx*.006;this.pitch=clamp(this.pitch+dy*.006,-1.48,1.48)}this.cameraChanged()});const up=e=>{this.pointerMap.delete(e.pointerId);this.dragging=this.pointerMap.size>0;this.pinch=null};c.addEventListener('pointerup',up);c.addEventListener('pointercancel',up);c.addEventListener('wheel',e=>{e.preventDefault();this.distance=clamp(this.distance*Math.exp(e.deltaY*.0013),5,1600);this.cameraChanged()},{passive:false});window.addEventListener('resize',()=>this.resize())}
+ resize(){let dpr=Math.min(window.devicePixelRatio||1,this.quality==='low'?1:1.6),w=window.innerWidth,h=window.innerHeight;this.canvas.width=Math.round(w*dpr);this.canvas.height=Math.round(h*dpr);this.w=w;this.h=h;this.dpr=dpr;this.gl.viewport(0,0,this.canvas.width,this.canvas.height)}
+ matrix(p,d,sx,sy,sz){let y=V.norm(d),x=V.norm(V.cross(Math.abs(y[1])>.9?[1,0,0]:[0,1,0],y)),z=V.cross(x,y);return [...V.mul(x,sx),0,...V.mul(y,sy),0,...V.mul(z,sz),0,...p,1]}
+ upload(mesh,data){const g=this.gl;g.bindBuffer(g.ARRAY_BUFFER,mesh.instances);g.bufferData(g.ARRAY_BUFFER,new Float32Array(data),g.DYNAMIC_DRAW);mesh.count=data.length/20}
+ sync(world,s){world.appearance.update(s);const looks=world.appearance,scope=s.paletteScope,seed=world.settings.seed;let data=[],paletteName=s.palette;for(let seg of world.segments){let d=V.sub(seg.b,seg.a),age=world.tick-seg.born,c=styleColor(looks.forBranch(seg.id,scope),seed,seg,'branch',world.tick,world.branchChroma.get(seg.id));data.push(...this.matrix(seg.a,d,seg.r*.75,Math.hypot(...d),seg.r*.75),...c,seg.born)}this.upload(this.meshes.cylinder,data);this.drawnSegments=world.segments.length;data=[];this.haloData=[];
+ const max=world.limits().cells,ratio=Math.min(1,max/Math.max(1,world.population));let ccount=0;for(let i=0;i<world.total;i++){if(!world.cells[i])continue;// Stable hash sampling distributes the rendering budget throughout all three axes.
+ if(((Math.imul(i,2654435761)>>>0)/4294967296)>ratio)continue;let p=world.position(i),age=world.ages[i],look=looks.forCell(i,scope),trait=world.cellLineage[i]&&!world.cellChroma[i]?world.ecology.lineages.get(world.cellLineage[i]):null,col=styleColor(look,seed,{p,age},'cell',world.tick,world.cellChroma[i],trait),r=(.13+s.life*.28)*(age<3?.75:1);if(s.mode==='crystal')r*=1.4;if(s.mode==='tetra')r*=1.2;data.push(...this.matrix(p,[0,1,0],r,r,r),...col,world.tick-Math.max(0,age-1));if(i%4===0){const halo=look.cellHue===look.sporeHue?col:styleColor({...look,cellHue:look.sporeHue},seed,{p,age},'cell',world.tick,world.cellChroma[i],trait);this.haloData.push(...p,...halo,3.2+age*.025,1);}ccount++}
+ const cellType=s.mode==='crystal'?'cube':s.mode==='tetra'?'tetra':'sphere';this.cellType=cellType;this.upload(this.meshes[cellType],data);this.drawnCells=ccount;
+ if(s.spores){for(let g of world.ghosts){let age=world.tick-g.time,fade=clamp(1-age/8),p=[g.p[0],g.p[1]+age*.18,g.p[2]],col=styleColor(looks.forGhost(g,scope),seed,{p:g.p},'spore',world.tick,g.chroma,g.trait);this.haloData.push(...p,...col,2+age*.15,fade)}}this.haloCount=this.haloData.length/8;this.haloSortKey=null;this.dirty=false;this.syncCount=(this.syncCount||0)+1;}
+ sortHalos(eye,forward){
+  const key=[...eye,...forward].join(',');if(this.haloSortKey===key)return;
+  const g=this.gl,data=this.haloData,order=Array.from({length:this.haloCount},(_,i)=>i*8);
+  // Back-to-front source-over; opaque geometry still writes/tests depth.
+  const depth=i=>data[i]*forward[0]+data[i+1]*forward[1]+data[i+2]*forward[2];
+  order.sort((a,b)=>depth(b)-depth(a)||a-b);
+  if(!this.sortedHalos||this.sortedHalos.length!==data.length)this.sortedHalos=new Float32Array(data.length);
+  for(let j=0;j<order.length;j++)for(let k=0;k<8;k++)this.sortedHalos[j*8+k]=data[order[j]+k];
+  g.bindBuffer(g.ARRAY_BUFFER,this.pointBuffer);g.bufferData(g.ARRAY_BUFFER,this.sortedHalos,g.DYNAMIC_DRAW);this.haloSortKey=key;
+ }
+ setUniform(p,name,type,...args){const gl=this.gl;if(!this.uniforms)this.uniforms=new Map();if(!this.uniforms.has(p))this.uniforms.set(p,new Map());const cache=this.uniforms.get(p);if(!cache.has(name))cache.set(name,gl.getUniformLocation(p,name));const l=cache.get(name);if(type==='matrix')gl.uniformMatrix4fv(l,false,args[0]);else if(type==='vec3')gl.uniform3fv(l,args[0]);else gl.uniform1f(l,args[0])}
+ render(world,s,a,dt,phase=0,colorSignal=null){if(this.status!=='ready')return;if(this.quality!==s.quality){this.quality=s.quality;this.resize()}if(this.dirty)this.sync(world,s);const response=root.ChoralResponse.frame(s,colorSignal||a,this.systemReduced);this.response=response;if(response.orbit&&!this.dragging)this.yaw+=dt*.065;let eye=[this.target[0]+Math.sin(this.yaw)*Math.cos(this.pitch)*this.distance,this.target[1]+Math.sin(this.pitch)*this.distance,this.target[2]+Math.cos(this.yaw)*Math.cos(this.pitch)*this.distance],p=perspective(this.w<this.h?2*Math.atan(Math.tan(.36)/(this.w/this.h)):.72,this.w/this.h,.1,4000);p[8]=this.w>650&&!document.body.classList.contains('panel-hidden')?-(Math.min(360,this.w*.38)/this.w):0;if(this.w<=650&&!document.body.classList.contains('panel-hidden')){const panel=document.getElementById('panel'),header=document.querySelector('header'),top=(header?.getBoundingClientRect().bottom||82)+8,bottom=(panel?.getBoundingClientRect().top||this.h*.30)-8,available=bottom-top;if(available>55){const scale=Math.min(1,available/(Math.min(this.w,this.h)*.55));p[0]*=scale;p[5]*=scale;p[9]=(top+bottom)/this.h-1;}}let vp=mul4(p,lookAt(eye,this.target));this.lastEye=eye;
+ let gl=this.gl,bg=s.theme==='light'?[.90,.94,.91]:s.theme==='contrast'?[0,0,0]:[.025,.045,.044];gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.enable(gl.DEPTH_TEST);gl.depthMask(true);gl.disable(gl.BLEND);gl.disable(gl.CULL_FACE);gl.useProgram(this.program);
+ this.setUniform(this.program,'viewProjection','matrix',vp);this.setUniform(this.program,'eye','vec3',eye);this.setUniform(this.program,'time','float',world.tick+(response.interpolate?phase:1));const forward=V.norm(V.sub(this.target,eye));this.setUniform(this.program,'forward','vec3',forward);this.setUniform(this.program,'focusDistance','float',this.distance);this.setUniform(this.program,'keyDirection','vec3',root.ChoralLighting.direction(s,this.yaw));for(const key of ['illumination','emission','interiorFill','depthCue'])this.setUniform(this.program,key,'float',s[key]);this.setUniform(this.program,'renderMode','float',s.renderMode==='unlit'?2:s.renderMode==='bioluminescent'?1:0);const cs=colorSignal||a,accentPower=response.accentPower;this.setUniform(this.program,'livingHue','float',response.livingHue);this.setUniform(this.program,'retainColors','float',s.paletteScope==='future'?1:0);this.setUniform(this.program,'pulse','float',response.pulse);this.setUniform(this.program,'accentColor','vec3',root.ChoralColor.liveColor(s.palette,cs));this.setUniform(this.program,'accentPower','float',accentPower);
+ const draw=(mesh,type)=>{this.setUniform(this.program,'kind','float',type);gl.bindVertexArray(mesh.vao);gl.drawArraysInstanced(gl.TRIANGLES,0,mesh.verticesCount,mesh.count)};if(s.skeleton)draw(this.meshes.cylinder,0);if(s.cells&&s.life>0)draw(this.meshes[this.cellType||'sphere'],1);
+ if(s.spores&&s.glow>0&&this.haloData?.length){gl.enable(gl.BLEND);this.sortHalos(eye,forward);gl.blendEquation(gl.FUNC_ADD);gl.blendFuncSeparate(gl.ONE,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(false);gl.useProgram(this.pointProgram);this.setUniform(this.pointProgram,'viewProjection','matrix',vp);this.setUniform(this.pointProgram,'eye','vec3',eye);this.setUniform(this.pointProgram,'pixelScale','float',this.canvas.height*.7);this.setUniform(this.pointProgram,'intensity','float',.60*s.glow);this.setUniform(this.pointProgram,'livingHue','float',response.livingHue);this.setUniform(this.pointProgram,'retainColors','float',s.paletteScope==='future'?1:0);this.setUniform(this.pointProgram,'accentColor','vec3',root.ChoralColor.liveColor(s.palette,cs));this.setUniform(this.pointProgram,'accentPower','float',accentPower);gl.bindVertexArray(this.pointVAO);gl.drawArrays(gl.POINTS,0,this.haloCount);gl.depthMask(true);gl.disable(gl.BLEND)}gl.bindVertexArray(null);this.frameCount++}
+ fit(world){let min=[-8,-8,-8],max=[8,8,8];for(let s of world.segments)for(let p of [s.a,s.b])for(let i=0;i<3;i++){min[i]=Math.min(min[i],p[i]);max[i]=Math.max(max[i],p[i])}this.target=min.map((v,i)=>(v+max[i])/2);for(let i=0;i<world.total;i++)if(world.cells[i]){let p=world.position(i);for(let k=0;k<3;k++){min[k]=Math.min(min[k],p[k]);max[k]=Math.max(max[k],p[k])}}this.target=min.map((v,i)=>(v+max[i])/2);this.distance=clamp(Math.max(...max.map((v,i)=>v-min[i]))*2.45,110,360);this.cameraChanged()}
+ camera(){return {yaw:this.yaw,pitch:this.pitch,distance:this.distance,target:this.target.slice()}}
+ restoreCamera(c){if(!c||!['yaw','pitch','distance'].every(k=>Number.isFinite(c[k]))||!Array.isArray(c.target)||c.target.length!==3||!c.target.every(Number.isFinite))return;this.yaw=c.yaw;this.pitch=clamp(c.pitch,-1.48,1.48);this.distance=clamp(c.distance,5,1600);this.target=c.target.map(v=>clamp(v,-150,150))}
+}
+root.ChoralView={View,palette};
+})(window);
+
+(function(root){
+'use strict';const {clamp}=root.ChoralCore;
+class AudioEngine {
+ constructor(el,notify){this.element=el;this.notify=notify;this.kind='preview';this.label='Preview signal · not listening';this.ctx=null;this.stream=null;this.node=null;this.fileNode=null;this.objectURL=null;this.requestID=0;this.features={energy:0,bass:0,mid:0,high:0,beat:false,rms:0};this.fluxMean=.01;this.lastBeat=-1000;this.prevEnergy=0;this.beats=0;this.outputMuted=false;this.testNodes=[];this.testMode=null;this.studyBand=null;this.sourceStarted=performance.now();this.noSignal=false;this.previewTime=0;this.spectrum=new Float32Array(48);}
+ async ensure(){if(!this.ctx){const C=window.AudioContext||window.webkitAudioContext;if(!C)throw Error('Web Audio is unavailable in this browser.');this.ctx=new C();this.analyser=this.ctx.createAnalyser();this.analyser.fftSize=4096;this.analyser.smoothingTimeConstant=.55;this.analyser.minDecibels=-95;this.analyser.maxDecibels=-8;this.freq=new Float32Array(this.analyser.frequencyBinCount);this.previousFreq=new Float32Array(this.freq.length);this.wave=new Float32Array(this.analyser.fftSize);this.output=this.ctx.createGain();this.output.gain.value=this.outputMuted?0:.75;this.output.connect(this.ctx.destination);this.silent=this.ctx.createGain();this.silent.gain.value=0;this.silent.connect(this.ctx.destination)}await this.ctx.resume();if(this.ctx.state!=='running')throw Error('Audio is suspended. Press the audio source button again to resume.');}
+ cleanup(){if(this.stream){const tracks=this.stream.getTracks();this.stream=null;tracks.forEach(t=>t.stop())}if(this.node){try{this.node.disconnect()}catch{}this.node=null}this.testNodes.forEach(n=>{try{n.stop()}catch{}try{n.disconnect()}catch{}});this.testNodes=[];if(this.testTimer){clearInterval(this.testTimer);this.testTimer=null}this.element.pause();if(this.analyser){try{this.analyser.disconnect()}catch{}}this.features={energy:0,bass:0,mid:0,high:0,beat:false,rms:0};this.noSignal=false;this.spectrum.fill(0);this.previousFreq?.fill(0);this.fluxMean=.01;this.prevEnergy=0;this.lastBeat=-1000;this.testMode=null;this.studyBand=null;this.sourceStarted=performance.now();}
+ preview(){++this.requestID;this.cleanup();this.kind='preview';this.label='Preview signal · not listening';this.notify();}
+ stop(){++this.requestID;this.cleanup();this.kind='none';this.label='Disconnected · specimen preserved';this.notify();}
+ async capture(kind){const id=++this.requestID;let acquired=null;try{if(!window.isSecureContext)throw Error('Audio capture needs an HTTPS page or localhost. Open a local music file instead.');if(!navigator.mediaDevices)throw Error('Audio capture is not available. Open a music file instead.');let promise;if(kind==='share'){if(!navigator.mediaDevices.getDisplayMedia)throw Error('This browser cannot share audio. Try a desktop browser or open a local music file.');promise=navigator.mediaDevices.getDisplayMedia({video:true,audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false,suppressLocalAudioPlayback:false},systemAudio:'include',selfBrowserSurface:'exclude',surfaceSwitching:'include'});}else{promise=navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false},video:false})}
+ acquired=await promise;if(id!==this.requestID){acquired.getTracks().forEach(t=>t.stop());return}if(!acquired.getAudioTracks().length)throw Error('No audio track was shared. Choose the tab playing music and enable “Share audio” in the browser dialog.');await this.ensure();if(id!==this.requestID){acquired.getTracks().forEach(t=>t.stop());return}this.cleanup();this.stream=acquired;this.node=this.ctx.createMediaStreamSource(new MediaStream(acquired.getAudioTracks()));this.node.connect(this.analyser);this.analyser.connect(this.silent);this.kind=kind;this.label=kind==='share'?'Shared audio · listening locally':'Microphone · listening locally';for(let track of acquired.getTracks())track.addEventListener('ended',()=>{if(this.stream===acquired){this.stop();this.notify('Audio sharing ended. The specimen has been preserved.')}});this.notify();
+ }catch(e){if(acquired&&this.stream!==acquired)acquired.getTracks().forEach(t=>t.stop());if(id!==this.requestID)return;const msg=e.name==='NotAllowedError'?'Audio permission was cancelled or denied. Your current source has not been changed.':e.message;this.notify(msg,true)}}
+ async openFile(file){if(!file)return;if(file.size>750*1024*1024){this.notify('This file is too large for the prototype (750 MB limit).',true);return}const id=++this.requestID;try{await this.ensure();if(id!==this.requestID)return;this.cleanup();if(this.objectURL)URL.revokeObjectURL(this.objectURL);this.objectURL=URL.createObjectURL(file);this.element.src=this.objectURL;if(!this.fileNode)this.fileNode=this.ctx.createMediaElementSource(this.element);this.node=this.fileNode;this.node.connect(this.analyser);this.analyser.connect(this.output);this.kind='file';this.label=file.name;this.notify();await this.element.play();}catch(e){this.notify('The file could not start: '+e.message+' Try a supported MP3, WAV, OGG, or M4A file, or press Play.',true)}}
+ async test(){const id=++this.requestID;try{await this.ensure();if(id!==this.requestID)return;this.cleanup();const master=this.ctx.createGain();master.gain.value=.22;master.connect(this.analyser);this.analyser.connect(this.output);this.node=master;this.kind='test';this.testMode='garden';this.label='Test garden · generated audio';let beat=0;const schedule=()=>{const t=this.ctx.currentTime;const kick=this.ctx.createOscillator(),kg=this.ctx.createGain();kick.frequency.setValueAtTime(135,t);kick.frequency.exponentialRampToValueAtTime(48,t+.24);kg.gain.setValueAtTime(.85,t);kg.gain.exponentialRampToValueAtTime(.001,t+.32);kick.connect(kg).connect(master);kick.start(t);kick.stop(t+.33);const o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type='triangle';o.frequency.value=[220,330,440,293.66,261.63,392,329.63,523.25][beat%8];g.gain.setValueAtTime(.001,t);g.gain.linearRampToValueAtTime(.45,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.39);o.connect(g).connect(master);o.start(t);o.stop(t+.41);if(beat%2===0){const h=this.ctx.createOscillator(),hg=this.ctx.createGain();h.frequency.value=5800;hg.gain.setValueAtTime(.08,t);hg.gain.exponentialRampToValueAtTime(.0001,t+.06);h.connect(hg).connect(master);h.start(t);h.stop(t+.08);h.onended=()=>{h.disconnect();hg.disconnect()}}kick.onended=()=>{kick.disconnect();kg.disconnect()};o.onended=()=>{o.disconnect();g.disconnect()};beat++};schedule();this.testTimer=setInterval(schedule,480);this.notify();}catch(e){this.notify(e.message,true)}}
+ async colorStudy(choice='sweep'){
+  const id=++this.requestID;
+  try{
+   await this.ensure();if(id!==this.requestID)return;this.cleanup();
+   const tones={bass:90,mid:1000,high:6500},names=choice in tones?[choice]:['bass','mid','high'];
+   const master=this.ctx.createGain(),osc=this.ctx.createOscillator();master.gain.value=0;master.connect(this.analyser);this.analyser.connect(this.output);osc.connect(master);this.node=master;this.testNodes=[osc];this.kind='test';this.testMode='color-study';let step=0;
+   const next=()=>{const name=names[step++%names.length],t=this.ctx.currentTime;master.gain.cancelScheduledValues(t);master.gain.setTargetAtTime(0,t,.015);osc.frequency.setValueAtTime(tones[name],t+.1);master.gain.setTargetAtTime(.16,t+.11,.04);this.studyBand=name;this.label='Color study · '+({bass:'BASS',mid:'MIDS',high:'HIGHS'}[name])+' '+tones[name]+' Hz'+(names.length>1?' · 5 s each':' · sustained');this.notify();};
+   next();osc.start();if(names.length>1)this.testTimer=setInterval(next,5000);
+  }catch(e){this.notify('Color study could not start: '+e.message,true);}
+ }
+
+ mute(v){this.outputMuted=v;if(this.output)this.output.gain.setTargetAtTime(v?0:.75,this.ctx.currentTime,.025)}
+ sample(dt,settings,now){const f=this.features;f.beat=false;let energy=0,bass=0,mid=0,high=0,rms=0;
+ if(this.kind==='preview'){this.previewTime+=dt;const t=this.previewTime,beat=Math.floor(t*2.05);f.beat=beat!==this.previewBeat;this.previewBeat=beat;const pulse=Math.exp(-((t*2.05)%1)*5);bass=.18+.65*pulse;mid=.22+.50*(.5+.5*Math.sin(t*.83));high=.10+.62*Math.pow(.5+.5*Math.sin(t*2.83),4);energy=.16+.25*pulse+.22*mid;rms=energy/4;for(let i=0;i<48;i++)this.spectrum[i]=clamp((.25+.3*Math.sin(i*.55+t*1.8))*(i<10?bass:mid));}
+ else if(this.ctx&&['file','share','mic','test'].includes(this.kind)){this.analyser.getFloatTimeDomainData(this.wave);let sum=0;for(let x of this.wave)sum+=x*x;rms=Math.sqrt(sum/this.wave.length);this.analyser.getFloatFrequencyData(this.freq);const hz=this.ctx.sampleRate/this.analyser.fftSize;let b=0,m=0,h=0,flux=0;for(let i=1;i<this.freq.length;i++){let p=Number.isFinite(this.freq[i])?Math.pow(10,this.freq[i]/10):0,freq=i*hz;if(freq>=35&&freq<250)b+=p;else if(freq>=250&&freq<2400)m+=p;else if(freq>=2400&&freq<14000)h+=p;flux+=Math.max(0,p-this.previousFreq[i]);this.previousFreq[i]=p}
+ const gain=settings.sensitivity*2.2;energy=rms<settings.gate?0:clamp((rms-settings.gate)*settings.sensitivity*2.4);bass=energy>0?clamp(Math.sqrt(b)*gain):0;mid=energy>0?clamp(Math.sqrt(m)*gain):0;high=energy>0?clamp(Math.sqrt(h)*gain):0;this.fluxMean=this.fluxMean*.97+flux*.03;if(energy>.05&&now-this.lastBeat>230&&(flux>Math.max(.00005,this.fluxMean*1.8)||energy>this.prevEnergy+.16)){f.beat=true;this.lastBeat=now;this.beats++}this.prevEnergy=energy;
+ for(let i=0;i<48;i++){let low=Math.max(1,Math.floor(Math.pow(this.freq.length,i/48))),hi=Math.max(low+1,Math.floor(Math.pow(this.freq.length,(i+1)/48))),max=-100;for(let j=low;j<hi&&j<this.freq.length;j++)max=Math.max(max,this.freq[j]);this.spectrum[i]=clamp((max+88)/72)}this.noSignal=now-this.sourceStarted>4000&&rms<.0003;}
+ const smooth=1-Math.exp(-Math.min(dt,.1)/.07);for(let [k,v]of Object.entries({energy,bass,mid,high}))f[k]+= (v-f[k])*smooth;f.rms=rms;if(this.kind==='none')for(let k of ['energy','bass','mid','high'])f[k]=0;return f;}
+}
+root.ChoralAudio=AudioEngine;
+})(window);
+
+(function(){
+'use strict';
+const {World,DEFAULTS,MODES,VERSION,STORAGE,sanitize,clamp,loadSettings}=window.ChoralCore,$=id=>document.getElementById(id);let settings={...DEFAULTS},saveTimer,toastTimer,view,world,audio,paused=false,accumulator=0,frameTime=performance.now(),uiTime=0,fpsTime=performance.now(),frames=0,beatUntil=0,fps=0,pendingBeat=false,lastFeatures={energy:0,bass:0,mid:0,high:0,beat:false};let errors=[];const composer=new window.ChoralColor.Composer();let colorSignal=composer.snapshot(),lastColorUITick=-1,composerNode=null;
+const motionQuery=window.matchMedia('(prefers-reduced-motion: reduce)');let reduced=motionQuery.matches,activeStep='sound',previousReduced=null,lastExportGeneration=null;const steps=['sound','habitat','color','grow','save'];const Response=window.ChoralResponse;
+const setText=(id,text)=>{if($(id).textContent!==text)$(id).textContent=text;};
+const isReduced=()=>Response.reduced(settings,reduced);
+function toast(message,error=false){if(!message)return;$('toast').textContent=message;$('toast').classList.toggle('error',error);$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,error?11000:5500);if(error)errors.push({time:new Date().toISOString(),message});}
+function fatal(e){$('boot').hidden=true;$('fatal').hidden=false;$('fatal-detail').textContent=e?.message||String(e);errors.push({time:new Date().toISOString(),message:e?.message||String(e)});console.error(e)}
+function save(){clearTimeout(saveTimer);$('save-state').classList.add('unsaved');$('save-state').innerHTML='<i class="led"></i>Saving settings…';saveTimer=setTimeout(()=>{try{localStorage.setItem(STORAGE,JSON.stringify(settings));$('save-state').classList.remove('unsaved');$('save-state').innerHTML='<i class="led"></i>Settings saved locally'}catch{$('save-state').innerHTML='<i class="led"></i>Storage unavailable'}},350)}
+function output(key,val){if(['branching','mutation','life','soundColor','colorInheritance','lineageVariation','colorMutation','colorDiversity','colorSaturation'].includes(key))return Math.round(val*100)+'%';if(key==='memory')return val===100?'PRESERVE':val+' / 100';if(key==='gate')return val.toFixed(3)+' RMS';if(['growth','sensitivity'].includes(key))return val.toFixed(1)+'×';if(key==='colorSmoothing')return val.toFixed(2)+' s';if(['hueBias','branchHue','cellHue','sporeHue','lightAzimuth','lightElevation'].includes(key))return (val>0?'+':'')+val+'°';if(['glow','illumination','emission','interiorFill','depthCue'].includes(key))return Math.round(val*100)+'%';return val}
+function updatePaletteUI(){
+ const {PALETTES,palette}=window.ChoralColor,name=settings.palette,meta=PALETTES[name];
+ $('palette-description').textContent=meta.description;
+ const future=settings.paletteScope==='future';
+ $('palette-behavior').textContent=future?'Existing material is preserved. Palette, diversity, hue, and saturation changes affect new growth only. Resume growth or Bloom to see them.':'Palette, diversity, hue, and saturation restyle existing growth immediately. Birth colors and ancestry remain untouched.';
+ $('palette-scope-status').textContent=future?'PRESERVED VIEW · NEXT GROWTH: '+meta.name.toUpperCase():'RESTYLE VIEW + NEW GROWTH';
+ for(const b of document.querySelectorAll('[data-scope]'))b.setAttribute('aria-pressed',String(b.dataset.scope===settings.paletteScope));
+ for(const b of document.querySelectorAll('button[data-palette]'))b.setAttribute('aria-pressed',String(b.dataset.palette===name));
+ const factor=meta.mutation||1,effective=Math.min(1,settings.colorMutation*factor);
+ $('palette-policy').textContent='Effective color mutation: '+(effective*100).toFixed(1)+'% per tracked birth'+(factor!==1?' · palette ×'+factor:'')+'. Geometry is unchanged.';
+ $('palette-next-label').textContent=future?'Next growth palette':'Growth palette';
+ $('full-spectrum').hidden=name==='spectrum';
+ const swatches=$('palette-swatches');
+ if(swatches.dataset.previewPalette!==name){
+  swatches.replaceChildren();
+  for(let i=0;i<8;i++){let el=document.createElement('i');el.style.backgroundColor='rgb('+palette(name,i/8,.53).map(v=>Math.round(Math.max(0,Math.min(1,v))*255)).join(',')+')';swatches.append(el)}
+  swatches.dataset.previewPalette=name;
+ }
+}
+function updateEcologyUI(stats){
+ $('family-count').textContent=stats.families.toLocaleString();$('colony-count').textContent=stats.cellColonies.toLocaleString();$('variant-count').textContent=stats.livingVariants.toLocaleString();
+ const legend=$('lineage-legend');legend.replaceChildren();
+ for(const l of stats.leaders){
+  const samples=new Map();if(settings.paletteScope==='future')for(let i=0;i<world.total;i++)if(world.cells[i]&&world.cellLineage[i]===l.id){const id=world.appearance.cells[i];samples.set(id,(samples.get(id)||0)+1);}const look=samples.size?world.appearance.get([...samples].sort((a,b)=>b[1]-a[1])[0][0]):window.ChoralColor.styleFrom(settings);
+  const rgb=window.ChoralColor.applyStyle(look,l.tone,.9,.53,'cell').map(v=>Math.round(v*255));
+  const chip=document.createElement('div');chip.className='lineage-chip';chip.style.setProperty('--chip-color','rgb('+rgb.join(',')+')');
+  chip.title='Lineage '+l.id+' · family '+l.family+' · '+l.cells+' living cells'+(l.kind==='mutation'?' · inherited mutation':'')+(samples.size>1?' · mixed looks; chip shows the most populous look':'');
+  const dot=document.createElement('i');dot.setAttribute('aria-hidden','true');const text=document.createElement('span');text.textContent='L'+l.id+' / '+l.cells;chip.append(dot,text);legend.append(chip);
+ }
+ if(!stats.leaders.length)legend.textContent='No tracked cellular colonies yet.';
+ $('lineage-history').textContent=stats.lineageOrigin==='new'?'Ancestry and the separate color random stream travel with your specimen.':stats.lineageOrigin==='legacy-v0.3.0'?'Imported birth colors stay intact. New growth begins ancestry; past ancestry is not invented.':'Older growth keeps its original colors. New growth begins recorded color ancestry.';
+}
+function updateLightingUI(){
+ const L=window.ChoralLighting,unlit=settings.renderMode==='unlit';
+ $('lighting-description').textContent=L.PRESETS[settings.renderMode].description;
+ $('lighting-status').textContent=(L.isCustom(settings)?'CUSTOM · ':'PRESET · ')+L.PRESETS[settings.renderMode].name.toUpperCase();
+ for(const el of document.querySelectorAll('[data-lit-only]'))el.disabled=unlit;
+}
+function updateWorkspaceUI(){
+ const advanced=settings.interfaceMode==='advanced';
+ for(const el of document.querySelectorAll('.advanced-only'))el.hidden=!advanced;
+ for(const el of document.querySelectorAll('.legacy-palette-row'))el.hidden=false;
+ for(const key of steps){$('step-'+key).hidden=key!==activeStep;const button=$('nav-'+key);if(key===activeStep)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');}
+ const i=steps.indexOf(activeStep);$('workflow-prev').disabled=i===0;$('workflow-prev').textContent=i?'← '+steps[i-1][0].toUpperCase()+steps[i-1].slice(1):'Back';$('workflow-next').textContent=i===4?'View sculpture':'Next: '+steps[i+1][0].toUpperCase()+steps[i+1].slice(1)+' →';
+}
+function updateResponseUI(){
+ const quiet=isReduced();if(view)view.systemReduced=reduced;
+ document.body.classList.toggle('reduced-motion',quiet);
+ // Entering a quiet state stops existing movement; leaving it never starts growth automatically.
+ if(quiet&&previousReduced===false)setPaused(true);previousReduced=quiet;
+ const mode=settings.colorResponse;
+ setText('response-description',Response.MODES[mode].description);
+ setText('response-status',quiet?'MOTION REDUCED · STORED MATERIAL SHOWN':mode==='recorded'?'LIVE RECOLORING AND ACCENTS OFF':mode==='living'?'TEMPORARY WHOLE-SPECIMEN COLOR':settings.colorAccents?'HISTORY + LOCALIZED LIVE ACCENTS':'HISTORY · ACCENTS OFF');
+ const accent=document.querySelector('[data-setting="colorAccents"]');accent.disabled=quiet||mode==='recorded';
+ setText('accent-help',quiet?'Reduced motion suspends accent animation and Living recoloring. Change Motion in Grow to enable them.':mode==='recorded'?'Recorded deliberately disables animated accents. Your accent preference is retained for Living or Hybrid.':'Localized highlights only. Living still recolors the body when accents are off.');
+ document.querySelector('[data-setting="orbit"]').disabled=quiet;
+ setText('motion-status',quiet?'Motion is reduced'+(settings.motionPreference==='system'?' by your device preference':'')+'. Growth stays paused until you explicitly resume or Bloom.':settings.motionPreference==='full'?'Full motion explicitly enabled. Orbit and accent animation have separate controls.':'Following your device: full motion. A reduced-motion change will pause growth automatically.');
+ $('still-view').setAttribute('aria-pressed',String(quiet&&paused));$('still-view-grow').setAttribute('aria-pressed',String(quiet&&paused));
+ setText('response-badge',mode.toUpperCase()+' COLOR'+(quiet?' · STILL':''));
+}
+function applyUI(rendererOnly=false){
+ if(world)world.updateSettings(settings);
+ for(const el of document.querySelectorAll('[data-setting]')){const k=el.dataset.setting;if(el.type==='checkbox')el.checked=settings[k];else if(el.type==='radio')el.checked=settings[k]===el.value;else el.value=settings[k];}
+ for(const el of document.querySelectorAll('[data-output]'))el.textContent=output(el.dataset.output,settings[el.dataset.output]);
+ document.body.classList.toggle('light',settings.theme==='light');document.body.classList.toggle('contrast',settings.theme==='contrast');
+ document.querySelector('meta[name="theme-color"]').content=settings.theme==='light'?'#e4eee6':settings.theme==='contrast'?'#000000':'#101b19';
+ $('seed-input').value=settings.seed;
+ for(const el of $('habitats').children){el.classList.toggle('active',el.dataset.mode===settings.mode);el.setAttribute('aria-pressed',String(el.dataset.mode===settings.mode));}
+ $('habitat-description').textContent=MODES[settings.mode].sub;$('specimen-label').textContent=`SPECIMEN ${settings.seed} / 3D LIVING SYSTEM`;
+ $('stage-title').textContent={coral:'A reef, grown from sound.',forest:'A canopy that remembers.',mycelium:'Connections, taking root.',crystal:'Order meets emergence.',vortex:'A spiral finding its form.',tetra:'Recursion, brought to life.'}[settings.mode];
+ updatePaletteUI();updateLightingUI();updateWorkspaceUI();updateResponseUI();if(world)updateEcologyUI(world.colorStats());if(view&&!rendererOnly)view.dirty=true;
+}
+function showStep(key,focus=false){if(!steps.includes(key))return;if(document.body.classList.contains('panel-hidden'))togglePanel();activeStep=key;updateWorkspaceUI();$('workflow-body').scrollTop=0;if(focus)$('nav-'+key).focus({preventScroll:true});}
+function stillView(){settings=sanitize({...settings,motionPreference:'reduce',motion:false});setPaused(true);applyUI(true);save();toast('Still view. Growth, orbit, and animated colors paused; all material colors remain.');}
+function updateColorStatus(){
+ const C=window.ChoralColor;
+ for(const [band,role] of [['bass','branch'],['mid','cell'],['high','accent']]){
+  const input={energy:colorSignal.energy,bass:0,mid:0,high:0};input[band]=Math.max(.01,colorSignal[band]);
+  if(isReduced())continue;$(band+'-color').style.backgroundColor='rgb('+C.liveColor(settings.palette,input,role).map(v=>Math.round(v*255)).join(',')+')';
+  $(band+'-color').style.opacity=String(.35+.65*colorSignal[band]);
+ }
+ let label=audio.kind==='preview'?'PREVIEW COLORS · SYNTHETIC INPUT':audio.kind==='none'?'BIRTH COLORS PRESERVED':audio.kind==='test'?'TEST AUDIO · ANALYSER CONNECTED':'AUDIO COLORS · RECORDING NEW BIRTHS';
+ if(paused&&audio.kind!=='none')label+=' · GROWTH PAUSED';
+ if(isReduced())label+=' · ANIMATION OFF';else if(!settings.colorAccents)label+=' · LIVE ACCENTS OFF';
+ $('color-status').textContent=label;
+ if(lastColorUITick!==world.tick){if(lastExportGeneration!==null)setText('specimen-save-status',world.generation===lastExportGeneration?'Export prepared at generation '+lastExportGeneration+'. Keep the downloaded JSON.':'Growth has advanced since the generation '+lastExportGeneration+' export. Export again to keep it.');lastColorUITick=world.tick;const stats=world.colorStats();updateEcologyUI(stats);$('color-history').textContent=stats.recordedBranches.toLocaleString()+' branches with birth colors.'+(stats.origin!=='new'?' Older imported growth has no recorded sound history.':' Initial seed cells have no sound history.');}
+}
+function setPaused(v){paused=v;$('grow-pause').textContent=v?'Resume growth':'Pause growth';$('grow-pause').setAttribute('aria-pressed',String(v));$('still-view').setAttribute('aria-pressed',String(isReduced()&&v));$('still-view-grow').setAttribute('aria-pressed',String(isReduced()&&v));$('pause').textContent=v?'▶  Resume growth':'Ⅱ  Pause growth';$('pause').setAttribute('aria-pressed',v?'true':'false');accumulator=0;pendingBeat=false;composer.clearPending();}
+function reset(seed=settings.seed,warm=false){lastExportGeneration=null;setText('specimen-save-status','Only settings autosave. Export the specimen before closing or upgrading.');settings.seed=seed>>>0;composer.reset(audio?.kind||'preview');colorSignal=composer.snapshot();lastColorUITick=-1;world.reset(settings.mode,settings.seed);if(warm){for(let i=0;i<15;i++)world.step({energy:.55,bass:.5,mid:.65,high:.3,beat:i%4===0,source:'preview'})}view.dirty=true;accumulator=0;setPaused(isReduced());applyUI();view.fit(world);save();}
+function audioChanged(msg,error){if(composer.source!==audio.kind||composerNode!==audio.node){composerNode=audio.node;composer.reset(audio.kind);colorSignal=composer.snapshot();pendingBeat=false;}if(msg)toast(msg,error);$('source-caption').textContent=audio.label;$('source-caption').classList.toggle('warn',error===true);$('player').hidden=audio.kind!=='file';$('preview').setAttribute('aria-pressed',audio.kind==='preview'?'true':'false');$('share-audio').setAttribute('aria-pressed',audio.kind==='share'?'true':'false');$('microphone').setAttribute('aria-pressed',audio.kind==='mic'?'true':'false');$('test-audio').setAttribute('aria-pressed',audio.kind==='test'&&audio.testMode==='garden'?'true':'false');$('color-study').setAttribute('aria-pressed',audio.testMode==='color-study'?'true':'false');$('input-badge').textContent={preview:'PREVIEW SIGNAL',none:'DISCONNECTED',file:'MUSIC FILE',mic:'MICROPHONE',share:'SHARED AUDIO',test:'TEST AUDIO'}[audio.kind];$('stage-subtitle').replaceChildren();if(audio.kind==='preview'){$('stage-subtitle').append('Silent preview. ');let x=document.createElement('span');x.textContent='Connect audio to make it yours.';$('stage-subtitle').append(x)}else $('stage-subtitle').textContent=audio.kind==='none'?'Your specimen is preserved. Reconnect to grow.':'Audio connected. Earlier branches keep their history.';accumulator=0;}
+function blobDownload(blob,name){let url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000)}
+function exportSpecimen(){let d=world.serialize();d.instrument='C(H)ORAL';d.camera=view.camera();d.exportedAt=new Date().toISOString();d.notes={audioIncluded:false,simulatedCells:world.population,visibleCells:view.drawnCells,source:audio.kind,birthFeaturesIncluded:true,colorLineagesIncluded:true,colorRandomStateIncluded:true,appearanceIncluded:true,birthArtistSettingsIncluded:true,rawAudioIncluded:false};blobDownload(new Blob([JSON.stringify(d)],{type:'application/json'}),`choral-${settings.mode}-${settings.seed}-g${world.generation}.json`);lastExportGeneration=world.generation;setText('specimen-save-status','Export prepared at generation '+world.generation+'. Keep the downloaded JSON; growth itself is not autosaved.');toast('Specimen export prepared. The JSON includes living state and geometry, not audio.');}
+async function importSpecimen(file){try{if(!file)return;if(file.size>18*1024*1024)throw Error('Specimen files must be smaller than 18 MB.');const data=JSON.parse(await file.text());let candidate=new World();candidate.restore(data);const local={theme:settings.theme,interfaceMode:settings.interfaceMode,motionPreference:settings.motionPreference,motion:settings.motion};world=candidate;lastColorUITick=-1;settings=sanitize({...world.settings,...local});world.updateSettings(settings);lastExportGeneration=null;setText('specimen-save-status','Imported specimen. Export again after making changes; only settings autosave.');audio.stop();view.dirty=true;view.restoreCamera(data.camera);setPaused(true);applyUI();save();toast(data.version===VERSION?'Specimen restored, including lineages, mixed palettes, and preserved appearance. Connect audio, then resume to grow.':data.version==='0.6.0'?'Batch 5 specimen restored, including lighting, ancestry, and mixed palettes. Local interface and motion preferences are retained.':data.version==='0.5.0'?'Batch 4 specimen restored with mixed palettes and preserved appearance. Lighting is upgraded; old Glow is retained as halo intensity.':data.version==='0.4.0'?'Batch 3 specimen restored, including lineages and original palette. New palette controls are ready.':data.version==='0.3.0'?'Earlier birth colors and sound history restored. New growth starts lineages; past ancestry is not invented.':'Older specimen restored. Existing colors are retained; no past audio-color history is invented. New growth will record colors and lineages.')}catch(e){toast('Import failed: '+e.message,true)}}
+function bloom(){world.bud({energy:1,bass:1},true);for(let i=0;i<3;i++)world.step({energy:1,bass:1,mid:1,high:.6,beat:true,source:'manual'});view.dirty=true;toast('Manual bloom added three generations.');}
+function togglePanel(){let hidden=document.body.classList.toggle('panel-hidden');if(hidden&&$('panel').contains(document.activeElement))$('toggle-panel').focus({preventScroll:true});$('toggle-panel').textContent=hidden?'Show controls':'Hide controls';$('toggle-panel').setAttribute('aria-expanded',String(!hidden));}
+function diagnostics(){const {leaders,...colorHistory}=world.colorStats();let d={instrument:'C(H)ORAL',version:VERSION,time:new Date().toISOString(),browser:navigator.userAgent,secureContext:window.isSecureContext,webGL:view.status,audioContext:audio.ctx?.state||'not started',source:audio.kind,hasAudioTrack:!!audio.stream?.getAudioTracks().length,sharedVideoTrack:!!audio.stream?.getVideoTracks().length,settings,generation:world.generation,population:world.population,renderedCells:view.drawnCells,branches:world.segments.length,tips:world.tips.length,fps,features:lastFeatures,colorFeatures:composer.snapshot(),colorHistory,errors:errors.slice(-20),privacy:'No audio, video, filenames, or specimen geometry included.'};blobDownload(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),'choral-diagnostics.json');}
+try{
+let store;try{store=window.localStorage}catch{}
+const loaded=loadSettings(store,reduced);settings=loaded.settings;
+if(loaded.notice){$('settings-notice').textContent=loaded.notice;$('settings-notice').hidden=false}
+const icons={coral:'♧',forest:'⋔',mycelium:'⌘',crystal:'✧',vortex:'◎',tetra:'△'};for(let [key,m]of Object.entries(MODES)){let b=document.createElement('button');b.className='habitat';b.dataset.mode=key;b.title=m.sub;b.innerHTML=`<span class="glyph" aria-hidden="true">${icons[key]}</span><span class="name">${m.title}</span>`;b.addEventListener('click',()=>{if(settings.mode===key){toast(m.title+' is already planted. Use New seed to begin again.');return;}settings.mode=key;reset(settings.seed,audio.kind==='preview');toast(m.title+' habitat planted. Previous geometry was cleared.')});$('habitats').append(b)}for(let i=0;i<48;i++)$('spectrum').append(document.createElement('i'));
+world=new World(settings);view=new window.ChoralView.View($('scene'));audio=new window.ChoralAudio($('player'),audioChanged);
+for(const el of document.querySelectorAll('[data-setting]'))el.addEventListener('input',()=>{
+ if(el.type==='radio'&&!el.checked)return;const key=el.dataset.setting;
+ const value=el.type==='checkbox'?el.checked:el.type==='range'||el.type==='number'?Number(el.value):el.value;
+ const patch=key==='renderMode'?window.ChoralLighting.preset(value):key==='motionPreference'?{motionPreference:value,motion:value!=='reduce'}:{[key]:value};
+ settings=sanitize({...settings,...patch});
+ const viewOnly=window.ChoralLighting.KEYS.includes(key)||Response.KEYS.includes(key)||key==='theme';applyUI(viewOnly);save();
+});
+for(const button of document.querySelectorAll('[data-step]'))button.onclick=()=>showStep(button.dataset.step);
+for(const button of document.querySelectorAll('[data-go]'))button.onclick=()=>showStep(button.dataset.go,true);
+$('workflow-prev').onclick=()=>showStep(steps[Math.max(0,steps.indexOf(activeStep)-1)],true);
+$('workflow-next').onclick=()=>{const i=steps.indexOf(activeStep);if(i===4)togglePanel();else showStep(steps[i+1],true);};
+$('workflow-nav').addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const i=steps.indexOf(activeStep),j=e.key==='Home'?0:e.key==='End'?4:(i+(e.key==='ArrowRight'?1:4))%5;showStep(steps[j],true);});
+$('still-view').onclick=stillView;$('still-view-grow').onclick=stillView;$('grow-pause').onclick=()=>setPaused(!paused);$('grow-bloom').onclick=bloom;
+const motionChanged=()=>{reduced=motionQuery.matches;updateResponseUI();};if(motionQuery.addEventListener)motionQuery.addEventListener('change',motionChanged);else motionQuery.addListener(motionChanged);
+$('lighting-jump').onclick=()=>{$('lighting-card').open=true;$('lighting-card').scrollIntoView({behavior:isReduced()?'auto':'smooth',block:'start'});$('render-mode').focus({preventScroll:true});};
+$('reset-lighting').onclick=()=>{settings=sanitize({...settings,...window.ChoralLighting.preset(settings.renderMode)});applyUI(true);save();toast('Lighting reset. Geometry, materials, camera, and audio are unchanged.');};
+$('color-study').onclick=()=>audio.colorStudy($('study-tone').value);
+$('study-tone').onchange=()=>{if(audio.testMode==='color-study')audio.colorStudy($('study-tone').value)};
+function choosePalette(name){settings=sanitize({...settings,palette:name});applyUI();save();toast(settings.paletteScope==='future'?window.ChoralColor.PALETTES[name].name+' selected for new growth. Existing material is preserved.':window.ChoralColor.PALETTES[name].name+' restyled the view. Geometry, camera, audio, and birth records are unchanged.');}
+$('full-spectrum').onclick=()=>choosePalette('spectrum');
+for(const b of document.querySelectorAll('[data-scope]'))b.onclick=()=>{settings={...settings,paletteScope:b.dataset.scope};applyUI();save();toast(settings.paletteScope==='future'?'Current material preserved. Your next color choices affect new growth only.':'Existing growth now uses the selected palette and artist controls. Birth history remains intact.');};
+for(const name of window.ChoralColor.PRIMARY_PALETTES){const meta=window.ChoralColor.PALETTES[name],b=document.createElement('button');b.dataset.palette=name;b.className='palette-choice';b.title=meta.description;b.setAttribute('aria-label',meta.name+' palette');const label=document.createElement('span');label.textContent=meta.name;const strip=document.createElement('span');strip.className='choice-swatches';strip.setAttribute('aria-hidden','true');for(let i=0;i<8;i++){const dot=document.createElement('i');dot.style.backgroundColor='rgb('+window.ChoralColor.palette(name,i/8,.53).map(v=>Math.round(v*255)).join(',')+')';strip.append(dot);}b.append(label,strip);b.onclick=()=>choosePalette(name);$('palette-library').append(b);}
+$('reset-color-tuning').onclick=()=>{settings={...settings,...window.ChoralColor.STYLE_DEFAULTS};applyUI();save();toast(settings.paletteScope==='future'?'Artist controls reset for future growth. Existing material is preserved.':'Artist controls reset. Palette and birth history are unchanged.');};
+$('share-audio').onclick=()=>audio.capture('share');$('microphone').onclick=()=>audio.capture('mic');$('open-audio').onclick=()=>$('audio-file').click();$('audio-file').onchange=()=>{audio.openFile($('audio-file').files[0]);$('audio-file').value=''};$('preview').onclick=()=>audio.preview();$('test-audio').onclick=()=>audio.test();$('disconnect').onclick=()=>audio.stop();$('mute-output').onchange=()=>audio.mute($('mute-output').checked);$('player').addEventListener('error',()=>{if(audio.kind==='file')toast('The audio file could not be decoded by this browser. Try another supported file.',true)});$('player').addEventListener('play',()=>{if(audio.ctx?.state==='suspended')audio.ctx.resume().catch(e=>toast(e.message,true))});
+$('toggle-panel').onclick=togglePanel;$('pause').onclick=()=>setPaused(!paused);$('bloom').onclick=bloom;$('new-seed').onclick=()=>reset(crypto.getRandomValues(new Uint32Array(1))[0]);$('same-seed').onclick=()=>{reset();toast('The same seed has been planted again. Current audio will shape a new future.')};$('apply-seed').onclick=()=>{const v=Number($('seed-input').value);if(!Number.isInteger(v)||v<0||v>4294967295){toast('Use a whole-number seed from 0 to 4294967295.',true);return}reset(v)};$('fit').onclick=()=>view.fit(world);$('export-json').onclick=exportSpecimen;$('import-json').onclick=()=>$('json-file').click();$('json-file').onchange=()=>{importSpecimen($('json-file').files[0]);$('json-file').value=''};$('diagnostics').onclick=diagnostics;
+$('fresh-start').onclick=()=>{if(!window.confirm('Clear this specimen and C(H)ORAL’s saved settings? Export the specimen first to keep it.'))return;audio.stop();settings={...DEFAULTS,seed:crypto.getRandomValues(new Uint32Array(1))[0],};$('settings-notice').hidden=true;try{localStorage.removeItem(STORAGE)}catch{}reset();toast('Fresh start. Audio disconnected and a new seed planted.')};
+$('snapshot').onclick=()=>{view.render(world,settings,lastFeatures,0,1,colorSignal);$('scene').toBlob(blob=>{if(blob)blobDownload(blob,`choral-${settings.mode}-${settings.seed}-g${world.generation}.png`);else toast('The browser could not create the image.',true)},'image/png')};$('fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else toast('Fullscreen is not supported by this browser. Hide controls for a larger view.')}catch(e){toast('Fullscreen could not start: '+e.message,true)}};
+$('save-png-panel').onclick=()=>$('snapshot').click();
+$('help').onclick=()=>$('guide').showModal();$('close-guide').onclick=()=>$('guide').close();document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('guide').open&&!document.body.classList.contains('panel-hidden')){e.preventDefault();togglePanel();return;}if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(document.activeElement?.tagName)||$('guide').open||e.ctrlKey||e.metaKey||e.altKey)return;const k=e.key.toLowerCase();if(k===' '){e.preventDefault();setPaused(!paused)}else if(k==='b')bloom();else if(k==='h')togglePanel();else if(k==='f')view.fit(world)});
+$('scene').addEventListener('keydown',e=>{
+ if(e.ctrlKey||e.metaKey||e.altKey)return;const k=e.key;if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','=','-','_'].includes(k))return;e.preventDefault();
+ if(k==='+'||k==='=')view.distance=clamp(view.distance*.90,5,1600);else if(k==='-'||k==='_')view.distance=clamp(view.distance/ .90,5,1600);
+ else if(e.shiftKey){const d=view.distance*.025;if(k==='ArrowUp')view.target[1]+=d;else if(k==='ArrowDown')view.target[1]-=d;else{const sign=k==='ArrowLeft'?-1:1;view.target[0]+=Math.cos(view.yaw)*d*sign;view.target[2]-=Math.sin(view.yaw)*d*sign;}}
+ else if(k==='ArrowLeft')view.yaw-=.10;else if(k==='ArrowRight')view.yaw+=.10;else view.pitch=clamp(view.pitch+(k==='ArrowUp'?.08:-.08),-1.48,1.48);
+});
+let dragDepth=0;window.addEventListener('dragenter',e=>{if(e.dataTransfer?.types.includes('Files')){e.preventDefault();dragDepth++;$('dropzone').hidden=false}});window.addEventListener('dragover',e=>{if(e.dataTransfer?.types.includes('Files'))e.preventDefault()});window.addEventListener('dragleave',e=>{dragDepth--;if(dragDepth<=0)$('dropzone').hidden=true});window.addEventListener('drop',e=>{e.preventDefault();dragDepth=0;$('dropzone').hidden=true;const f=e.dataTransfer.files[0];if(!f)return;if(f.name.toLowerCase().endsWith('.json'))importSpecimen(f);else audio.openFile(f)});
+document.addEventListener('choral-render-error',e=>{setPaused(true);toast(e.detail,true)});document.addEventListener('visibilitychange',()=>{frameTime=performance.now();accumulator=0});window.addEventListener('beforeunload',()=>audio.cleanup());
+reset(settings.seed,true);if(isReduced())setPaused(true);audioChanged();if(window.innerWidth<=650)togglePanel();$('boot').hidden=true;
+function frame(now){try{if(motionQuery.matches!==reduced){reduced=motionQuery.matches;updateResponseUI();}const dt=Math.min(.25,Math.max(0,(now-frameTime)/1000));frameTime=now;lastFeatures=audio.sample(dt,settings,now);colorSignal=composer.update(lastFeatures,dt,settings,audio.kind);if(lastFeatures.beat){beatUntil=now+150;pendingBeat=true;}if(paused){pendingBeat=false;composer.clearPending();}let sound=lastFeatures.energy>.008&&audio.kind!=='none';let pace=0,signal=lastFeatures;if(!paused){if(sound)pace=2.5+lastFeatures.energy*8;else if(settings.silence==='decay'&&audio.kind!=='none'){pace=1.5;signal={energy:0,bass:0,mid:0,high:0,beat:false}}else if(settings.silence==='idle'&&audio.kind!=='none'){pace=1;signal={energy:.04,bass:.05,mid:.1,high:0,beat:false}}accumulator+=dt*pace;let count=0;while(accumulator>=1&&count<3){world.step({...signal,beat:pendingBeat,color:sound?composer.consume():{...signal,source:'idle',onset:false}});pendingBeat=false;accumulator--;view.dirty=true;count++}}view.render(world,settings,lastFeatures,dt,paused||!sound?1:Math.min(1,accumulator),colorSignal);frames++;
+if(now-fpsTime>=1000){fps=Math.round(frames*1000/(now-fpsTime));frames=0;fpsTime=now;}if(now-uiTime>(isReduced()?500:130)){uiTime=now;updateColorStatus();for(let k of ['bass','mid','high']){$(k+'-meter').style.width=Math.round(lastFeatures[k]*100)+'%';$(k+'-value').textContent=Math.round(lastFeatures[k]*100)+'%'}if(!isReduced())[...$('spectrum').children].forEach((el,i)=>el.style.height=(2+audio.spectrum[i]*39)+'px');$('beat-indicator').classList.toggle('lit',!isReduced()&&now<beatUntil);$('gen-stat').textContent=world.generation.toLocaleString();$('cells-stat').textContent=world.population.toLocaleString();$('branches-stat').textContent=world.segments.length.toLocaleString();$('fps-stat').textContent=fps+' FPS';let state=paused?'GROWTH PAUSED':world.capacity?'STRUCTURE CAP · EXPORT OR RESEED':audio.kind==='preview'?'PREVIEW · SYNTHETIC INPUT':audio.kind==='none'?'DISCONNECTED · PRESERVED':!sound?'QUIET · '+settings.silence.toUpperCase():'GROWING · '+audio.kind.toUpperCase();$('footer-state').textContent=state;const noSignal=audio.noSignal&&audio.kind!=='file';setText('source-caption',noSignal?'No audible signal. Check the shared source and its audio checkbox.':audio.label);$('source-caption').classList.toggle('warn',noSignal);}
+requestAnimationFrame(frame)}catch(e){fatal(e)}}requestAnimationFrame(frame);
+// Read-only diagnostic snapshots plus an explicitly documented test harness for local validation.
+window.CHORAL={version:VERSION,snapshot:()=>({settings:{...settings},generation:world.generation,tick:world.tick,population:world.population,branches:world.segments.length,tips:world.tips.length,renderedCells:view.drawnCells,features:{...lastFeatures},source:audio.kind,paused,camera:view.camera(),fps,workflow:{step:activeStep,mode:settings.interfaceMode,panelOpen:!document.body.classList.contains('panel-hidden')},motion:{systemReduced:reduced,effectiveReduced:isReduced()},renderer:{response:view.response,treatment:settings.renderMode,meshUploads:view.syncCount||0,halos:view.haloCount||0},colorFeatures:{...colorSignal},colorHistory:world.colorStats(),errors:errors.slice()}),exportState:()=>({...world.serialize(),camera:view.camera()}),getAudio:()=>audio,setPaused,setCameraForTest:c=>view.restoreCamera(c),stepForTest:(n,signal)=>{setPaused(true);for(let i=0;i<Math.min(400,n);i++)world.step(signal);view.dirty=true;return world.serialize()},renderForTest:(colorOverride)=>{view.dirty=true;view.render(world,settings,lastFeatures,0,1,colorOverride||colorSignal);return view.gl.getError()}};
+}catch(e){fatal(e)}
+})();
+
+</script>
+</body></html>
